@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<![endif]-->
+<title>FAST Camposol Map</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Brondic Gales">
+
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="css/fonts/font-awesome/css/font-awesome.css">
+<link href="css/custom.css" rel="stylesheet">
+
+</head>
+
+<body onload="init();">
+<div class="body">
+
+<div role="main" class="main"><div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="location.href='index.html';">Select New Street</button>
+		</div>
+		<div class="col-md-9 street" id="street_name"></div>
+	</div>
+		
+	<div class="row"><div class="col-md-12">
+		<canvas id="mapCanvas" style="max-width:100%;height:auto;"></canvas>
+	</div></div>
+	
+</div></div>
+
+</div>
+
+
+<script>
+var mapWidth;
+var mapHeight;
+var mapFileName;
+var street_name;
+
+var canvas = document.getElementsByTagName('canvas')[0];
+canvas.width = 1140; canvas.height = 2000;
+
+function readCookie(name)
+{
+    var cookie = localStorage.getItem(name);
+    return cookie;
+}
+
+function init()
+{
+	displayLoading();
+	map_number = readCookie('map_number');
+	street_number = readCookie('street_number');
+	street_name = readCookie('street_name');
+
+	document.getElementById("street_name").innerHTML = street_name;
+	
+	map_number = map_number * 1; //make it a number rather than string
+	street_number = street_number * 1; //make it a number rather than string
+
+	setMapData(map_number, street_number);
+}
+
+function displayLoading()
+{
+	var c = document.getElementById("mapCanvas");
+	var ctx = c.getContext("2d");
+	ctx.font = "30px arial";
+	ctx.fillText("Map Loading ...",canvas.width/2-50,200);
+}
+
+function setMapData(map_number, street_number)
+{
+	switch (map_number) {
+		case 1: mapWidth = 1963; mapHeight = 2310; mapFileName = 'img/sector-a.jpg'; drawMapA(street_number); break;
+		case 2: mapWidth = 2151; mapHeight = 3000; mapFileName = 'img/sector-b.jpg'; drawMapB(street_number);break;
+		case 3: mapWidth = 2395; mapHeight = 3260; mapFileName = 'img/sector-c.jpg'; drawMapC(street_number);break;
+		case 4: mapWidth = 3356; mapHeight = 2882; mapFileName = 'img/sector-d.jpg'; drawMapD(street_number);break;
+		break;
+	}
+}
+
+function drawMapA(calle)
+{
+	var num_pts = [];
+	num_pts[0] = 2;
+	num_pts[1] = 2;
+	num_pts[2] = 2;
+	num_pts[3] = 2;
+	num_pts[4] = 2;
+	num_pts[5] = 5;
+	num_pts[6] = 4;
+	num_pts[7] = 3;
+	num_pts[8] = 3;
+	num_pts[9] = 2;
+	num_pts[10] = 3;
+	num_pts[11] = 5;
+	num_pts[12] = 2;
+	num_pts[13] = 2;
+	num_pts[14] = 3;
+	num_pts[15] = 10;
+	num_pts[16] = 7;
+	num_pts[17] = 2;
+	num_pts[18] = 2;
+	num_pts[19] = 2;
+	num_pts[20] = 5;
+	num_pts[21] = 2;
+	num_pts[22] = 2;
+	num_pts[23] = 2;
+	num_pts[24] = 4;
+	num_pts[25] = 3;
+	num_pts[26] = 4;
+	num_pts[27] = 2;
+	num_pts[28] = 2;
+	num_pts[29] = 2;
+	num_pts[30] = 6;
+	num_pts[31] = 2;
+	num_pts[32] = 2;
+	num_pts[33] = 4;
+	num_pts[34] = 2;
+	num_pts[35] = 2;
+	num_pts[36] = 8;
+	num_pts[37] = 2;
+	num_pts[38] = 6;
+	num_pts[39] = 6;
+	num_pts[40] = 2;
+	num_pts[41] = 2;
+	num_pts[42] = 2;
+	num_pts[43] = 2;
+	num_pts[44] = 2;
+	num_pts[45] = 2;
+	num_pts[46] = 2;
+	num_pts[47] = 2;
+	num_pts[48] = 2;
+	num_pts[49] = 2;
+	num_pts[50] = 2;
+	num_pts[51] = 2;
+	num_pts[52] = 2;
+
+	
+	var x_coord = new Array(53);
+	for (i=0; i<53; i++)
+	x_coord[i]=new Array(10);
+	x_coord[0][0] = 1060;x_coord[0][1] = 1155;x_coord[0][2] = 0;x_coord[0][3] = 0;x_coord[0][4] = 0;x_coord[0][5] = 0;x_coord[0][6] = 0;x_coord[0][7] = 0;x_coord[0][8] = 0;x_coord[0][9] = 0;
+	x_coord[1][0] = 111;x_coord[1][1] = 618;x_coord[1][2] = 0;x_coord[1][3] = 0;x_coord[1][4] = 0;x_coord[1][5] = 0;x_coord[1][6] = 0;x_coord[1][7] = 0;x_coord[1][8] = 0;x_coord[1][9] = 0;
+	x_coord[2][0] = 80;x_coord[2][1] = 282;x_coord[2][2] = 0;x_coord[2][3] = 0;x_coord[2][4] = 0;x_coord[2][5] = 0;x_coord[2][6] = 0;x_coord[2][7] = 0;x_coord[2][8] = 0;x_coord[2][9] = 0;
+	x_coord[3][0] = 308;x_coord[3][1] = 532;x_coord[3][2] = 0;x_coord[3][3] = 0;x_coord[3][4] = 0;x_coord[3][5] = 0;x_coord[3][6] = 0;x_coord[3][7] = 0;x_coord[3][8] = 0;x_coord[3][9] = 0;
+	x_coord[4][0] = 809;x_coord[4][1] = 461;x_coord[4][2] = 0;x_coord[4][3] = 0;x_coord[4][4] = 0;x_coord[4][5] = 0;x_coord[4][6] = 0;x_coord[4][7] = 0;x_coord[4][8] = 0;x_coord[4][9] = 0;
+	x_coord[5][0] = 1887;x_coord[5][1] = 1285;x_coord[5][2] = 1111;x_coord[5][3] = 870;x_coord[5][4] = 830;x_coord[5][5] = 0;x_coord[5][6] = 0;x_coord[5][7] = 0;x_coord[5][8] = 0;x_coord[5][9] = 0;
+	x_coord[6][0] = 157;x_coord[6][1] = 389;x_coord[6][2] = 396;x_coord[6][3] = 713;x_coord[6][4] = 0;x_coord[6][5] = 0;x_coord[6][6] = 0;x_coord[6][7] = 0;x_coord[6][8] = 0;x_coord[6][9] = 0;
+	x_coord[7][0] = 1071;x_coord[7][1] = 1559;x_coord[7][2] = 1807;x_coord[7][3] = 0;x_coord[7][4] = 0;x_coord[7][5] = 0;x_coord[7][6] = 0;x_coord[7][7] = 0;x_coord[7][8] = 0;x_coord[7][9] = 0;
+	x_coord[8][0] = 275;x_coord[8][1] = 759;x_coord[8][2] = 1416;x_coord[8][3] = 0;x_coord[8][4] = 0;x_coord[8][5] = 0;x_coord[8][6] = 0;x_coord[8][7] = 0;x_coord[8][8] = 0;x_coord[8][9] = 0;
+	x_coord[9][0] = 1717;x_coord[9][1] = 1645;x_coord[9][2] = 0;x_coord[9][3] = 0;x_coord[9][4] = 0;x_coord[9][5] = 0;x_coord[9][6] = 0;x_coord[9][7] = 0;x_coord[9][8] = 0;x_coord[9][9] = 0;
+	x_coord[10][0] = 1776;x_coord[10][1] = 1890;x_coord[10][2] = 1890;x_coord[10][3] = 0;x_coord[10][4] = 0;x_coord[10][5] = 0;x_coord[10][6] = 0;x_coord[10][7] = 0;x_coord[10][8] = 0;x_coord[10][9] = 0;
+	x_coord[11][0] = 968;x_coord[11][1] = 1562;x_coord[11][2] = 1715;x_coord[11][3] = 1802;x_coord[11][4] = 1916;x_coord[11][5] = 0;x_coord[11][6] = 0;x_coord[11][7] = 0;x_coord[11][8] = 0;x_coord[11][9] = 0;
+	x_coord[12][0] = 535;x_coord[12][1] = 368;x_coord[12][2] = 0;x_coord[12][3] = 0;x_coord[12][4] = 0;x_coord[12][5] = 0;x_coord[12][6] = 0;x_coord[12][7] = 0;x_coord[12][8] = 0;x_coord[12][9] = 0;
+	x_coord[13][0] = 961;x_coord[13][1] = 1274;x_coord[13][2] = 0;x_coord[13][3] = 0;x_coord[13][4] = 0;x_coord[13][5] = 0;x_coord[13][6] = 0;x_coord[13][7] = 0;x_coord[13][8] = 0;x_coord[13][9] = 0;
+	x_coord[14][0] = 1050;x_coord[14][1] = 856;x_coord[14][2] = 692;x_coord[14][3] = 0;x_coord[14][4] = 0;x_coord[14][5] = 0;x_coord[14][6] = 0;x_coord[14][7] = 0;x_coord[14][8] = 0;x_coord[14][9] = 0;
+	x_coord[15][0] = 1922;x_coord[15][1] = 1511;x_coord[15][2] = 1413;x_coord[15][3] = 1203;x_coord[15][4] = 1060;x_coord[15][5] = 931;x_coord[15][6] = 868;x_coord[15][7] = 789;x_coord[15][8] = 711;x_coord[15][9] = 524;
+	x_coord[16][0] = 1729;x_coord[16][1] = 1254;x_coord[16][2] = 1068;x_coord[16][3] = 958;x_coord[16][4] = 818;x_coord[16][5] = 730;x_coord[16][6] = 687;x_coord[16][7] = 0;x_coord[16][8] = 0;x_coord[16][9] = 0;
+	x_coord[17][0] = 1283;x_coord[17][1] = 1193;x_coord[17][2] = 0;x_coord[17][3] = 0;x_coord[17][4] = 0;x_coord[17][5] = 0;x_coord[17][6] = 0;x_coord[17][7] = 0;x_coord[17][8] = 0;x_coord[17][9] = 0;
+	x_coord[18][0] = 301;x_coord[18][1] = 178;x_coord[18][2] = 0;x_coord[18][3] = 0;x_coord[18][4] = 0;x_coord[18][5] = 0;x_coord[18][6] = 0;x_coord[18][7] = 0;x_coord[18][8] = 0;x_coord[18][9] = 0;
+	x_coord[19][0] = 1014;x_coord[19][1] = 1310;x_coord[19][2] = 0;x_coord[19][3] = 0;x_coord[19][4] = 0;x_coord[19][5] = 0;x_coord[19][6] = 0;x_coord[19][7] = 0;x_coord[19][8] = 0;x_coord[19][9] = 0;
+	x_coord[20][0] = 1485;x_coord[20][1] = 1206;x_coord[20][2] = 786;x_coord[20][3] = 631;x_coord[20][4] = 537;x_coord[20][5] = 0;x_coord[20][6] = 0;x_coord[20][7] = 0;x_coord[20][8] = 0;x_coord[20][9] = 0;
+	x_coord[21][0] = 267;x_coord[21][1] = 523;x_coord[21][2] = 0;x_coord[21][3] = 0;x_coord[21][4] = 0;x_coord[21][5] = 0;x_coord[21][6] = 0;x_coord[21][7] = 0;x_coord[21][8] = 0;x_coord[21][9] = 0;
+	x_coord[22][0] = 277;x_coord[22][1] = 465;x_coord[22][2] = 0;x_coord[22][3] = 0;x_coord[22][4] = 0;x_coord[22][5] = 0;x_coord[22][6] = 0;x_coord[22][7] = 0;x_coord[22][8] = 0;x_coord[22][9] = 0;
+	x_coord[23][0] = 1114;x_coord[23][1] = 882;x_coord[23][2] = 0;x_coord[23][3] = 0;x_coord[23][4] = 0;x_coord[23][5] = 0;x_coord[23][6] = 0;x_coord[23][7] = 0;x_coord[23][8] = 0;x_coord[23][9] = 0;
+	x_coord[24][0] = 1885;x_coord[24][1] = 1230;x_coord[24][2] = 871;x_coord[24][3] = 616;x_coord[24][4] = 0;x_coord[24][5] = 0;x_coord[24][6] = 0;x_coord[24][7] = 0;x_coord[24][8] = 0;x_coord[24][9] = 0;
+	x_coord[25][0] = 688;x_coord[25][1] = 608;x_coord[25][2] = 538;x_coord[25][3] = 0;x_coord[25][4] = 0;x_coord[25][5] = 0;x_coord[25][6] = 0;x_coord[25][7] = 0;x_coord[25][8] = 0;x_coord[25][9] = 0;
+	x_coord[26][0] = 174;x_coord[26][1] = 766;x_coord[26][2] = 866;x_coord[26][3] = 881;x_coord[26][4] = 0;x_coord[26][5] = 0;x_coord[26][6] = 0;x_coord[26][7] = 0;x_coord[26][8] = 0;x_coord[26][9] = 0;
+	x_coord[27][0] = 1513;x_coord[27][1] = 913;x_coord[27][2] = 0;x_coord[27][3] = 0;x_coord[27][4] = 0;x_coord[27][5] = 0;x_coord[27][6] = 0;x_coord[27][7] = 0;x_coord[27][8] = 0;x_coord[27][9] = 0;
+	x_coord[28][0] = 694;x_coord[28][1] = 711;x_coord[28][2] = 0;x_coord[28][3] = 0;x_coord[28][4] = 0;x_coord[28][5] = 0;x_coord[28][6] = 0;x_coord[28][7] = 0;x_coord[28][8] = 0;x_coord[28][9] = 0;
+	x_coord[29][0] = 384;x_coord[29][1] = 882;x_coord[29][2] = 0;x_coord[29][3] = 0;x_coord[29][4] = 0;x_coord[29][5] = 0;x_coord[29][6] = 0;x_coord[29][7] = 0;x_coord[29][8] = 0;x_coord[29][9] = 0;
+	x_coord[30][0] = 85;x_coord[30][1] = 87;x_coord[30][2] = 104;x_coord[30][3] = 172;x_coord[30][4] = 259;x_coord[30][5] = 515;x_coord[30][6] = 0;x_coord[30][7] = 0;x_coord[30][8] = 0;x_coord[30][9] = 0;
+	x_coord[31][0] = 457;x_coord[31][1] = 691;x_coord[31][2] = 0;x_coord[31][3] = 0;x_coord[31][4] = 0;x_coord[31][5] = 0;x_coord[31][6] = 0;x_coord[31][7] = 0;x_coord[31][8] = 0;x_coord[31][9] = 0;
+	x_coord[32][0] = 1735;x_coord[32][1] = 1681;x_coord[32][2] = 0;x_coord[32][3] = 0;x_coord[32][4] = 0;x_coord[32][5] = 0;x_coord[32][6] = 0;x_coord[32][7] = 0;x_coord[32][8] = 0;x_coord[32][9] = 0;
+	x_coord[33][0] = 591;x_coord[33][1] = 690;x_coord[33][2] = 865;x_coord[33][3] = 1051;x_coord[33][4] = 0;x_coord[33][5] = 0;x_coord[33][6] = 0;x_coord[33][7] = 0;x_coord[33][8] = 0;x_coord[33][9] = 0;
+	x_coord[34][0] = 854;x_coord[34][1] = 867;x_coord[34][2] = 0;x_coord[34][3] = 0;x_coord[34][4] = 0;x_coord[34][5] = 0;x_coord[34][6] = 0;x_coord[34][7] = 0;x_coord[34][8] = 0;x_coord[34][9] = 0;
+	x_coord[35][0] = 443;x_coord[35][1] = 323;x_coord[35][2] = 0;x_coord[35][3] = 0;x_coord[35][4] = 0;x_coord[35][5] = 0;x_coord[35][6] = 0;x_coord[35][7] = 0;x_coord[35][8] = 0;x_coord[35][9] = 0;
+	x_coord[36][0] = 326;x_coord[36][1] = 692;x_coord[36][2] = 763;x_coord[36][3] = 901;x_coord[36][4] = 1028;x_coord[36][5] = 1592;x_coord[36][6] = 1739;x_coord[36][7] = 1910;x_coord[36][8] = 0;x_coord[36][9] = 0;
+	x_coord[37][0] = 203;x_coord[37][1] = 736;x_coord[37][2] = 0;x_coord[37][3] = 0;x_coord[37][4] = 0;x_coord[37][5] = 0;x_coord[37][6] = 0;x_coord[37][7] = 0;x_coord[37][8] = 0;x_coord[37][9] = 0;
+	x_coord[38][0] = 1920;x_coord[38][1] = 1347;x_coord[38][2] = 1329;x_coord[38][3] = 1242;x_coord[38][4] = 1057;x_coord[38][5] = 612;x_coord[38][6] = 0;x_coord[38][7] = 0;x_coord[38][8] = 0;x_coord[38][9] = 0;
+	x_coord[39][0] = 78;x_coord[39][1] = 302;x_coord[39][2] = 920;x_coord[39][3] = 1195;x_coord[39][4] = 1668;x_coord[39][5] = 1783;x_coord[39][6] = 0;x_coord[39][7] = 0;x_coord[39][8] = 0;x_coord[39][9] = 0;
+	x_coord[40][0] = 376;x_coord[40][1] = 664;x_coord[40][2] = 0;x_coord[40][3] = 0;x_coord[40][4] = 0;x_coord[40][5] = 0;x_coord[40][6] = 0;x_coord[40][7] = 0;x_coord[40][8] = 0;x_coord[40][9] = 0;
+	x_coord[41][0] = 917;x_coord[41][1] = 366;x_coord[41][2] = 0;x_coord[41][3] = 0;x_coord[41][4] = 0;x_coord[41][5] = 0;x_coord[41][6] = 0;x_coord[41][7] = 0;x_coord[41][8] = 0;x_coord[41][9] = 0;
+	x_coord[42][0] = 101;x_coord[42][1] = 170;x_coord[42][2] = 0;x_coord[42][3] = 0;x_coord[42][4] = 0;x_coord[42][5] = 0;x_coord[42][6] = 0;x_coord[42][7] = 0;x_coord[42][8] = 0;x_coord[42][9] = 0;
+	x_coord[43][0] = 1930;x_coord[43][1] = 1916;x_coord[43][2] = 0;x_coord[43][3] = 0;x_coord[43][4] = 0;x_coord[43][5] = 0;x_coord[43][6] = 0;x_coord[43][7] = 0;x_coord[43][8] = 0;x_coord[43][9] = 0;
+	x_coord[44][0] = 838;x_coord[44][1] = 1291;x_coord[44][2] = 0;x_coord[44][3] = 0;x_coord[44][4] = 0;x_coord[44][5] = 0;x_coord[44][6] = 0;x_coord[44][7] = 0;x_coord[44][8] = 0;x_coord[44][9] = 0;
+	x_coord[45][0] = 86;x_coord[45][1] = 204;x_coord[45][2] = 0;x_coord[45][3] = 0;x_coord[45][4] = 0;x_coord[45][5] = 0;x_coord[45][6] = 0;x_coord[45][7] = 0;x_coord[45][8] = 0;x_coord[45][9] = 0;
+	x_coord[46][0] = 257;x_coord[46][1] = 638;x_coord[46][2] = 0;x_coord[46][3] = 0;x_coord[46][4] = 0;x_coord[46][5] = 0;x_coord[46][6] = 0;x_coord[46][7] = 0;x_coord[46][8] = 0;x_coord[46][9] = 0;
+	x_coord[47][0] = 1454;x_coord[47][1] = 1449;x_coord[47][2] = 0;x_coord[47][3] = 0;x_coord[47][4] = 0;x_coord[47][5] = 0;x_coord[47][6] = 0;x_coord[47][7] = 0;x_coord[47][8] = 0;x_coord[47][9] = 0;
+	x_coord[48][0] = 89;x_coord[48][1] = 439;x_coord[48][2] = 0;x_coord[48][3] = 0;x_coord[48][4] = 0;x_coord[48][5] = 0;x_coord[48][6] = 0;x_coord[48][7] = 0;x_coord[48][8] = 0;x_coord[48][9] = 0;
+	x_coord[49][0] = 1754;x_coord[49][1] = 1667;x_coord[49][2] = 0;x_coord[49][3] = 0;x_coord[49][4] = 0;x_coord[49][5] = 0;x_coord[49][6] = 0;x_coord[49][7] = 0;x_coord[49][8] = 0;x_coord[49][9] = 0;
+	x_coord[50][0] = 1678;x_coord[50][1] = 1922;x_coord[50][2] = 0;x_coord[50][3] = 0;x_coord[50][4] = 0;x_coord[50][5] = 0;x_coord[50][6] = 0;x_coord[50][7] = 0;x_coord[50][8] = 0;x_coord[50][9] = 0;
+	x_coord[51][0] = 1214;x_coord[51][1] = 1215;x_coord[51][2] = 0;x_coord[51][3] = 0;x_coord[51][4] = 0;x_coord[51][5] = 0;x_coord[51][6] = 0;x_coord[51][7] = 0;x_coord[51][8] = 0;x_coord[51][9] = 0;
+	x_coord[52][0] = 1556;x_coord[52][1] = 1468;x_coord[52][2] = 0;x_coord[52][3] = 0;x_coord[52][4] = 0;x_coord[52][5] = 0;x_coord[52][6] = 0;x_coord[52][7] = 0;x_coord[52][8] = 0;x_coord[52][9] = 0;
+
+
+	var y_coord = new Array(53);
+	for (i=0; i<53; i++)
+	y_coord[i]=new Array(10);
+
+	y_coord[0][0] = 1961;y_coord[0][1] = 2132;y_coord[0][2] = 0;y_coord[0][3] = 0;y_coord[0][4] = 0;y_coord[0][5] = 0;y_coord[0][6] = 0;y_coord[0][7] = 0;y_coord[0][8] = 0;y_coord[0][9] = 0;
+	y_coord[1][0] = 1461;y_coord[1][1] = 1274;y_coord[1][2] = 0;y_coord[1][3] = 0;y_coord[1][4] = 0;y_coord[1][5] = 0;y_coord[1][6] = 0;y_coord[1][7] = 0;y_coord[1][8] = 0;y_coord[1][9] = 0;
+	y_coord[2][0] = 1030;y_coord[2][1] = 947;y_coord[2][2] = 0;y_coord[2][3] = 0;y_coord[2][4] = 0;y_coord[2][5] = 0;y_coord[2][6] = 0;y_coord[2][7] = 0;y_coord[2][8] = 0;y_coord[2][9] = 0;
+	y_coord[3][0] = 1273;y_coord[3][1] = 1192;y_coord[3][2] = 0;y_coord[3][3] = 0;y_coord[3][4] = 0;y_coord[3][5] = 0;y_coord[3][6] = 0;y_coord[3][7] = 0;y_coord[3][8] = 0;y_coord[3][9] = 0;
+	y_coord[4][0] = 788;y_coord[4][1] = 552;y_coord[4][2] = 0;y_coord[4][3] = 0;y_coord[4][4] = 0;y_coord[4][5] = 0;y_coord[4][6] = 0;y_coord[4][7] = 0;y_coord[4][8] = 0;y_coord[4][9] = 0;
+	y_coord[5][0] = 413;y_coord[5][1] = 558;y_coord[5][2] = 701;y_coord[5][3] = 1200;y_coord[5][4] = 1295;y_coord[5][5] = 0;y_coord[5][6] = 0;y_coord[5][7] = 0;y_coord[5][8] = 0;y_coord[5][9] = 0;
+	y_coord[6][0] = 1564;y_coord[6][1] = 1472;y_coord[6][2] = 1489;y_coord[6][3] = 1364;y_coord[6][4] = 0;y_coord[6][5] = 0;y_coord[6][6] = 0;y_coord[6][7] = 0;y_coord[6][8] = 0;y_coord[6][9] = 0;
+	y_coord[7][0] = 1358;y_coord[7][1] = 1343;y_coord[7][2] = 1405;y_coord[7][3] = 0;y_coord[7][4] = 0;y_coord[7][5] = 0;y_coord[7][6] = 0;y_coord[7][7] = 0;y_coord[7][8] = 0;y_coord[7][9] = 0;
+	y_coord[8][0] = 943;y_coord[8][1] = 1401;y_coord[8][2] = 1948;y_coord[8][3] = 0;y_coord[8][4] = 0;y_coord[8][5] = 0;y_coord[8][6] = 0;y_coord[8][7] = 0;y_coord[8][8] = 0;y_coord[8][9] = 0;
+	y_coord[9][0] = 1659;y_coord[9][1] = 1470;y_coord[9][2] = 0;y_coord[9][3] = 0;y_coord[9][4] = 0;y_coord[9][5] = 0;y_coord[9][6] = 0;y_coord[9][7] = 0;y_coord[9][8] = 0;y_coord[9][9] = 0;
+	y_coord[10][0] = 36;y_coord[10][1] = 144;y_coord[10][2] = 412;y_coord[10][3] = 0;y_coord[10][4] = 0;y_coord[10][5] = 0;y_coord[10][6] = 0;y_coord[10][7] = 0;y_coord[10][8] = 0;y_coord[10][9] = 0;
+	y_coord[11][0] = 1266;y_coord[11][1] = 1239;y_coord[11][2] = 1270;y_coord[11][3] = 1277;y_coord[11][4] = 1270;y_coord[11][5] = 0;y_coord[11][6] = 0;y_coord[11][7] = 0;y_coord[11][8] = 0;y_coord[11][9] = 0;
+	y_coord[12][0] = 610;y_coord[12][1] = 1035;y_coord[12][2] = 0;y_coord[12][3] = 0;y_coord[12][4] = 0;y_coord[12][5] = 0;y_coord[12][6] = 0;y_coord[12][7] = 0;y_coord[12][8] = 0;y_coord[12][9] = 0;
+	y_coord[13][0] = 1478;y_coord[13][1] = 1739;y_coord[13][2] = 0;y_coord[13][3] = 0;y_coord[13][4] = 0;y_coord[13][5] = 0;y_coord[13][6] = 0;y_coord[13][7] = 0;y_coord[13][8] = 0;y_coord[13][9] = 0;
+	y_coord[14][0] = 1344;y_coord[14][1] = 1638;y_coord[14][2] = 1714;y_coord[14][3] = 0;y_coord[14][4] = 0;y_coord[14][5] = 0;y_coord[14][6] = 0;y_coord[14][7] = 0;y_coord[14][8] = 0;y_coord[14][9] = 0;
+	y_coord[15][0] = 1577;y_coord[15][1] = 1736;y_coord[15][2] = 1954;y_coord[15][3] = 2099;y_coord[15][4] = 2184;y_coord[15][5] = 2165;y_coord[15][6] = 2169;y_coord[15][7] = 2182;y_coord[15][8] = 2206;y_coord[15][9] = 2273;
+	y_coord[16][0] = 345;y_coord[16][1] = 462;y_coord[16][2] = 609;y_coord[16][3] = 734;y_coord[16][4] = 1048;y_coord[16][5] = 1274;y_coord[16][6] = 1330;y_coord[16][7] = 0;y_coord[16][8] = 0;y_coord[16][9] = 0;
+	y_coord[17][0] = 561;y_coord[17][1] = 162;y_coord[17][2] = 0;y_coord[17][3] = 0;y_coord[17][4] = 0;y_coord[17][5] = 0;y_coord[17][6] = 0;y_coord[17][7] = 0;y_coord[17][8] = 0;y_coord[17][9] = 0;
+	y_coord[18][0] = 637;y_coord[18][1] = 414;y_coord[18][2] = 0;y_coord[18][3] = 0;y_coord[18][4] = 0;y_coord[18][5] = 0;y_coord[18][6] = 0;y_coord[18][7] = 0;y_coord[18][8] = 0;y_coord[18][9] = 0;
+	y_coord[19][0] = 1392;y_coord[19][1] = 1633;y_coord[19][2] = 0;y_coord[19][3] = 0;y_coord[19][4] = 0;y_coord[19][5] = 0;y_coord[19][6] = 0;y_coord[19][7] = 0;y_coord[19][8] = 0;y_coord[19][9] = 0;
+	y_coord[20][0] = 194;y_coord[20][1] = 259;y_coord[20][2] = 529;y_coord[20][3] = 934;y_coord[20][4] = 1185;y_coord[20][5] = 0;y_coord[20][6] = 0;y_coord[20][7] = 0;y_coord[20][8] = 0;y_coord[20][9] = 0;
+	y_coord[21][0] = 1179;y_coord[21][1] = 1784;y_coord[21][2] = 0;y_coord[21][3] = 0;y_coord[21][4] = 0;y_coord[21][5] = 0;y_coord[21][6] = 0;y_coord[21][7] = 0;y_coord[21][8] = 0;y_coord[21][9] = 0;
+	y_coord[22][0] = 949;y_coord[22][1] = 560;y_coord[22][2] = 0;y_coord[22][3] = 0;y_coord[22][4] = 0;y_coord[22][5] = 0;y_coord[22][6] = 0;y_coord[22][7] = 0;y_coord[22][8] = 0;y_coord[22][9] = 0;
+	y_coord[23][0] = 700;y_coord[23][1] = 198;y_coord[23][2] = 0;y_coord[23][3] = 0;y_coord[23][4] = 0;y_coord[23][5] = 0;y_coord[23][6] = 0;y_coord[23][7] = 0;y_coord[23][8] = 0;y_coord[23][9] = 0;
+	y_coord[24][0] = 202;y_coord[24][1] = 363;y_coord[24][2] = 641;y_coord[24][3] = 1265;y_coord[24][4] = 0;y_coord[24][5] = 0;y_coord[24][6] = 0;y_coord[24][7] = 0;y_coord[24][8] = 0;y_coord[24][9] = 0;
+	y_coord[25][0] = 1723;y_coord[25][1] = 2075;y_coord[25][2] = 2265;y_coord[25][3] = 0;y_coord[25][4] = 0;y_coord[25][5] = 0;y_coord[25][6] = 0;y_coord[25][7] = 0;y_coord[25][8] = 0;y_coord[25][9] = 0;
+	y_coord[26][0] = 415;y_coord[26][1] = 136;y_coord[26][2] = 170;y_coord[26][3] = 197;y_coord[26][4] = 0;y_coord[26][5] = 0;y_coord[26][6] = 0;y_coord[26][7] = 0;y_coord[26][8] = 0;y_coord[26][9] = 0;
+	y_coord[27][0] = 1729;y_coord[27][1] = 1227;y_coord[27][2] = 0;y_coord[27][3] = 0;y_coord[27][4] = 0;y_coord[27][5] = 0;y_coord[27][6] = 0;y_coord[27][7] = 0;y_coord[27][8] = 0;y_coord[27][9] = 0;
+	y_coord[28][0] = 2056;y_coord[28][1] = 2162;y_coord[28][2] = 0;y_coord[28][3] = 0;y_coord[28][4] = 0;y_coord[28][5] = 0;y_coord[28][6] = 0;y_coord[28][7] = 0;y_coord[28][8] = 0;y_coord[28][9] = 0;
+	y_coord[29][0] = 447;y_coord[29][1] = 196;y_coord[29][2] = 0;y_coord[29][3] = 0;y_coord[29][4] = 0;y_coord[29][5] = 0;y_coord[29][6] = 0;y_coord[29][7] = 0;y_coord[29][8] = 0;y_coord[29][9] = 0;
+	y_coord[30][0] = 989;y_coord[30][1] = 1206;y_coord[30][2] = 1417;y_coord[30][3] = 1595;y_coord[30][4] = 1768;y_coord[30][5] = 2278;y_coord[30][6] = 0;y_coord[30][7] = 0;y_coord[30][8] = 0;y_coord[30][9] = 0;
+	y_coord[31][0] = 1121;y_coord[31][1] = 431;y_coord[31][2] = 0;y_coord[31][3] = 0;y_coord[31][4] = 0;y_coord[31][5] = 0;y_coord[31][6] = 0;y_coord[31][7] = 0;y_coord[31][8] = 0;y_coord[31][9] = 0;
+	y_coord[32][0] = 1167;y_coord[32][1] = 1373;y_coord[32][2] = 0;y_coord[32][3] = 0;y_coord[32][4] = 0;y_coord[32][5] = 0;y_coord[32][6] = 0;y_coord[32][7] = 0;y_coord[32][8] = 0;y_coord[32][9] = 0;
+	y_coord[33][0] = 215;y_coord[33][1] = 417;y_coord[33][2] = 629;y_coord[33][3] = 824;y_coord[33][4] = 0;y_coord[33][5] = 0;y_coord[33][6] = 0;y_coord[33][7] = 0;y_coord[33][8] = 0;y_coord[33][9] = 0;
+	y_coord[34][0] = 2017;y_coord[34][1] = 2166;y_coord[34][2] = 0;y_coord[34][3] = 0;y_coord[34][4] = 0;y_coord[34][5] = 0;y_coord[34][6] = 0;y_coord[34][7] = 0;y_coord[34][8] = 0;y_coord[34][9] = 0;
+	y_coord[35][0] = 557;y_coord[35][1] = 341;y_coord[35][2] = 0;y_coord[35][3] = 0;y_coord[35][4] = 0;y_coord[35][5] = 0;y_coord[35][6] = 0;y_coord[35][7] = 0;y_coord[35][8] = 0;y_coord[35][9] = 0;
+	y_coord[36][0] = 1888;y_coord[36][1] = 1706;y_coord[36][2] = 1409;y_coord[36][3] = 1222;y_coord[36][4] = 1141;y_coord[36][5] = 1120;y_coord[36][6] = 1158;y_coord[36][7] = 1151;y_coord[36][8] = 0;y_coord[36][9] = 0;
+	y_coord[37][0] = 1649;y_coord[37][1] = 1430;y_coord[37][2] = 0;y_coord[37][3] = 0;y_coord[37][4] = 0;y_coord[37][5] = 0;y_coord[37][6] = 0;y_coord[37][7] = 0;y_coord[37][8] = 0;y_coord[37][9] = 0;
+	y_coord[38][0] = 1365;y_coord[38][1] = 1585;y_coord[38][2] = 1582;y_coord[38][3] = 1811;y_coord[38][4] = 1960;y_coord[38][5] = 2076;y_coord[38][6] = 0;y_coord[38][7] = 0;y_coord[38][8] = 0;y_coord[38][9] = 0;
+	y_coord[39][0] = 761;y_coord[39][1] = 640;y_coord[39][2] = 287;y_coord[39][3] = 157;y_coord[39][4] = 45;y_coord[39][5] = 40;y_coord[39][6] = 0;y_coord[39][7] = 0;y_coord[39][8] = 0;y_coord[39][9] = 0;
+	y_coord[40][0] = 1430;y_coord[40][1] = 1320;y_coord[40][2] = 0;y_coord[40][3] = 0;y_coord[40][4] = 0;y_coord[40][5] = 0;y_coord[40][6] = 0;y_coord[40][7] = 0;y_coord[40][8] = 0;y_coord[40][9] = 0;
+	y_coord[41][0] = 1107;y_coord[41][1] = 755;y_coord[41][2] = 0;y_coord[41][3] = 0;y_coord[41][4] = 0;y_coord[41][5] = 0;y_coord[41][6] = 0;y_coord[41][7] = 0;y_coord[41][8] = 0;y_coord[41][9] = 0;
+	y_coord[42][0] = 1372;y_coord[42][1] = 1341;y_coord[42][2] = 0;y_coord[42][3] = 0;y_coord[42][4] = 0;y_coord[42][5] = 0;y_coord[42][6] = 0;y_coord[42][7] = 0;y_coord[42][8] = 0;y_coord[42][9] = 0;
+	y_coord[43][0] = 1570;y_coord[43][1] = 1151;y_coord[43][2] = 0;y_coord[43][3] = 0;y_coord[43][4] = 0;y_coord[43][5] = 0;y_coord[43][6] = 0;y_coord[43][7] = 0;y_coord[43][8] = 0;y_coord[43][9] = 0;
+	y_coord[44][0] = 1316;y_coord[44][1] = 1687;y_coord[44][2] = 0;y_coord[44][3] = 0;y_coord[44][4] = 0;y_coord[44][5] = 0;y_coord[44][6] = 0;y_coord[44][7] = 0;y_coord[44][8] = 0;y_coord[44][9] = 0;
+	y_coord[45][0] = 1154;y_coord[45][1] = 1107;y_coord[45][2] = 0;y_coord[45][3] = 0;y_coord[45][4] = 0;y_coord[45][5] = 0;y_coord[45][6] = 0;y_coord[45][7] = 0;y_coord[45][8] = 0;y_coord[45][9] = 0;
+	y_coord[46][0] = 1761;y_coord[46][1] = 1591;y_coord[46][2] = 0;y_coord[46][3] = 0;y_coord[46][4] = 0;y_coord[46][5] = 0;y_coord[46][6] = 0;y_coord[46][7] = 0;y_coord[46][8] = 0;y_coord[46][9] = 0;
+	y_coord[47][0] = 1130;y_coord[47][1] = 1348;y_coord[47][2] = 0;y_coord[47][3] = 0;y_coord[47][4] = 0;y_coord[47][5] = 0;y_coord[47][6] = 0;y_coord[47][7] = 0;y_coord[47][8] = 0;y_coord[47][9] = 0;
+	y_coord[48][0] = 1247;y_coord[48][1] = 1104;y_coord[48][2] = 0;y_coord[48][3] = 0;y_coord[48][4] = 0;y_coord[48][5] = 0;y_coord[48][6] = 0;y_coord[48][7] = 0;y_coord[48][8] = 0;y_coord[48][9] = 0;
+	y_coord[49][0] = 446;y_coord[49][1] = 42;y_coord[49][2] = 0;y_coord[49][3] = 0;y_coord[49][4] = 0;y_coord[49][5] = 0;y_coord[49][6] = 0;y_coord[49][7] = 0;y_coord[49][8] = 0;y_coord[49][9] = 0;
+	y_coord[50][0] = 1559;y_coord[50][1] = 1470;y_coord[50][2] = 0;y_coord[50][3] = 0;y_coord[50][4] = 0;y_coord[50][5] = 0;y_coord[50][6] = 0;y_coord[50][7] = 0;y_coord[50][8] = 0;y_coord[50][9] = 0;
+	y_coord[51][0] = 1141;y_coord[51][1] = 1355;y_coord[51][2] = 0;y_coord[51][3] = 0;y_coord[51][4] = 0;y_coord[51][5] = 0;y_coord[51][6] = 0;y_coord[51][7] = 0;y_coord[51][8] = 0;y_coord[51][9] = 0;
+	y_coord[52][0] = 497;y_coord[52][1] = 96;y_coord[52][2] = 0;y_coord[52][3] = 0;y_coord[52][4] = 0;y_coord[52][5] = 0;y_coord[52][6] = 0;y_coord[52][7] = 0;y_coord[52][8] = 0;y_coord[52][9] = 0;
+
+	var map = new Image();
+	var ctx = canvas.getContext('2d');
+	var scale = canvas.width / mapWidth;
+	var x = 0;
+	var y = 0;
+
+	var x_offset = 0;
+	var y_offset = 0;
+	
+	map.onload = function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
+		for (n = 1; n < num_pts[calle]; n++)
+		{
+			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
+			ctx.stroke();
+		}
+	}
+	map.src = mapFileName;
+
+	function redrawMap() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);	
+		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
+
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
+		for (n = 1; n < num_pts[street_number]; n++)
+		{
+			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
+			ctx.stroke();
+		}
+	}
+
+	//----------------------------
+	// Mouse listeners and events
+	//----------------------------
+	var zoom = function(evt){
+		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
+		if (delta) {
+			scale = scale*Math.pow(1.01,delta);
+			if (scale < 0.25) scale = 0.25;
+			redrawMap();
+		}
+		return evt.preventDefault() && false;
+	};
+	canvas.addEventListener('DOMMouseScroll',zoom,false);
+	canvas.addEventListener('mousewheel',zoom,false);
+	//--------------------------------------------
+	canvas.addEventListener('mousedown', mouseDownListener, false);
+	
+	function mouseDownListener(evt) {
+		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+				
+		dragging = true;
+		startX = mouseX - x_offset;
+		startY = mouseY - y_offset;
+
+		if (dragging) {
+			window.addEventListener('mousemove', mouseMoveListener, false);
+		}
+		canvas.removeEventListener('mousedown', mouseDownListener, false);
+		window.addEventListener('mouseup', mouseUpListener, false);
+		
+		//code below prevents the mouse down from having an effect on the main browser window:
+		if (evt.preventDefault) {
+			evt.preventDefault();
+		} //standard
+		else if (evt.returnValue) {
+			evt.returnValue = false;
+		} //older IE
+		return false;
+	}
+
+	function mouseMoveListener(evt) {
+	if (!dragging) return;
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+		
+		endX = mouseX;
+		endY = mouseY;
+		
+		x_offset = endX - startX;
+		y_offset = endY - startY;
+
+		redrawMap();
+	}
+	
+	function mouseUpListener(evt) {
+		canvas.addEventListener("mousedown", mouseDownListener, false);
+		window.removeEventListener("mouseup", mouseUpListener, false);
+		if (dragging) {
+			dragging = false;
+			window.removeEventListener("mousemove", mouseMoveListener, false);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+function drawMapB(calle)
+{
+	var num_pts = [];
+	num_pts[0] = 2;
+	num_pts[1] = 2;
+	num_pts[2] = 4;
+	num_pts[3] = 7;
+	num_pts[4] = 2;
+	num_pts[5] = 4;
+	num_pts[6] = 2;
+	num_pts[7] = 2;
+	num_pts[8] = 2;
+	num_pts[9] = 2;
+	num_pts[10] = 2;
+	num_pts[11] = 7;
+	num_pts[12] = 2;
+	num_pts[13] = 2;
+	num_pts[14] = 4;
+	num_pts[15] = 9;
+	num_pts[16] = 10;
+	num_pts[17] = 9;
+	num_pts[18] = 4;
+	num_pts[19] = 3;
+	num_pts[20] = 2;
+	num_pts[21] = 2;
+	num_pts[22] = 2;
+	num_pts[23] = 4;
+	num_pts[24] = 5;
+	num_pts[25] = 2;
+	num_pts[26] = 6;
+	num_pts[27] = 3;
+	num_pts[28] = 2;
+	num_pts[29] = 2;
+	num_pts[30] = 2;
+	
+	var x_coord = new Array(31);
+	for (i=0; i<31; i++)
+	x_coord[i]=new Array(10);
+	
+	x_coord[0][0] = 811;x_coord[0][1] = 1448;x_coord[0][2] = 251667;x_coord[0][3] = 251667;x_coord[0][4] = 251667;x_coord[0][5] = 251667;x_coord[0][6] = 251667;x_coord[0][7] = 251667;x_coord[0][8] = 251667;x_coord[0][9] = 251667;
+	x_coord[1][0] = 82;x_coord[1][1] = 445;x_coord[1][2] = 251667;x_coord[1][3] = 251667;x_coord[1][4] = 251667;x_coord[1][5] = 251667;x_coord[1][6] = 251667;x_coord[1][7] = 251667;x_coord[1][8] = 251667;x_coord[1][9] = 251667;
+	x_coord[2][0] = 295;x_coord[2][1] = 704;x_coord[2][2] = 717;x_coord[2][3] = 1030;x_coord[2][4] = 251667;x_coord[2][5] = 251667;x_coord[2][6] = 251667;x_coord[2][7] = 251667;x_coord[2][8] = 251667;x_coord[2][9] = 251667;
+	x_coord[3][0] = 540;x_coord[3][1] = 609;x_coord[3][2] = 733;x_coord[3][3] = 801;x_coord[3][4] = 888;x_coord[3][5] = 1019;x_coord[3][6] = 1086;x_coord[3][7] = 251667;x_coord[3][8] = 251667;x_coord[3][9] = 251667;
+	x_coord[4][0] = 302;x_coord[4][1] = 926;x_coord[4][2] = 251667;x_coord[4][3] = 251667;x_coord[4][4] = 251667;x_coord[4][5] = 251667;x_coord[4][6] = 251667;x_coord[4][7] = 251667;x_coord[4][8] = 251667;x_coord[4][9] = 251667;
+	x_coord[5][0] = 292;x_coord[5][1] = 737;x_coord[5][2] = 759;x_coord[5][3] = 1070;x_coord[5][4] = 251667;x_coord[5][5] = 251667;x_coord[5][6] = 251667;x_coord[5][7] = 251667;x_coord[5][8] = 251667;x_coord[5][9] = 251667;
+	x_coord[6][0] = 890;x_coord[6][1] = 1185;x_coord[6][2] = 251667;x_coord[6][3] = 251667;x_coord[6][4] = 251667;x_coord[6][5] = 251667;x_coord[6][6] = 251667;x_coord[6][7] = 251667;x_coord[6][8] = 251667;x_coord[6][9] = 251667;
+	x_coord[7][0] = 304;x_coord[7][1] = 792;x_coord[7][2] = 251667;x_coord[7][3] = 251667;x_coord[7][4] = 251667;x_coord[7][5] = 251667;x_coord[7][6] = 251667;x_coord[7][7] = 251667;x_coord[7][8] = 251667;x_coord[7][9] = 251667;
+	x_coord[8][0] = 1047;x_coord[8][1] = 1172;x_coord[8][2] = 251667;x_coord[8][3] = 251667;x_coord[8][4] = 251667;x_coord[8][5] = 251667;x_coord[8][6] = 251667;x_coord[8][7] = 251667;x_coord[8][8] = 251667;x_coord[8][9] = 251667;
+	x_coord[9][0] = 798;x_coord[9][1] = 1107;x_coord[9][2] = 251667;x_coord[9][3] = 251667;x_coord[9][4] = 251667;x_coord[9][5] = 251667;x_coord[9][6] = 251667;x_coord[9][7] = 251667;x_coord[9][8] = 251667;x_coord[9][9] = 251667;
+	x_coord[10][0] = 636;x_coord[10][1] = 1015;x_coord[10][2] = 251667;x_coord[10][3] = 251667;x_coord[10][4] = 251667;x_coord[10][5] = 251667;x_coord[10][6] = 251667;x_coord[10][7] = 251667;x_coord[10][8] = 251667;x_coord[10][9] = 251667;
+	x_coord[11][0] = 1947;x_coord[11][1] = 1741;x_coord[11][2] = 1363;x_coord[11][3] = 1237;x_coord[11][4] = 932;x_coord[11][5] = 599;x_coord[11][6] = 292;x_coord[11][7] = 251667;x_coord[11][8] = 251667;x_coord[11][9] = 251667;
+	x_coord[12][0] = 956;x_coord[12][1] = 1146;x_coord[12][2] = 251667;x_coord[12][3] = 251667;x_coord[12][4] = 251667;x_coord[12][5] = 251667;x_coord[12][6] = 251667;x_coord[12][7] = 251667;x_coord[12][8] = 251667;x_coord[12][9] = 251667;
+	x_coord[13][0] = 1149;x_coord[13][1] = 1264;x_coord[13][2] = 251667;x_coord[13][3] = 251667;x_coord[13][4] = 251667;x_coord[13][5] = 251667;x_coord[13][6] = 251667;x_coord[13][7] = 251667;x_coord[13][8] = 251667;x_coord[13][9] = 251667;
+	x_coord[14][0] = 1744;x_coord[14][1] = 1903;x_coord[14][2] = 2027;x_coord[14][3] = 2063;x_coord[14][4] = 251667;x_coord[14][5] = 251667;x_coord[14][6] = 251667;x_coord[14][7] = 251667;x_coord[14][8] = 251667;x_coord[14][9] = 251667;
+	x_coord[15][0] = 1624;x_coord[15][1] = 1638;x_coord[15][2] = 1804;x_coord[15][3] = 2014;x_coord[15][4] = 2014;x_coord[15][5] = 1946;x_coord[15][6] = 1982;x_coord[15][7] = 2075;x_coord[15][8] = 2138;x_coord[15][9] = 251667;
+	x_coord[16][0] = 259;x_coord[16][1] = 43;x_coord[16][2] = 30;x_coord[16][3] = 60;x_coord[16][4] = 139;x_coord[16][5] = 582;x_coord[16][6] = 1107;x_coord[16][7] = 1209;x_coord[16][8] = 1369;x_coord[16][9] = 1368;
+	x_coord[17][0] = 1637;x_coord[17][1] = 1292;x_coord[17][2] = 1211;x_coord[17][3] = 1169;x_coord[17][4] = 952;x_coord[17][5] = 591;x_coord[17][6] = 372;x_coord[17][7] = 318;x_coord[17][8] = 21;x_coord[17][9] = 251667;
+	x_coord[18][0] = 171;x_coord[18][1] = 437;x_coord[18][2] = 857;x_coord[18][3] = 1493;x_coord[18][4] = 251667;x_coord[18][5] = 251667;x_coord[18][6] = 251667;x_coord[18][7] = 251667;x_coord[18][8] = 251667;x_coord[18][9] = 251667;
+	x_coord[19][0] = 1634;x_coord[19][1] = 1409;x_coord[19][2] = 1376;x_coord[19][3] = 251667;x_coord[19][4] = 251667;x_coord[19][5] = 251667;x_coord[19][6] = 251667;x_coord[19][7] = 251667;x_coord[19][8] = 251667;x_coord[19][9] = 251667;
+	x_coord[20][0] = 1195;x_coord[20][1] = 1465;x_coord[20][2] = 251667;x_coord[20][3] = 251667;x_coord[20][4] = 251667;x_coord[20][5] = 251667;x_coord[20][6] = 251667;x_coord[20][7] = 251667;x_coord[20][8] = 251667;x_coord[20][9] = 251667;
+	x_coord[21][0] = 915;x_coord[21][1] = 789;x_coord[21][2] = 251667;x_coord[21][3] = 251667;x_coord[21][4] = 251667;x_coord[21][5] = 251667;x_coord[21][6] = 251667;x_coord[21][7] = 251667;x_coord[21][8] = 251667;x_coord[21][9] = 251667;
+	x_coord[22][0] = 843;x_coord[22][1] = 1636;x_coord[22][2] = 251667;x_coord[22][3] = 251667;x_coord[22][4] = 251667;x_coord[22][5] = 251667;x_coord[22][6] = 251667;x_coord[22][7] = 251667;x_coord[22][8] = 251667;x_coord[22][9] = 251667;
+	x_coord[23][0] = 1434;x_coord[23][1] = 1738;x_coord[23][2] = 1743;x_coord[23][3] = 1743;x_coord[23][4] = 251667;x_coord[23][5] = 251667;x_coord[23][6] = 251667;x_coord[23][7] = 251667;x_coord[23][8] = 251667;x_coord[23][9] = 251667;
+	x_coord[24][0] = 486;x_coord[24][1] = 753;x_coord[24][2] = 1148;x_coord[24][3] = 1236;x_coord[24][4] = 1721;x_coord[24][5] = 251667;x_coord[24][6] = 251667;x_coord[24][7] = 251667;x_coord[24][8] = 251667;x_coord[24][9] = 251667;
+	x_coord[25][0] = 302;x_coord[25][1] = 856;x_coord[25][2] = 251667;x_coord[25][3] = 251667;x_coord[25][4] = 251667;x_coord[25][5] = 251667;x_coord[25][6] = 251667;x_coord[25][7] = 251667;x_coord[25][8] = 251667;x_coord[25][9] = 251667;
+	x_coord[26][0] = 302;x_coord[26][1] = 302;x_coord[26][2] = 290;x_coord[26][3] = 299;x_coord[26][4] = 320;x_coord[26][5] = 839;x_coord[26][6] = 251667;x_coord[26][7] = 251667;x_coord[26][8] = 251667;x_coord[26][9] = 251667;
+	x_coord[27][0] = 724;x_coord[27][1] = 962;x_coord[27][2] = 1192;x_coord[27][3] = 251667;x_coord[27][4] = 251667;x_coord[27][5] = 251667;x_coord[27][6] = 251667;x_coord[27][7] = 251667;x_coord[27][8] = 251667;x_coord[27][9] = 251667;
+	x_coord[28][0] = 448;x_coord[28][1] = 437;x_coord[28][2] = 251667;x_coord[28][3] = 251667;x_coord[28][4] = 251667;x_coord[28][5] = 251667;x_coord[28][6] = 251667;x_coord[28][7] = 251667;x_coord[28][8] = 251667;x_coord[28][9] = 251667;
+	x_coord[29][0] = 298;x_coord[29][1] = 995;x_coord[29][2] = 251667;x_coord[29][3] = 251667;x_coord[29][4] = 251667;x_coord[29][5] = 251667;x_coord[29][6] = 251667;x_coord[29][7] = 251667;x_coord[29][8] = 251667;x_coord[29][9] = 251667;
+	x_coord[30][0] = 1768;x_coord[30][1] = 2137;x_coord[30][2] = 251667;x_coord[30][3] = 251667;x_coord[30][4] = 251667;x_coord[30][5] = 251667;x_coord[30][6] = 251667;x_coord[30][7] = 251667;x_coord[30][8] = 251667;x_coord[30][9] = 251667;
+
+	var y_coord = new Array(31);
+	for (i=0; i<31; i++)
+	y_coord[i]=new Array(10);
+
+	y_coord[0][0] = 809;y_coord[0][1] = 501;y_coord[0][2] = 8871515;y_coord[0][3] = 8871515;y_coord[0][4] = 8871515;y_coord[0][5] = 8871515;y_coord[0][6] = 8871515;y_coord[0][7] = 8871515;y_coord[0][8] = 8871515;y_coord[0][9] = 8871515;
+	y_coord[1][0] = 1248;y_coord[1][1] = 1001;y_coord[1][2] = 8871515;y_coord[1][3] = 8871515;y_coord[1][4] = 8871515;y_coord[1][5] = 8871515;y_coord[1][6] = 8871515;y_coord[1][7] = 8871515;y_coord[1][8] = 8871515;y_coord[1][9] = 8871515;
+	y_coord[2][0] = 2161;y_coord[2][1] = 1976;y_coord[2][2] = 1986;y_coord[2][3] = 1828;y_coord[2][4] = 8871515;y_coord[2][5] = 8871515;y_coord[2][6] = 8871515;y_coord[2][7] = 8871515;y_coord[2][8] = 8871515;y_coord[2][9] = 8871515;
+	y_coord[3][0] = 1626;y_coord[3][1] = 1767;y_coord[3][2] = 2029;y_coord[3][3] = 2151;y_coord[3][4] = 2340;y_coord[3][5] = 2604;y_coord[3][6] = 2735;y_coord[3][7] = 8871515;y_coord[3][8] = 8871515;y_coord[3][9] = 8871515;
+	y_coord[4][0] = 1921;y_coord[4][1] = 1605;y_coord[4][2] = 8871515;y_coord[4][3] = 8871515;y_coord[4][4] = 8871515;y_coord[4][5] = 8871515;y_coord[4][6] = 8871515;y_coord[4][7] = 8871515;y_coord[4][8] = 8871515;y_coord[4][9] = 8871515;
+	y_coord[5][0] = 2236;y_coord[5][1] = 2030;y_coord[5][2] = 2069;y_coord[5][3] = 1910;y_coord[5][4] = 8871515;y_coord[5][5] = 8871515;y_coord[5][6] = 8871515;y_coord[5][7] = 8871515;y_coord[5][8] = 8871515;y_coord[5][9] = 8871515;
+	y_coord[6][0] = 2340;y_coord[6][1] = 2309;y_coord[6][2] = 8871515;y_coord[6][3] = 8871515;y_coord[6][4] = 8871515;y_coord[6][5] = 8871515;y_coord[6][6] = 8871515;y_coord[6][7] = 8871515;y_coord[6][8] = 8871515;y_coord[6][9] = 8871515;
+	y_coord[7][0] = 1581;y_coord[7][1] = 1339;y_coord[7][2] = 8871515;y_coord[7][3] = 8871515;y_coord[7][4] = 8871515;y_coord[7][5] = 8871515;y_coord[7][6] = 8871515;y_coord[7][7] = 8871515;y_coord[7][8] = 8871515;y_coord[7][9] = 8871515;
+	y_coord[8][0] = 2429;y_coord[8][1] = 2671;y_coord[8][2] = 8871515;y_coord[8][3] = 8871515;y_coord[8][4] = 8871515;y_coord[8][5] = 8871515;y_coord[8][6] = 8871515;y_coord[8][7] = 8871515;y_coord[8][8] = 8871515;y_coord[8][9] = 8871515;
+	y_coord[9][0] = 2151;y_coord[9][1] = 1989;y_coord[9][2] = 8871515;y_coord[9][3] = 8871515;y_coord[9][4] = 8871515;y_coord[9][5] = 8871515;y_coord[9][6] = 8871515;y_coord[9][7] = 8871515;y_coord[9][8] = 8871515;y_coord[9][9] = 8871515;
+	y_coord[10][0] = 2799;y_coord[10][1] = 2605;y_coord[10][2] = 8871515;y_coord[10][3] = 8871515;y_coord[10][4] = 8871515;y_coord[10][5] = 8871515;y_coord[10][6] = 8871515;y_coord[10][7] = 8871515;y_coord[10][8] = 8871515;y_coord[10][9] = 8871515;
+	y_coord[11][0] = 1022;y_coord[11][1] = 936;y_coord[11][2] = 854;y_coord[11][3] = 878;y_coord[11][4] = 1061;y_coord[11][5] = 1251;y_coord[11][6] = 1476;y_coord[11][7] = 8871515;y_coord[11][8] = 8871515;y_coord[11][9] = 8871515;
+	y_coord[12][0] = 2185;y_coord[12][1] = 2073;y_coord[12][2] = 8871515;y_coord[12][3] = 8871515;y_coord[12][4] = 8871515;y_coord[12][5] = 8871515;y_coord[12][6] = 8871515;y_coord[12][7] = 8871515;y_coord[12][8] = 8871515;y_coord[12][9] = 8871515;
+	y_coord[13][0] = 2379;y_coord[13][1] = 2600;y_coord[13][2] = 8871515;y_coord[13][3] = 8871515;y_coord[13][4] = 8871515;y_coord[13][5] = 8871515;y_coord[13][6] = 8871515;y_coord[13][7] = 8871515;y_coord[13][8] = 8871515;y_coord[13][9] = 8871515;
+	y_coord[14][0] = 1080;y_coord[14][1] = 1146;y_coord[14][2] = 1158;y_coord[14][3] = 1219;y_coord[14][4] = 8871515;y_coord[14][5] = 8871515;y_coord[14][6] = 8871515;y_coord[14][7] = 8871515;y_coord[14][8] = 8871515;y_coord[14][9] = 8871515;
+	y_coord[15][0] = 128;y_coord[15][1] = 182;y_coord[15][2] = 494;y_coord[15][3] = 910;y_coord[15][4] = 959;y_coord[15][5] = 1011;y_coord[15][6] = 1030;y_coord[15][7] = 1041;y_coord[15][8] = 1182;y_coord[15][9] = 8871515;
+	y_coord[16][0] = 1455;y_coord[16][1] = 1207;y_coord[16][2] = 1146;y_coord[16][3] = 1079;y_coord[16][4] = 1023;y_coord[16][5] = 937;y_coord[16][6] = 492;y_coord[16][7] = 475;y_coord[16][8] = 397;y_coord[16][9] = 325;
+	y_coord[17][0] = 2294;y_coord[17][1] = 2205;y_coord[17][2] = 2174;y_coord[17][3] = 2170;y_coord[17][4] = 2187;y_coord[17][5] = 2240;y_coord[17][6] = 2272;y_coord[17][7] = 2289;y_coord[17][8] = 2265;y_coord[17][9] = 8871515;
+	y_coord[18][0] = 1351;y_coord[18][1] = 1165;y_coord[18][2] = 914;y_coord[18][3] = 602;y_coord[18][4] = 8871515;y_coord[18][5] = 8871515;y_coord[18][6] = 8871515;y_coord[18][7] = 8871515;y_coord[18][8] = 8871515;y_coord[18][9] = 8871515;
+	y_coord[19][0] = 898;y_coord[19][1] = 426;y_coord[19][2] = 396;y_coord[19][3] = 8871515;y_coord[19][4] = 8871515;y_coord[19][5] = 8871515;y_coord[19][6] = 8871515;y_coord[19][7] = 8871515;y_coord[19][8] = 8871515;y_coord[19][9] = 8871515;
+	y_coord[20][0] = 2464;y_coord[20][1] = 2249;y_coord[20][2] = 8871515;y_coord[20][3] = 8871515;y_coord[20][4] = 8871515;y_coord[20][5] = 8871515;y_coord[20][6] = 8871515;y_coord[20][7] = 8871515;y_coord[20][8] = 8871515;y_coord[20][9] = 8871515;
+	y_coord[21][0] = 1029;y_coord[21][1] = 769;y_coord[21][2] = 8871515;y_coord[21][3] = 8871515;y_coord[21][4] = 8871515;y_coord[21][5] = 8871515;y_coord[21][6] = 8871515;y_coord[21][7] = 8871515;y_coord[21][8] = 8871515;y_coord[21][9] = 8871515;
+	y_coord[22][0] = 2923;y_coord[22][1] = 2297;y_coord[22][2] = 8871515;y_coord[22][3] = 8871515;y_coord[22][4] = 8871515;y_coord[22][5] = 8871515;y_coord[22][6] = 8871515;y_coord[22][7] = 8871515;y_coord[22][8] = 8871515;y_coord[22][9] = 8871515;
+	y_coord[23][0] = 220;y_coord[23][1] = 872;y_coord[23][2] = 979;y_coord[23][3] = 1349;y_coord[23][4] = 8871515;y_coord[23][5] = 8871515;y_coord[23][6] = 8871515;y_coord[23][7] = 8871515;y_coord[23][8] = 8871515;y_coord[23][9] = 8871515;
+	y_coord[24][0] = 2712;y_coord[24][1] = 2568;y_coord[24][2] = 2378;y_coord[24][3] = 2224;y_coord[24][4] = 1425;y_coord[24][5] = 8871515;y_coord[24][6] = 8871515;y_coord[24][7] = 8871515;y_coord[24][8] = 8871515;y_coord[24][9] = 8871515;
+	y_coord[25][0] = 1745;y_coord[25][1] = 1471;y_coord[25][2] = 8871515;y_coord[25][3] = 8871515;y_coord[25][4] = 8871515;y_coord[25][5] = 8871515;y_coord[25][6] = 8871515;y_coord[25][7] = 8871515;y_coord[25][8] = 8871515;y_coord[25][9] = 8871515;
+	y_coord[26][0] = 1554;y_coord[26][1] = 1893;y_coord[26][2] = 2329;y_coord[26][3] = 2513;y_coord[26][4] = 2609;y_coord[26][5] = 2926;y_coord[26][6] = 8871515;y_coord[26][7] = 8871515;y_coord[26][8] = 8871515;y_coord[26][9] = 8871515;
+	y_coord[27][0] = 1192;y_coord[27][1] = 1671;y_coord[27][2] = 2166;y_coord[27][3] = 8871515;y_coord[27][4] = 8871515;y_coord[27][5] = 8871515;y_coord[27][6] = 8871515;y_coord[27][7] = 8871515;y_coord[27][8] = 8871515;y_coord[27][9] = 8871515;
+	y_coord[28][0] = 964;y_coord[28][1] = 1164;y_coord[28][2] = 8871515;y_coord[28][3] = 8871515;y_coord[28][4] = 8871515;y_coord[28][5] = 8871515;y_coord[28][6] = 8871515;y_coord[28][7] = 8871515;y_coord[28][8] = 8871515;y_coord[28][9] = 8871515;
+	y_coord[29][0] = 2091;y_coord[29][1] = 1751;y_coord[29][2] = 8871515;y_coord[29][3] = 8871515;y_coord[29][4] = 8871515;y_coord[29][5] = 8871515;y_coord[29][6] = 8871515;y_coord[29][7] = 8871515;y_coord[29][8] = 8871515;y_coord[29][9] = 8871515;
+	y_coord[30][0] = 1354;y_coord[30][1] = 1183;y_coord[30][2] = 8871515;y_coord[30][3] = 8871515;y_coord[30][4] = 8871515;y_coord[30][5] = 8871515;y_coord[30][6] = 8871515;y_coord[30][7] = 8871515;y_coord[30][8] = 8871515;y_coord[30][9] = 8871515;
+
+	var map = new Image();
+	var ctx = canvas.getContext('2d');
+	var scale = canvas.width / mapWidth;
+	var x = 0;
+	var y = 0;
+
+	var x_offset = 0;
+	var y_offset = 0;
+	
+	map.onload = function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
+		for (n = 1; n < num_pts[calle]; n++)
+		{
+			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
+			ctx.stroke();
+		}
+	}
+	map.src = mapFileName;
+
+	function redrawMap() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);	
+		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
+
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
+		for (n = 1; n < num_pts[street_number]; n++)
+		{
+			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
+			ctx.stroke();
+		}
+	}
+
+	//----------------------------
+	// Mouse listeners and events
+	//----------------------------
+	var zoom = function(evt){
+		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
+		if (delta) {
+			scale = scale*Math.pow(1.01,delta);
+			if (scale < 0.25) scale = 0.25;
+			redrawMap();
+		}
+		return evt.preventDefault() && false;
+	};
+	canvas.addEventListener('DOMMouseScroll',zoom,false);
+	canvas.addEventListener('mousewheel',zoom,false);
+	//--------------------------------------------
+	canvas.addEventListener('mousedown', mouseDownListener, false);
+	
+	function mouseDownListener(evt) {
+		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+				
+		dragging = true;
+		startX = mouseX - x_offset;
+		startY = mouseY - y_offset;
+
+		if (dragging) {
+			window.addEventListener('mousemove', mouseMoveListener, false);
+		}
+		canvas.removeEventListener('mousedown', mouseDownListener, false);
+		window.addEventListener('mouseup', mouseUpListener, false);
+		
+		//code below prevents the mouse down from having an effect on the main browser window:
+		if (evt.preventDefault) {
+			evt.preventDefault();
+		} //standard
+		else if (evt.returnValue) {
+			evt.returnValue = false;
+		} //older IE
+		return false;
+	}
+
+	function mouseMoveListener(evt) {
+	if (!dragging) return;
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+		
+		endX = mouseX;
+		endY = mouseY;
+		
+		x_offset = endX - startX;
+		y_offset = endY - startY;
+
+		redrawMap();
+	}
+	
+	function mouseUpListener(evt) {
+		canvas.addEventListener("mousedown", mouseDownListener, false);
+		window.removeEventListener("mouseup", mouseUpListener, false);
+		if (dragging) {
+			dragging = false;
+			window.removeEventListener("mousemove", mouseMoveListener, false);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+function drawMapC(calle)
+{
+	var num_pts = [];
+	num_pts[0] = 7;
+	num_pts[1] = 4;
+	num_pts[2] = 2;
+	num_pts[3] = 2;
+	num_pts[4] = 10;
+	num_pts[5] = 4;
+	num_pts[6] = 3;
+	num_pts[7] = 5;
+	num_pts[8] = 5;
+	num_pts[9] = 2;
+	num_pts[10] = 3;
+	num_pts[11] = 4;
+	num_pts[12] = 2;
+	num_pts[13] = 2;
+	num_pts[14] = 2;
+	num_pts[15] = 4;
+	num_pts[16] = 3;
+	num_pts[17] = 3;
+	num_pts[18] = 3;
+	num_pts[19] = 2;
+	num_pts[20] = 2;
+	num_pts[21] = 4;
+	num_pts[22] = 3;
+	num_pts[23] = 2;
+	num_pts[24] = 7;
+	num_pts[25] = 2;
+	num_pts[26] = 2;
+	num_pts[27] = 2;
+	num_pts[28] = 2;
+	num_pts[29] = 2;
+	num_pts[30] = 2;
+	num_pts[31] = 4;
+	num_pts[32] = 2;
+	num_pts[33] = 2;
+	num_pts[34] = 5;
+	num_pts[35] = 5;
+	num_pts[36] = 2;
+	num_pts[37] = 5;
+	num_pts[38] = 2;
+	num_pts[39] = 2;
+	
+	var x_coord = new Array(40);
+	for (i=0; i<40; i++)
+	x_coord[i]=new Array(10);
+	
+	x_coord[0][0] = 2244;x_coord[0][1] = 1202;x_coord[0][2] = 828;x_coord[0][3] = 482;x_coord[0][4] = 366;x_coord[0][5] = 238;x_coord[0][6] = -2;x_coord[0][7] = 254069;x_coord[0][8] = 254069;x_coord[0][9] = 254069;
+	x_coord[1][0] = 1025;x_coord[1][1] = 765;x_coord[1][2] = 475;x_coord[1][3] = -8;x_coord[1][4] = 254069;x_coord[1][5] = 254069;x_coord[1][6] = 254069;x_coord[1][7] = 254069;x_coord[1][8] = 254069;x_coord[1][9] = 254069;
+	x_coord[2][0] = 78;x_coord[2][1] = 884;x_coord[2][2] = 254069;x_coord[2][3] = 254069;x_coord[2][4] = 254069;x_coord[2][5] = 254069;x_coord[2][6] = 254069;x_coord[2][7] = 254069;x_coord[2][8] = 254069;x_coord[2][9] = 254069;
+	x_coord[3][0] = 103;x_coord[3][1] = 746;x_coord[3][2] = 254069;x_coord[3][3] = 254069;x_coord[3][4] = 254069;x_coord[3][5] = 254069;x_coord[3][6] = 254069;x_coord[3][7] = 254069;x_coord[3][8] = 254069;x_coord[3][9] = 254069;
+	x_coord[4][0] = 478;x_coord[4][1] = 804;x_coord[4][2] = 1303;x_coord[4][3] = 1301;x_coord[4][4] = 1403;x_coord[4][5] = 1424;x_coord[4][6] = 1510;x_coord[4][7] = 1977;x_coord[4][8] = 2078;x_coord[4][9] = 2110;
+	x_coord[5][0] = 1244;x_coord[5][1] = 961;x_coord[5][2] = 650;x_coord[5][3] = 258;x_coord[5][4] = 254069;x_coord[5][5] = 254069;x_coord[5][6] = 254069;x_coord[5][7] = 254069;x_coord[5][8] = 254069;x_coord[5][9] = 254069;
+	x_coord[6][0] = 123;x_coord[6][1] = 442;x_coord[6][2] = 557;x_coord[6][3] = 254069;x_coord[6][4] = 254069;x_coord[6][5] = 254069;x_coord[6][6] = 254069;x_coord[6][7] = 254069;x_coord[6][8] = 254069;x_coord[6][9] = 254069;
+	x_coord[7][0] = 465;x_coord[7][1] = 982;x_coord[7][2] = 1106;x_coord[7][3] = 1280;x_coord[7][4] = 1510;x_coord[7][5] = 254069;x_coord[7][6] = 254069;x_coord[7][7] = 254069;x_coord[7][8] = 254069;x_coord[7][9] = 254069;
+	x_coord[8][0] = 1378;x_coord[8][1] = 800;x_coord[8][2] = 724;x_coord[8][3] = 644;x_coord[8][4] = 318;x_coord[8][5] = 254069;x_coord[8][6] = 254069;x_coord[8][7] = 254069;x_coord[8][8] = 254069;x_coord[8][9] = 254069;
+	x_coord[9][0] = 142;x_coord[9][1] = 335;x_coord[9][2] = 254069;x_coord[9][3] = 254069;x_coord[9][4] = 254069;x_coord[9][5] = 254069;x_coord[9][6] = 254069;x_coord[9][7] = 254069;x_coord[9][8] = 254069;x_coord[9][9] = 254069;
+	x_coord[10][0] = 550;x_coord[10][1] = 702;x_coord[10][2] = 735;x_coord[10][3] = 254069;x_coord[10][4] = 254069;x_coord[10][5] = 254069;x_coord[10][6] = 254069;x_coord[10][7] = 254069;x_coord[10][8] = 254069;x_coord[10][9] = 254069;
+	x_coord[11][0] = 469;x_coord[11][1] = 496;x_coord[11][2] = 562;x_coord[11][3] = 791;x_coord[11][4] = 254069;x_coord[11][5] = 254069;x_coord[11][6] = 254069;x_coord[11][7] = 254069;x_coord[11][8] = 254069;x_coord[11][9] = 254069;
+	x_coord[12][0] = 675;x_coord[12][1] = 891;x_coord[12][2] = 254069;x_coord[12][3] = 254069;x_coord[12][4] = 254069;x_coord[12][5] = 254069;x_coord[12][6] = 254069;x_coord[12][7] = 254069;x_coord[12][8] = 254069;x_coord[12][9] = 254069;
+	x_coord[13][0] = 787;x_coord[13][1] = 978;x_coord[13][2] = 254069;x_coord[13][3] = 254069;x_coord[13][4] = 254069;x_coord[13][5] = 254069;x_coord[13][6] = 254069;x_coord[13][7] = 254069;x_coord[13][8] = 254069;x_coord[13][9] = 254069;
+	x_coord[14][0] = 1076;x_coord[14][1] = 1178;x_coord[14][2] = 254069;x_coord[14][3] = 254069;x_coord[14][4] = 254069;x_coord[14][5] = 254069;x_coord[14][6] = 254069;x_coord[14][7] = 254069;x_coord[14][8] = 254069;x_coord[14][9] = 254069;
+	x_coord[15][0] = 890;x_coord[15][1] = 1234;x_coord[15][2] = 1510;x_coord[15][3] = 1809;x_coord[15][4] = 254069;x_coord[15][5] = 254069;x_coord[15][6] = 254069;x_coord[15][7] = 254069;x_coord[15][8] = 254069;x_coord[15][9] = 254069;
+	x_coord[16][0] = 163;x_coord[16][1] = 567;x_coord[16][2] = 955;x_coord[16][3] = 254069;x_coord[16][4] = 254069;x_coord[16][5] = 254069;x_coord[16][6] = 254069;x_coord[16][7] = 254069;x_coord[16][8] = 254069;x_coord[16][9] = 254069;
+	x_coord[17][0] = 838;x_coord[17][1] = 886;x_coord[17][2] = 1058;x_coord[17][3] = 254069;x_coord[17][4] = 254069;x_coord[17][5] = 254069;x_coord[17][6] = 254069;x_coord[17][7] = 254069;x_coord[17][8] = 254069;x_coord[17][9] = 254069;
+	x_coord[18][0] = 1567;x_coord[18][1] = 1508;x_coord[18][2] = 1624;x_coord[18][3] = 254069;x_coord[18][4] = 254069;x_coord[18][5] = 254069;x_coord[18][6] = 254069;x_coord[18][7] = 254069;x_coord[18][8] = 254069;x_coord[18][9] = 254069;
+	x_coord[19][0] = 1125;x_coord[19][1] = 754;x_coord[19][2] = 254069;x_coord[19][3] = 254069;x_coord[19][4] = 254069;x_coord[19][5] = 254069;x_coord[19][6] = 254069;x_coord[19][7] = 254069;x_coord[19][8] = 254069;x_coord[19][9] = 254069;
+	x_coord[20][0] = 1665;x_coord[20][1] = 1708;x_coord[20][2] = 254069;x_coord[20][3] = 254069;x_coord[20][4] = 254069;x_coord[20][5] = 254069;x_coord[20][6] = 254069;x_coord[20][7] = 254069;x_coord[20][8] = 254069;x_coord[20][9] = 254069;
+	x_coord[21][0] = 1958;x_coord[21][1] = 2043;x_coord[21][2] = 2077;x_coord[21][3] = 2109;x_coord[21][4] = 254069;x_coord[21][5] = 254069;x_coord[21][6] = 254069;x_coord[21][7] = 254069;x_coord[21][8] = 254069;x_coord[21][9] = 254069;
+	x_coord[22][0] = 183;x_coord[22][1] = 445;x_coord[22][2] = 490;x_coord[22][3] = 254069;x_coord[22][4] = 254069;x_coord[22][5] = 254069;x_coord[22][6] = 254069;x_coord[22][7] = 254069;x_coord[22][8] = 254069;x_coord[22][9] = 254069;
+	x_coord[23][0] = 393;x_coord[23][1] = 613;x_coord[23][2] = 254069;x_coord[23][3] = 254069;x_coord[23][4] = 254069;x_coord[23][5] = 254069;x_coord[23][6] = 254069;x_coord[23][7] = 254069;x_coord[23][8] = 254069;x_coord[23][9] = 254069;
+	x_coord[24][0] = 731;x_coord[24][1] = 574;x_coord[24][2] = 450;x_coord[24][3] = 396;x_coord[24][4] = 195;x_coord[24][5] = 80;x_coord[24][6] = 64;x_coord[24][7] = 254069;x_coord[24][8] = 254069;x_coord[24][9] = 254069;
+	x_coord[25][0] = 457;x_coord[25][1] = 651;x_coord[25][2] = 254069;x_coord[25][3] = 254069;x_coord[25][4] = 254069;x_coord[25][5] = 254069;x_coord[25][6] = 254069;x_coord[25][7] = 254069;x_coord[25][8] = 254069;x_coord[25][9] = 254069;
+	x_coord[26][0] = 495;x_coord[26][1] = 692;x_coord[26][2] = 254069;x_coord[26][3] = 254069;x_coord[26][4] = 254069;x_coord[26][5] = 254069;x_coord[26][6] = 254069;x_coord[26][7] = 254069;x_coord[26][8] = 254069;x_coord[26][9] = 254069;
+	x_coord[27][0] = 1568;x_coord[27][1] = 1787;x_coord[27][2] = 254069;x_coord[27][3] = 254069;x_coord[27][4] = 254069;x_coord[27][5] = 254069;x_coord[27][6] = 254069;x_coord[27][7] = 254069;x_coord[27][8] = 254069;x_coord[27][9] = 254069;
+	x_coord[28][0] = 1056;x_coord[28][1] = 703;x_coord[28][2] = 254069;x_coord[28][3] = 254069;x_coord[28][4] = 254069;x_coord[28][5] = 254069;x_coord[28][6] = 254069;x_coord[28][7] = 254069;x_coord[28][8] = 254069;x_coord[28][9] = 254069;
+	x_coord[29][0] = 500;x_coord[29][1] = 695;x_coord[29][2] = 254069;x_coord[29][3] = 254069;x_coord[29][4] = 254069;x_coord[29][5] = 254069;x_coord[29][6] = 254069;x_coord[29][7] = 254069;x_coord[29][8] = 254069;x_coord[29][9] = 254069;
+	x_coord[30][0] = 770;x_coord[30][1] = 1190;x_coord[30][2] = 254069;x_coord[30][3] = 254069;x_coord[30][4] = 254069;x_coord[30][5] = 254069;x_coord[30][6] = 254069;x_coord[30][7] = 254069;x_coord[30][8] = 254069;x_coord[30][9] = 254069;
+	x_coord[31][0] = 1187;x_coord[31][1] = 919;x_coord[31][2] = 609;x_coord[31][3] = 188;x_coord[31][4] = 254069;x_coord[31][5] = 254069;x_coord[31][6] = 254069;x_coord[31][7] = 254069;x_coord[31][8] = 254069;x_coord[31][9] = 254069;
+	x_coord[32][0] = 286;x_coord[32][1] = 574;x_coord[32][2] = 254069;x_coord[32][3] = 254069;x_coord[32][4] = 254069;x_coord[32][5] = 254069;x_coord[32][6] = 254069;x_coord[32][7] = 254069;x_coord[32][8] = 254069;x_coord[32][9] = 254069;
+	x_coord[33][0] = 1197;x_coord[33][1] = 1344;x_coord[33][2] = 254069;x_coord[33][3] = 254069;x_coord[33][4] = 254069;x_coord[33][5] = 254069;x_coord[33][6] = 254069;x_coord[33][7] = 254069;x_coord[33][8] = 254069;x_coord[33][9] = 254069;
+	x_coord[34][0] = 1082;x_coord[34][1] = 822;x_coord[34][2] = 739;x_coord[34][3] = 513;x_coord[34][4] = 75;x_coord[34][5] = 254069;x_coord[34][6] = 254069;x_coord[34][7] = 254069;x_coord[34][8] = 254069;x_coord[34][9] = 254069;
+	x_coord[35][0] = 86;x_coord[35][1] = 839;x_coord[35][2] = 1226;x_coord[35][3] = 1878;x_coord[35][4] = 1955;x_coord[35][5] = 254069;x_coord[35][6] = 254069;x_coord[35][7] = 254069;x_coord[35][8] = 254069;x_coord[35][9] = 254069;
+	x_coord[36][0] = 1765;x_coord[36][1] = 1837;x_coord[36][2] = 254069;x_coord[36][3] = 254069;x_coord[36][4] = 254069;x_coord[36][5] = 254069;x_coord[36][6] = 254069;x_coord[36][7] = 254069;x_coord[36][8] = 254069;x_coord[36][9] = 254069;
+	x_coord[37][0] = 574;x_coord[37][1] = 732;x_coord[37][2] = 742;x_coord[37][3] = 884;x_coord[37][4] = 1140;x_coord[37][5] = 254069;x_coord[37][6] = 254069;x_coord[37][7] = 254069;x_coord[37][8] = 254069;x_coord[37][9] = 254069;
+	x_coord[38][0] = 533;x_coord[38][1] = 185;x_coord[38][2] = 254069;x_coord[38][3] = 254069;x_coord[38][4] = 254069;x_coord[38][5] = 254069;x_coord[38][6] = 254069;x_coord[38][7] = 254069;x_coord[38][8] = 254069;x_coord[38][9] = 254069;
+	x_coord[39][0] = 1038;x_coord[39][1] = 1244;x_coord[39][2] = 254069;x_coord[39][3] = 254069;x_coord[39][4] = 254069;x_coord[39][5] = 254069;x_coord[39][6] = 254069;x_coord[39][7] = 254069;x_coord[39][8] = 254069;x_coord[39][9] = 254069;
+
+	var y_coord = new Array(40);
+	for (i=0; i<40; i++)
+	y_coord[i]=new Array(10);
+
+	y_coord[0][0] = 623;y_coord[0][1] = 935;y_coord[0][2] = 1215;y_coord[0][3] = 1531;y_coord[0][4] = 1763;y_coord[0][5] = 2187;y_coord[0][6] = 2531;y_coord[0][7] = 8870355;y_coord[0][8] = 8870355;y_coord[0][9] = 8870355;
+	y_coord[1][0] = 3248;y_coord[1][1] = 2999;y_coord[1][2] = 2822;y_coord[1][3] = 2560;y_coord[1][4] = 8870355;y_coord[1][5] = 8870355;y_coord[1][6] = 8870355;y_coord[1][7] = 8870355;y_coord[1][8] = 8870355;y_coord[1][9] = 8870355;
+	y_coord[2][0] = 126;y_coord[2][1] = 167;y_coord[2][2] = 8870355;y_coord[2][3] = 8870355;y_coord[2][4] = 8870355;y_coord[2][5] = 8870355;y_coord[2][6] = 8870355;y_coord[2][7] = 8870355;y_coord[2][8] = 8870355;y_coord[2][9] = 8870355;
+	y_coord[3][0] = 230;y_coord[3][1] = 267;y_coord[3][2] = 8870355;y_coord[3][3] = 8870355;y_coord[3][4] = 8870355;y_coord[3][5] = 8870355;y_coord[3][6] = 8870355;y_coord[3][7] = 8870355;y_coord[3][8] = 8870355;y_coord[3][9] = 8870355;
+	y_coord[4][0] = 2818;y_coord[4][1] = 2169;y_coord[4][2] = 1661;y_coord[4][3] = 1541;y_coord[4][4] = 1407;y_coord[4][5] = 1318;y_coord[4][6] = 1262;y_coord[4][7] = 1105;y_coord[4][8] = 892;y_coord[4][9] = 686;
+	y_coord[5][0] = 3010;y_coord[5][1] = 2760;y_coord[5][2] = 2491;y_coord[5][3] = 2204;y_coord[5][4] = 8870355;y_coord[5][5] = 8870355;y_coord[5][6] = 8870355;y_coord[5][7] = 8870355;y_coord[5][8] = 8870355;y_coord[5][9] = 8870355;
+	y_coord[6][0] = 338;y_coord[6][1] = 355;y_coord[6][2] = 355;y_coord[6][3] = 8870355;y_coord[6][4] = 8870355;y_coord[6][5] = 8870355;y_coord[6][6] = 8870355;y_coord[6][7] = 8870355;y_coord[6][8] = 8870355;y_coord[6][9] = 8870355;
+	y_coord[7][0] = 863;y_coord[7][1] = 663;y_coord[7][2] = 623;y_coord[7][3] = 542;y_coord[7][4] = 493;y_coord[7][5] = 8870355;y_coord[7][6] = 8870355;y_coord[7][7] = 8870355;y_coord[7][8] = 8870355;y_coord[7][9] = 8870355;
+	y_coord[8][0] = 2721;y_coord[8][1] = 2175;y_coord[8][2] = 2099;y_coord[8][3] = 2051;y_coord[8][4] = 1945;y_coord[8][5] = 8870355;y_coord[8][6] = 8870355;y_coord[8][7] = 8870355;y_coord[8][8] = 8870355;y_coord[8][9] = 8870355;
+	y_coord[9][0] = 435;y_coord[9][1] = 450;y_coord[9][2] = 8870355;y_coord[9][3] = 8870355;y_coord[9][4] = 8870355;y_coord[9][5] = 8870355;y_coord[9][6] = 8870355;y_coord[9][7] = 8870355;y_coord[9][8] = 8870355;y_coord[9][9] = 8870355;
+	y_coord[10][0] = 2687;y_coord[10][1] = 2772;y_coord[10][2] = 2775;y_coord[10][3] = 8870355;y_coord[10][4] = 8870355;y_coord[10][5] = 8870355;y_coord[10][6] = 8870355;y_coord[10][7] = 8870355;y_coord[10][8] = 8870355;y_coord[10][9] = 8870355;
+	y_coord[11][0] = 40;y_coord[11][1] = 152;y_coord[11][2] = 363;y_coord[11][3] = 725;y_coord[11][4] = 8870355;y_coord[11][5] = 8870355;y_coord[11][6] = 8870355;y_coord[11][7] = 8870355;y_coord[11][8] = 8870355;y_coord[11][9] = 8870355;
+	y_coord[12][0] = 321;y_coord[12][1] = 695;y_coord[12][2] = 8870355;y_coord[12][3] = 8870355;y_coord[12][4] = 8870355;y_coord[12][5] = 8870355;y_coord[12][6] = 8870355;y_coord[12][7] = 8870355;y_coord[12][8] = 8870355;y_coord[12][9] = 8870355;
+	y_coord[13][0] = 274;y_coord[13][1] = 657;y_coord[13][2] = 8870355;y_coord[13][3] = 8870355;y_coord[13][4] = 8870355;y_coord[13][5] = 8870355;y_coord[13][6] = 8870355;y_coord[13][7] = 8870355;y_coord[13][8] = 8870355;y_coord[13][9] = 8870355;
+	y_coord[14][0] = 245;y_coord[14][1] = 579;y_coord[14][2] = 8870355;y_coord[14][3] = 8870355;y_coord[14][4] = 8870355;y_coord[14][5] = 8870355;y_coord[14][6] = 8870355;y_coord[14][7] = 8870355;y_coord[14][8] = 8870355;y_coord[14][9] = 8870355;
+	y_coord[15][0] = 170;y_coord[15][1] = 302;y_coord[15][2] = 488;y_coord[15][3] = 592;y_coord[15][4] = 8870355;y_coord[15][5] = 8870355;y_coord[15][6] = 8870355;y_coord[15][7] = 8870355;y_coord[15][8] = 8870355;y_coord[15][9] = 8870355;
+	y_coord[16][0] = 516;y_coord[16][1] = 364;y_coord[16][2] = 198;y_coord[16][3] = 8870355;y_coord[16][4] = 8870355;y_coord[16][5] = 8870355;y_coord[16][6] = 8870355;y_coord[16][7] = 8870355;y_coord[16][8] = 8870355;y_coord[16][9] = 8870355;
+	y_coord[17][0] = 56;y_coord[17][1] = 167;y_coord[17][2] = 602;y_coord[17][3] = 8870355;y_coord[17][4] = 8870355;y_coord[17][5] = 8870355;y_coord[17][6] = 8870355;y_coord[17][7] = 8870355;y_coord[17][8] = 8870355;y_coord[17][9] = 8870355;
+	y_coord[18][0] = 814;y_coord[18][1] = 493;y_coord[18][2] = 283;y_coord[18][3] = 8870355;y_coord[18][4] = 8870355;y_coord[18][5] = 8870355;y_coord[18][6] = 8870355;y_coord[18][7] = 8870355;y_coord[18][8] = 8870355;y_coord[18][9] = 8870355;
+	y_coord[19][0] = 2614;y_coord[19][1] = 2281;y_coord[19][2] = 8870355;y_coord[19][3] = 8870355;y_coord[19][4] = 8870355;y_coord[19][5] = 8870355;y_coord[19][6] = 8870355;y_coord[19][7] = 8870355;y_coord[19][8] = 8870355;y_coord[19][9] = 8870355;
+	y_coord[20][0] = 547;y_coord[20][1] = 774;y_coord[20][2] = 8870355;y_coord[20][3] = 8870355;y_coord[20][4] = 8870355;y_coord[20][5] = 8870355;y_coord[20][6] = 8870355;y_coord[20][7] = 8870355;y_coord[20][8] = 8870355;y_coord[20][9] = 8870355;
+	y_coord[21][0] = 380;y_coord[21][1] = 476;y_coord[21][2] = 541;y_coord[21][3] = 664;y_coord[21][4] = 8870355;y_coord[21][5] = 8870355;y_coord[21][6] = 8870355;y_coord[21][7] = 8870355;y_coord[21][8] = 8870355;y_coord[21][9] = 8870355;
+	y_coord[22][0] = 605;y_coord[22][1] = 698;y_coord[22][2] = 774;y_coord[22][3] = 8870355;y_coord[22][4] = 8870355;y_coord[22][5] = 8870355;y_coord[22][6] = 8870355;y_coord[22][7] = 8870355;y_coord[22][8] = 8870355;y_coord[22][9] = 8870355;
+	y_coord[23][0] = 678;y_coord[23][1] = 585;y_coord[23][2] = 8870355;y_coord[23][3] = 8870355;y_coord[23][4] = 8870355;y_coord[23][5] = 8870355;y_coord[23][6] = 8870355;y_coord[23][7] = 8870355;y_coord[23][8] = 8870355;y_coord[23][9] = 8870355;
+	y_coord[24][0] = 1277;y_coord[24][1] = 1008;y_coord[24][2] = 846;y_coord[24][3] = 761;y_coord[24][4] = 681;y_coord[24][5] = 130;y_coord[24][6] = 33;y_coord[24][7] = 8870355;y_coord[24][8] = 8870355;y_coord[24][9] = 8870355;
+	y_coord[25][0] = 714;y_coord[25][1] = 640;y_coord[25][2] = 8870355;y_coord[25][3] = 8870355;y_coord[25][4] = 8870355;y_coord[25][5] = 8870355;y_coord[25][6] = 8870355;y_coord[25][7] = 8870355;y_coord[25][8] = 8870355;y_coord[25][9] = 8870355;
+	y_coord[26][0] = 774;y_coord[26][1] = 706;y_coord[26][2] = 8870355;y_coord[26][3] = 8870355;y_coord[26][4] = 8870355;y_coord[26][5] = 8870355;y_coord[26][6] = 8870355;y_coord[26][7] = 8870355;y_coord[26][8] = 8870355;y_coord[26][9] = 8870355;
+	y_coord[27][0] = 384;y_coord[27][1] = 471;y_coord[27][2] = 8870355;y_coord[27][3] = 8870355;y_coord[27][4] = 8870355;y_coord[27][5] = 8870355;y_coord[27][6] = 8870355;y_coord[27][7] = 8870355;y_coord[27][8] = 8870355;y_coord[27][9] = 8870355;
+	y_coord[28][0] = 2687;y_coord[28][1] = 2386;y_coord[28][2] = 8870355;y_coord[28][3] = 8870355;y_coord[28][4] = 8870355;y_coord[28][5] = 8870355;y_coord[28][6] = 8870355;y_coord[28][7] = 8870355;y_coord[28][8] = 8870355;y_coord[28][9] = 8870355;
+	y_coord[29][0] = 394;y_coord[29][1] = 704;y_coord[29][2] = 8870355;y_coord[29][3] = 8870355;y_coord[29][4] = 8870355;y_coord[29][5] = 8870355;y_coord[29][6] = 8870355;y_coord[29][7] = 8870355;y_coord[29][8] = 8870355;y_coord[29][9] = 8870355;
+	y_coord[30][0] = 3001;y_coord[30][1] = 2548;y_coord[30][2] = 8870355;y_coord[30][3] = 8870355;y_coord[30][4] = 8870355;y_coord[30][5] = 8870355;y_coord[30][6] = 8870355;y_coord[30][7] = 8870355;y_coord[30][8] = 8870355;y_coord[30][9] = 8870355;
+	y_coord[31][0] = 3077;y_coord[31][1] = 2834;y_coord[31][2] = 2572;y_coord[31][3] = 2300;y_coord[31][4] = 8870355;y_coord[31][5] = 8870355;y_coord[31][6] = 8870355;y_coord[31][7] = 8870355;y_coord[31][8] = 8870355;y_coord[31][9] = 8870355;
+	y_coord[32][0] = 643;y_coord[32][1] = 518;y_coord[32][2] = 8870355;y_coord[32][3] = 8870355;y_coord[32][4] = 8870355;y_coord[32][5] = 8870355;y_coord[32][6] = 8870355;y_coord[32][7] = 8870355;y_coord[32][8] = 8870355;y_coord[32][9] = 8870355;
+	y_coord[33][0] = 80;y_coord[33][1] = 872;y_coord[33][2] = 8870355;y_coord[33][3] = 8870355;y_coord[33][4] = 8870355;y_coord[33][5] = 8870355;y_coord[33][6] = 8870355;y_coord[33][7] = 8870355;y_coord[33][8] = 8870355;y_coord[33][9] = 8870355;
+	y_coord[34][0] = 3185;y_coord[34][1] = 2940;y_coord[34][2] = 2876;y_coord[34][3] = 2746;y_coord[34][4] = 2447;y_coord[34][5] = 8870355;y_coord[34][6] = 8870355;y_coord[34][7] = 8870355;y_coord[34][8] = 8870355;y_coord[34][9] = 8870355;
+	y_coord[35][0] = 22;y_coord[35][1] = 54;y_coord[35][2] = 79;y_coord[35][3] = 408;y_coord[35][4] = 380;y_coord[35][5] = 8870355;y_coord[35][6] = 8870355;y_coord[35][7] = 8870355;y_coord[35][8] = 8870355;y_coord[35][9] = 8870355;
+	y_coord[36][0] = 355;y_coord[36][1] = 736;y_coord[36][2] = 8870355;y_coord[36][3] = 8870355;y_coord[36][4] = 8870355;y_coord[36][5] = 8870355;y_coord[36][6] = 8870355;y_coord[36][7] = 8870355;y_coord[36][8] = 8870355;y_coord[36][9] = 8870355;
+	y_coord[37][0] = 2638;y_coord[37][1] = 2760;y_coord[37][2] = 2779;y_coord[37][3] = 2884;y_coord[37][4] = 3127;y_coord[37][5] = 8870355;y_coord[37][6] = 8870355;y_coord[37][7] = 8870355;y_coord[37][8] = 8870355;y_coord[37][9] = 8870355;
+	y_coord[38][0] = 457;y_coord[38][1] = 594;y_coord[38][2] = 8870355;y_coord[38][3] = 8870355;y_coord[38][4] = 8870355;y_coord[38][5] = 8870355;y_coord[38][6] = 8870355;y_coord[38][7] = 8870355;y_coord[38][8] = 8870355;y_coord[38][9] = 8870355;
+	y_coord[39][0] = 3243;y_coord[39][1] = 3017;y_coord[39][2] = 8870355;y_coord[39][3] = 8870355;y_coord[39][4] = 8870355;y_coord[39][5] = 8870355;y_coord[39][6] = 8870355;y_coord[39][7] = 8870355;y_coord[39][8] = 8870355;y_coord[39][9] = 8870355;
+
+	var map = new Image();
+	var ctx = canvas.getContext('2d');
+	var scale = canvas.width / mapWidth;
+	var x = 0;
+	var y = 0;
+
+	var x_offset = 0;
+	var y_offset = 0;
+	
+	map.onload = function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
+		for (n = 1; n < num_pts[calle]; n++)
+		{
+			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
+			ctx.stroke();
+		}
+	}
+	map.src = mapFileName;
+
+	function redrawMap() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);	
+		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
+
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
+		for (n = 1; n < num_pts[street_number]; n++)
+		{
+			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
+			ctx.stroke();
+		}
+	}
+
+	//----------------------------
+	// Mouse listeners and events
+	//----------------------------
+	var zoom = function(evt){
+		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
+		if (delta) {
+			scale = scale*Math.pow(1.01,delta);
+			if (scale < 0.25) scale = 0.25;
+			redrawMap();
+		}
+		return evt.preventDefault() && false;
+	};
+	canvas.addEventListener('DOMMouseScroll',zoom,false);
+	canvas.addEventListener('mousewheel',zoom,false);
+	//--------------------------------------------
+	canvas.addEventListener('mousedown', mouseDownListener, false);
+	
+	function mouseDownListener(evt) {
+		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+				
+		dragging = true;
+		startX = mouseX - x_offset;
+		startY = mouseY - y_offset;
+
+		if (dragging) {
+			window.addEventListener('mousemove', mouseMoveListener, false);
+		}
+		canvas.removeEventListener('mousedown', mouseDownListener, false);
+		window.addEventListener('mouseup', mouseUpListener, false);
+		
+		//code below prevents the mouse down from having an effect on the main browser window:
+		if (evt.preventDefault) {
+			evt.preventDefault();
+		} //standard
+		else if (evt.returnValue) {
+			evt.returnValue = false;
+		} //older IE
+		return false;
+	}
+
+	function mouseMoveListener(evt) {
+	if (!dragging) return;
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+		
+		endX = mouseX;
+		endY = mouseY;
+		
+		x_offset = endX - startX;
+		y_offset = endY - startY;
+
+		redrawMap();
+	}
+	
+	function mouseUpListener(evt) {
+		canvas.addEventListener("mousedown", mouseDownListener, false);
+		window.removeEventListener("mouseup", mouseUpListener, false);
+		if (dragging) {
+			dragging = false;
+			window.removeEventListener("mousemove", mouseMoveListener, false);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+function drawMapD(calle)
+{
+	var num_pts = [];
+	num_pts[0] = 10;
+	num_pts[1] = 5;
+	num_pts[2] = 2;
+	num_pts[3] = 9;
+	num_pts[4] = 2;
+	num_pts[5] = 6;
+	num_pts[6] = 2;
+	num_pts[7] = 2;
+	num_pts[8] = 2;
+	num_pts[9] = 2;
+	num_pts[10] = 9;
+	num_pts[11] = 5;
+	num_pts[12] = 2;
+	num_pts[13] = 6;
+	num_pts[14] = 4;
+	num_pts[15] = 2;
+	num_pts[16] = 2;
+	num_pts[17] = 3;
+	num_pts[18] = 7;
+	num_pts[19] = 2;
+	num_pts[20] = 2;
+	num_pts[21] = 3;
+	num_pts[22] = 2;
+	num_pts[23] = 2;
+	num_pts[24] = 4;
+	num_pts[25] = 4;
+	num_pts[26] = 2;
+	num_pts[27] = 4;
+	num_pts[28] = 9;
+	num_pts[29] = 2;
+	num_pts[30] = 5;
+	num_pts[31] = 7;
+	num_pts[32] = 2;
+	num_pts[33] = 2;
+	num_pts[34] = 2;
+	num_pts[35] = 2;
+	num_pts[36] = 2;
+	num_pts[37] = 4;
+	num_pts[38] = 4;
+	num_pts[39] = 3;
+	num_pts[40] = 2;
+	num_pts[41] = 2;
+	num_pts[42] = 2;
+	num_pts[43] = 2;
+	num_pts[44] = 2;
+	num_pts[45] = 2;
+	num_pts[46] = 2;
+	num_pts[47] = 3;
+	num_pts[48] = 2;
+	num_pts[49] = 3;
+	num_pts[50] = 2;
+	num_pts[51] = 2;
+	num_pts[52] = 2;
+	num_pts[53] = 5;
+	num_pts[54] = 2;
+	num_pts[55] = 2;
+	num_pts[56] = 2;
+	num_pts[57] = 4;
+	num_pts[58] = 6;
+	num_pts[59] = 2;
+	num_pts[60] = 2;
+	num_pts[61] = 2;
+	num_pts[62] = 4;
+	num_pts[63] = 2;
+	num_pts[64] = 4;
+	num_pts[65] = 3;
+	num_pts[66] = 2;
+	num_pts[67] = 5;
+	num_pts[68] = 2;
+	num_pts[69] = 7;
+	num_pts[70] = 3;
+	num_pts[71] = 3;
+	num_pts[72] = 9;
+	num_pts[73] = 3;
+	num_pts[74] = 2;
+	num_pts[75] = 2;
+	num_pts[76] = 3;
+	num_pts[77] = 9;
+	num_pts[78] = 2;
+	num_pts[79] = 3;
+	num_pts[80] = 2;
+
+	
+	var x_coord = new Array(81);
+	for (i=0; i<81; i++)
+	x_coord[i]=new Array(10);
+	
+	x_coord[0][0] = 61;x_coord[0][1] = 584;x_coord[0][2] = 1334;x_coord[0][3] = 1478;x_coord[0][4] = 1615;x_coord[0][5] = 1948;x_coord[0][6] = 2128;x_coord[0][7] = 2272;x_coord[0][8] = 2433;x_coord[0][9] = 2628;
+	x_coord[1][0] = 1082;x_coord[1][1] = 1527;x_coord[1][2] = 1623;x_coord[1][3] = 1679;x_coord[1][4] = 1761;x_coord[1][5] = 256490;x_coord[1][6] = 256490;x_coord[1][7] = 256490;x_coord[1][8] = 256490;x_coord[1][9] = 256490;
+	x_coord[2][0] = 246;x_coord[2][1] = 640;x_coord[2][2] = 256490;x_coord[2][3] = 256490;x_coord[2][4] = 256490;x_coord[2][5] = 256490;x_coord[2][6] = 256490;x_coord[2][7] = 256490;x_coord[2][8] = 256490;x_coord[2][9] = 256490;
+	x_coord[3][0] = 1159;x_coord[3][1] = 1365;x_coord[3][2] = 1470;x_coord[3][3] = 1561;x_coord[3][4] = 1655;x_coord[3][5] = 2090;x_coord[3][6] = 2315;x_coord[3][7] = 2558;x_coord[3][8] = 2800;x_coord[3][9] = 256490;
+	x_coord[4][0] = 2647;x_coord[4][1] = 2896;x_coord[4][2] = 256490;x_coord[4][3] = 256490;x_coord[4][4] = 256490;x_coord[4][5] = 256490;x_coord[4][6] = 256490;x_coord[4][7] = 256490;x_coord[4][8] = 256490;x_coord[4][9] = 256490;
+	x_coord[5][0] = 240;x_coord[5][1] = 284;x_coord[5][2] = 431;x_coord[5][3] = 490;x_coord[5][4] = 542;x_coord[5][5] = 600;x_coord[5][6] = 256490;x_coord[5][7] = 256490;x_coord[5][8] = 256490;x_coord[5][9] = 256490;
+	x_coord[6][0] = 2669;x_coord[6][1] = 2940;x_coord[6][2] = 256490;x_coord[6][3] = 256490;x_coord[6][4] = 256490;x_coord[6][5] = 256490;x_coord[6][6] = 256490;x_coord[6][7] = 256490;x_coord[6][8] = 256490;x_coord[6][9] = 256490;
+	x_coord[7][0] = 1222;x_coord[7][1] = 1508;x_coord[7][2] = 256490;x_coord[7][3] = 256490;x_coord[7][4] = 256490;x_coord[7][5] = 256490;x_coord[7][6] = 256490;x_coord[7][7] = 256490;x_coord[7][8] = 256490;x_coord[7][9] = 256490;
+	x_coord[8][0] = 1625;x_coord[8][1] = 1816;x_coord[8][2] = 256490;x_coord[8][3] = 256490;x_coord[8][4] = 256490;x_coord[8][5] = 256490;x_coord[8][6] = 256490;x_coord[8][7] = 256490;x_coord[8][8] = 256490;x_coord[8][9] = 256490;
+	x_coord[9][0] = 1271;x_coord[9][1] = 1479;x_coord[9][2] = 256490;x_coord[9][3] = 256490;x_coord[9][4] = 256490;x_coord[9][5] = 256490;x_coord[9][6] = 256490;x_coord[9][7] = 256490;x_coord[9][8] = 256490;x_coord[9][9] = 256490;
+	x_coord[10][0] = 3309;x_coord[10][1] = 2779;x_coord[10][2] = 2557;x_coord[10][3] = 2387;x_coord[10][4] = 1547;x_coord[10][5] = 637;x_coord[10][6] = 477;x_coord[10][7] = 365;x_coord[10][8] = 53;x_coord[10][9] = 256490;
+	x_coord[11][0] = 1454;x_coord[11][1] = 1715;x_coord[11][2] = 1745;x_coord[11][3] = 1820;x_coord[11][4] = 1886;x_coord[11][5] = 256490;x_coord[11][6] = 256490;x_coord[11][7] = 256490;x_coord[11][8] = 256490;x_coord[11][9] = 256490;
+	x_coord[12][0] = 1316;x_coord[12][1] = 1412;x_coord[12][2] = 256490;x_coord[12][3] = 256490;x_coord[12][4] = 256490;x_coord[12][5] = 256490;x_coord[12][6] = 256490;x_coord[12][7] = 256490;x_coord[12][8] = 256490;x_coord[12][9] = 256490;
+	x_coord[13][0] = 1218;x_coord[13][1] = 1375;x_coord[13][2] = 1422;x_coord[13][3] = 1471;x_coord[13][4] = 1517;x_coord[13][5] = 1595;x_coord[13][6] = 256490;x_coord[13][7] = 256490;x_coord[13][8] = 256490;x_coord[13][9] = 256490;
+	x_coord[14][0] = 2071;x_coord[14][1] = 2344;x_coord[14][2] = 2551;x_coord[14][3] = 2770;x_coord[14][4] = 256490;x_coord[14][5] = 256490;x_coord[14][6] = 256490;x_coord[14][7] = 256490;x_coord[14][8] = 256490;x_coord[14][9] = 256490;
+	x_coord[15][0] = 1550;x_coord[15][1] = 1817;x_coord[15][2] = 256490;x_coord[15][3] = 256490;x_coord[15][4] = 256490;x_coord[15][5] = 256490;x_coord[15][6] = 256490;x_coord[15][7] = 256490;x_coord[15][8] = 256490;x_coord[15][9] = 256490;
+	x_coord[16][0] = 1582;x_coord[16][1] = 2020;x_coord[16][2] = 256490;x_coord[16][3] = 256490;x_coord[16][4] = 256490;x_coord[16][5] = 256490;x_coord[16][6] = 256490;x_coord[16][7] = 256490;x_coord[16][8] = 256490;x_coord[16][9] = 256490;
+	x_coord[17][0] = 688;x_coord[17][1] = 849;x_coord[17][2] = 1186;x_coord[17][3] = 256490;x_coord[17][4] = 256490;x_coord[17][5] = 256490;x_coord[17][6] = 256490;x_coord[17][7] = 256490;x_coord[17][8] = 256490;x_coord[17][9] = 256490;
+	x_coord[18][0] = 2206;x_coord[18][1] = 2370;x_coord[18][2] = 2438;x_coord[18][3] = 2455;x_coord[18][4] = 2696;x_coord[18][5] = 2713;x_coord[18][6] = 2983;x_coord[18][7] = 256490;x_coord[18][8] = 256490;x_coord[18][9] = 256490;
+	x_coord[19][0] = 1799;x_coord[19][1] = 2018;x_coord[19][2] = 256490;x_coord[19][3] = 256490;x_coord[19][4] = 256490;x_coord[19][5] = 256490;x_coord[19][6] = 256490;x_coord[19][7] = 256490;x_coord[19][8] = 256490;x_coord[19][9] = 256490;
+	x_coord[20][0] = 1064;x_coord[20][1] = 1331;x_coord[20][2] = 256490;x_coord[20][3] = 256490;x_coord[20][4] = 256490;x_coord[20][5] = 256490;x_coord[20][6] = 256490;x_coord[20][7] = 256490;x_coord[20][8] = 256490;x_coord[20][9] = 256490;
+	x_coord[21][0] = 1325;x_coord[21][1] = 1368;x_coord[21][2] = 1721;x_coord[21][3] = 256490;x_coord[21][4] = 256490;x_coord[21][5] = 256490;x_coord[21][6] = 256490;x_coord[21][7] = 256490;x_coord[21][8] = 256490;x_coord[21][9] = 256490;
+	x_coord[22][0] = 287;x_coord[22][1] = 673;x_coord[22][2] = 256490;x_coord[22][3] = 256490;x_coord[22][4] = 256490;x_coord[22][5] = 256490;x_coord[22][6] = 256490;x_coord[22][7] = 256490;x_coord[22][8] = 256490;x_coord[22][9] = 256490;
+	x_coord[23][0] = 1086;x_coord[23][1] = 1296;x_coord[23][2] = 256490;x_coord[23][3] = 256490;x_coord[23][4] = 256490;x_coord[23][5] = 256490;x_coord[23][6] = 256490;x_coord[23][7] = 256490;x_coord[23][8] = 256490;x_coord[23][9] = 256490;
+	x_coord[24][0] = 2255;x_coord[24][1] = 2492;x_coord[24][2] = 2495;x_coord[24][3] = 2731;x_coord[24][4] = 256490;x_coord[24][5] = 256490;x_coord[24][6] = 256490;x_coord[24][7] = 256490;x_coord[24][8] = 256490;x_coord[24][9] = 256490;
+	x_coord[25][0] = 2171;x_coord[25][1] = 2402;x_coord[25][2] = 2414;x_coord[25][3] = 2655;x_coord[25][4] = 256490;x_coord[25][5] = 256490;x_coord[25][6] = 256490;x_coord[25][7] = 256490;x_coord[25][8] = 256490;x_coord[25][9] = 256490;
+	x_coord[26][0] = 861;x_coord[26][1] = 1138;x_coord[26][2] = 256490;x_coord[26][3] = 256490;x_coord[26][4] = 256490;x_coord[26][5] = 256490;x_coord[26][6] = 256490;x_coord[26][7] = 256490;x_coord[26][8] = 256490;x_coord[26][9] = 256490;
+	x_coord[27][0] = 541;x_coord[27][1] = 661;x_coord[27][2] = 752;x_coord[27][3] = 723;x_coord[27][4] = 256490;x_coord[27][5] = 256490;x_coord[27][6] = 256490;x_coord[27][7] = 256490;x_coord[27][8] = 256490;x_coord[27][9] = 256490;
+	x_coord[28][0] = 3307;x_coord[28][1] = 3029;x_coord[28][2] = 2769;x_coord[28][3] = 2394;x_coord[28][4] = 2141;x_coord[28][5] = 2014;x_coord[28][6] = 1913;x_coord[28][7] = 1859;x_coord[28][8] = 1821;x_coord[28][9] = 256490;
+	x_coord[29][0] = 1402;x_coord[29][1] = 1501;x_coord[29][2] = 256490;x_coord[29][3] = 256490;x_coord[29][4] = 256490;x_coord[29][5] = 256490;x_coord[29][6] = 256490;x_coord[29][7] = 256490;x_coord[29][8] = 256490;x_coord[29][9] = 256490;
+	x_coord[30][0] = 2413;x_coord[30][1] = 2584;x_coord[30][2] = 2664;x_coord[30][3] = 2869;x_coord[30][4] = 3030;x_coord[30][5] = 256490;x_coord[30][6] = 256490;x_coord[30][7] = 256490;x_coord[30][8] = 256490;x_coord[30][9] = 256490;
+	x_coord[31][0] = 1643;x_coord[31][1] = 1464;x_coord[31][2] = 1369;x_coord[31][3] = 1163;x_coord[31][4] = 1058;x_coord[31][5] = 748;x_coord[31][6] = 649;x_coord[31][7] = 256490;x_coord[31][8] = 256490;x_coord[31][9] = 256490;
+	x_coord[32][0] = 751;x_coord[32][1] = 1027;x_coord[32][2] = 256490;x_coord[32][3] = 256490;x_coord[32][4] = 256490;x_coord[32][5] = 256490;x_coord[32][6] = 256490;x_coord[32][7] = 256490;x_coord[32][8] = 256490;x_coord[32][9] = 256490;
+	x_coord[33][0] = 1403;x_coord[33][1] = 1828;x_coord[33][2] = 256490;x_coord[33][3] = 256490;x_coord[33][4] = 256490;x_coord[33][5] = 256490;x_coord[33][6] = 256490;x_coord[33][7] = 256490;x_coord[33][8] = 256490;x_coord[33][9] = 256490;
+	x_coord[34][0] = 1357;x_coord[34][1] = 1780;x_coord[34][2] = 256490;x_coord[34][3] = 256490;x_coord[34][4] = 256490;x_coord[34][5] = 256490;x_coord[34][6] = 256490;x_coord[34][7] = 256490;x_coord[34][8] = 256490;x_coord[34][9] = 256490;
+	x_coord[35][0] = 1018;x_coord[35][1] = 1229;x_coord[35][2] = 256490;x_coord[35][3] = 256490;x_coord[35][4] = 256490;x_coord[35][5] = 256490;x_coord[35][6] = 256490;x_coord[35][7] = 256490;x_coord[35][8] = 256490;x_coord[35][9] = 256490;
+	x_coord[36][0] = 630;x_coord[36][1] = 805;x_coord[36][2] = 256490;x_coord[36][3] = 256490;x_coord[36][4] = 256490;x_coord[36][5] = 256490;x_coord[36][6] = 256490;x_coord[36][7] = 256490;x_coord[36][8] = 256490;x_coord[36][9] = 256490;
+	x_coord[37][0] = 843;x_coord[37][1] = 882;x_coord[37][2] = 1027;x_coord[37][3] = 1062;x_coord[37][4] = 256490;x_coord[37][5] = 256490;x_coord[37][6] = 256490;x_coord[37][7] = 256490;x_coord[37][8] = 256490;x_coord[37][9] = 256490;
+	x_coord[38][0] = 2208;x_coord[38][1] = 2368;x_coord[38][2] = 2608;x_coord[38][3] = 2847;x_coord[38][4] = 256490;x_coord[38][5] = 256490;x_coord[38][6] = 256490;x_coord[38][7] = 256490;x_coord[38][8] = 256490;x_coord[38][9] = 256490;
+	x_coord[39][0] = 1271;x_coord[39][1] = 1486;x_coord[39][2] = 1667;x_coord[39][3] = 256490;x_coord[39][4] = 256490;x_coord[39][5] = 256490;x_coord[39][6] = 256490;x_coord[39][7] = 256490;x_coord[39][8] = 256490;x_coord[39][9] = 256490;
+	x_coord[40][0] = 1868;x_coord[40][1] = 2204;x_coord[40][2] = 256490;x_coord[40][3] = 256490;x_coord[40][4] = 256490;x_coord[40][5] = 256490;x_coord[40][6] = 256490;x_coord[40][7] = 256490;x_coord[40][8] = 256490;x_coord[40][9] = 256490;
+	x_coord[41][0] = 378;x_coord[41][1] = 690;x_coord[41][2] = 256490;x_coord[41][3] = 256490;x_coord[41][4] = 256490;x_coord[41][5] = 256490;x_coord[41][6] = 256490;x_coord[41][7] = 256490;x_coord[41][8] = 256490;x_coord[41][9] = 256490;
+	x_coord[42][0] = 186;x_coord[42][1] = 483;x_coord[42][2] = 256490;x_coord[42][3] = 256490;x_coord[42][4] = 256490;x_coord[42][5] = 256490;x_coord[42][6] = 256490;x_coord[42][7] = 256490;x_coord[42][8] = 256490;x_coord[42][9] = 256490;
+	x_coord[43][0] = 872;x_coord[43][1] = 1089;x_coord[43][2] = 256490;x_coord[43][3] = 256490;x_coord[43][4] = 256490;x_coord[43][5] = 256490;x_coord[43][6] = 256490;x_coord[43][7] = 256490;x_coord[43][8] = 256490;x_coord[43][9] = 256490;
+	x_coord[44][0] = 1730;x_coord[44][1] = 1869;x_coord[44][2] = 256490;x_coord[44][3] = 256490;x_coord[44][4] = 256490;x_coord[44][5] = 256490;x_coord[44][6] = 256490;x_coord[44][7] = 256490;x_coord[44][8] = 256490;x_coord[44][9] = 256490;
+	x_coord[45][0] = 708;x_coord[45][1] = 871;x_coord[45][2] = 256490;x_coord[45][3] = 256490;x_coord[45][4] = 256490;x_coord[45][5] = 256490;x_coord[45][6] = 256490;x_coord[45][7] = 256490;x_coord[45][8] = 256490;x_coord[45][9] = 256490;
+	x_coord[46][0] = 790;x_coord[46][1] = 939;x_coord[46][2] = 256490;x_coord[46][3] = 256490;x_coord[46][4] = 256490;x_coord[46][5] = 256490;x_coord[46][6] = 256490;x_coord[46][7] = 256490;x_coord[46][8] = 256490;x_coord[46][9] = 256490;
+	x_coord[47][0] = 1840;x_coord[47][1] = 2169;x_coord[47][2] = 2494;x_coord[47][3] = 256490;x_coord[47][4] = 256490;x_coord[47][5] = 256490;x_coord[47][6] = 256490;x_coord[47][7] = 256490;x_coord[47][8] = 256490;x_coord[47][9] = 256490;
+	x_coord[48][0] = 306;x_coord[48][1] = 535;x_coord[48][2] = 256490;x_coord[48][3] = 256490;x_coord[48][4] = 256490;x_coord[48][5] = 256490;x_coord[48][6] = 256490;x_coord[48][7] = 256490;x_coord[48][8] = 256490;x_coord[48][9] = 256490;
+	x_coord[49][0] = 1160;x_coord[49][1] = 1216;x_coord[49][2] = 1281;x_coord[49][3] = 256490;x_coord[49][4] = 256490;x_coord[49][5] = 256490;x_coord[49][6] = 256490;x_coord[49][7] = 256490;x_coord[49][8] = 256490;x_coord[49][9] = 256490;
+	x_coord[50][0] = 1480;x_coord[50][1] = 1708;x_coord[50][2] = 256490;x_coord[50][3] = 256490;x_coord[50][4] = 256490;x_coord[50][5] = 256490;x_coord[50][6] = 256490;x_coord[50][7] = 256490;x_coord[50][8] = 256490;x_coord[50][9] = 256490;
+	x_coord[51][0] = 551;x_coord[51][1] = 738;x_coord[51][2] = 256490;x_coord[51][3] = 256490;x_coord[51][4] = 256490;x_coord[51][5] = 256490;x_coord[51][6] = 256490;x_coord[51][7] = 256490;x_coord[51][8] = 256490;x_coord[51][9] = 256490;
+	x_coord[52][0] = 1366;x_coord[52][1] = 1462;x_coord[52][2] = 256490;x_coord[52][3] = 256490;x_coord[52][4] = 256490;x_coord[52][5] = 256490;x_coord[52][6] = 256490;x_coord[52][7] = 256490;x_coord[52][8] = 256490;x_coord[52][9] = 256490;
+	x_coord[53][0] = 699;x_coord[53][1] = 684;x_coord[53][2] = 678;x_coord[53][3] = 661;x_coord[53][4] = 492;x_coord[53][5] = 256490;x_coord[53][6] = 256490;x_coord[53][7] = 256490;x_coord[53][8] = 256490;x_coord[53][9] = 256490;
+	x_coord[54][0] = 815;x_coord[54][1] = 1021;x_coord[54][2] = 256490;x_coord[54][3] = 256490;x_coord[54][4] = 256490;x_coord[54][5] = 256490;x_coord[54][6] = 256490;x_coord[54][7] = 256490;x_coord[54][8] = 256490;x_coord[54][9] = 256490;
+	x_coord[55][0] = 1065;x_coord[55][1] = 1252;x_coord[55][2] = 256490;x_coord[55][3] = 256490;x_coord[55][4] = 256490;x_coord[55][5] = 256490;x_coord[55][6] = 256490;x_coord[55][7] = 256490;x_coord[55][8] = 256490;x_coord[55][9] = 256490;
+	x_coord[56][0] = 325;x_coord[56][1] = 677;x_coord[56][2] = 256490;x_coord[56][3] = 256490;x_coord[56][4] = 256490;x_coord[56][5] = 256490;x_coord[56][6] = 256490;x_coord[56][7] = 256490;x_coord[56][8] = 256490;x_coord[56][9] = 256490;
+	x_coord[57][0] = 1520;x_coord[57][1] = 1693;x_coord[57][2] = 1780;x_coord[57][3] = 1952;x_coord[57][4] = 256490;x_coord[57][5] = 256490;x_coord[57][6] = 256490;x_coord[57][7] = 256490;x_coord[57][8] = 256490;x_coord[57][9] = 256490;
+	x_coord[58][0] = 772;x_coord[58][1] = 965;x_coord[58][2] = 1600;x_coord[58][3] = 1671;x_coord[58][4] = 1837;x_coord[58][5] = 2157;x_coord[58][6] = 256490;x_coord[58][7] = 256490;x_coord[58][8] = 256490;x_coord[58][9] = 256490;
+	x_coord[59][0] = 1993;x_coord[59][1] = 2211;x_coord[59][2] = 256490;x_coord[59][3] = 256490;x_coord[59][4] = 256490;x_coord[59][5] = 256490;x_coord[59][6] = 256490;x_coord[59][7] = 256490;x_coord[59][8] = 256490;x_coord[59][9] = 256490;
+	x_coord[60][0] = 992;x_coord[60][1] = 1175;x_coord[60][2] = 256490;x_coord[60][3] = 256490;x_coord[60][4] = 256490;x_coord[60][5] = 256490;x_coord[60][6] = 256490;x_coord[60][7] = 256490;x_coord[60][8] = 256490;x_coord[60][9] = 256490;
+	x_coord[61][0] = 2416;x_coord[61][1] = 1798;x_coord[61][2] = 256490;x_coord[61][3] = 256490;x_coord[61][4] = 256490;x_coord[61][5] = 256490;x_coord[61][6] = 256490;x_coord[61][7] = 256490;x_coord[61][8] = 256490;x_coord[61][9] = 256490;
+	x_coord[62][0] = 497;x_coord[62][1] = 550;x_coord[62][2] = 790;x_coord[62][3] = 843;x_coord[62][4] = 256490;x_coord[62][5] = 256490;x_coord[62][6] = 256490;x_coord[62][7] = 256490;x_coord[62][8] = 256490;x_coord[62][9] = 256490;
+	x_coord[63][0] = 1111;x_coord[63][1] = 1392;x_coord[63][2] = 256490;x_coord[63][3] = 256490;x_coord[63][4] = 256490;x_coord[63][5] = 256490;x_coord[63][6] = 256490;x_coord[63][7] = 256490;x_coord[63][8] = 256490;x_coord[63][9] = 256490;
+	x_coord[64][0] = 2315;x_coord[64][1] = 2335;x_coord[64][2] = 2419;x_coord[64][3] = 2652;x_coord[64][4] = 256490;x_coord[64][5] = 256490;x_coord[64][6] = 256490;x_coord[64][7] = 256490;x_coord[64][8] = 256490;x_coord[64][9] = 256490;
+	x_coord[65][0] = 957;x_coord[65][1] = 1160;x_coord[65][2] = 1448;x_coord[65][3] = 256490;x_coord[65][4] = 256490;x_coord[65][5] = 256490;x_coord[65][6] = 256490;x_coord[65][7] = 256490;x_coord[65][8] = 256490;x_coord[65][9] = 256490;
+	x_coord[66][0] = 1220;x_coord[66][1] = 1592;x_coord[66][2] = 256490;x_coord[66][3] = 256490;x_coord[66][4] = 256490;x_coord[66][5] = 256490;x_coord[66][6] = 256490;x_coord[66][7] = 256490;x_coord[66][8] = 256490;x_coord[66][9] = 256490;
+	x_coord[67][0] = 1452;x_coord[67][1] = 1881;x_coord[67][2] = 2109;x_coord[67][3] = 2350;x_coord[67][4] = 2582;x_coord[67][5] = 256490;x_coord[67][6] = 256490;x_coord[67][7] = 256490;x_coord[67][8] = 256490;x_coord[67][9] = 256490;
+	x_coord[68][0] = 665;x_coord[68][1] = 1021;x_coord[68][2] = 256490;x_coord[68][3] = 256490;x_coord[68][4] = 256490;x_coord[68][5] = 256490;x_coord[68][6] = 256490;x_coord[68][7] = 256490;x_coord[68][8] = 256490;x_coord[68][9] = 256490;
+	x_coord[69][0] = 1917;x_coord[69][1] = 1888;x_coord[69][2] = 1866;x_coord[69][3] = 1843;x_coord[69][4] = 1700;x_coord[69][5] = 1586;x_coord[69][6] = 1528;x_coord[69][7] = 256490;x_coord[69][8] = 256490;x_coord[69][9] = 256490;
+	x_coord[70][0] = 1263;x_coord[70][1] = 1470;x_coord[70][2] = 1739;x_coord[70][3] = 256490;x_coord[70][4] = 256490;x_coord[70][5] = 256490;x_coord[70][6] = 256490;x_coord[70][7] = 256490;x_coord[70][8] = 256490;x_coord[70][9] = 256490;
+	x_coord[71][0] = 1722;x_coord[71][1] = 1825;x_coord[71][2] = 1929;x_coord[71][3] = 256490;x_coord[71][4] = 256490;x_coord[71][5] = 256490;x_coord[71][6] = 256490;x_coord[71][7] = 256490;x_coord[71][8] = 256490;x_coord[71][9] = 256490;
+	x_coord[72][0] = 917;x_coord[72][1] = 1034;x_coord[72][2] = 1216;x_coord[72][3] = 1269;x_coord[72][4] = 1337;x_coord[72][5] = 1520;x_coord[72][6] = 1622;x_coord[72][7] = 1693;x_coord[72][8] = 1864;x_coord[72][9] = 256490;
+	x_coord[73][0] = 1357;x_coord[73][1] = 1558;x_coord[73][2] = 1825;x_coord[73][3] = 256490;x_coord[73][4] = 256490;x_coord[73][5] = 256490;x_coord[73][6] = 256490;x_coord[73][7] = 256490;x_coord[73][8] = 256490;x_coord[73][9] = 256490;
+	x_coord[74][0] = 1807;x_coord[74][1] = 2003;x_coord[74][2] = 256490;x_coord[74][3] = 256490;x_coord[74][4] = 256490;x_coord[74][5] = 256490;x_coord[74][6] = 256490;x_coord[74][7] = 256490;x_coord[74][8] = 256490;x_coord[74][9] = 256490;
+	x_coord[75][0] = 1910;x_coord[75][1] = 2319;x_coord[75][2] = 256490;x_coord[75][3] = 256490;x_coord[75][4] = 256490;x_coord[75][5] = 256490;x_coord[75][6] = 256490;x_coord[75][7] = 256490;x_coord[75][8] = 256490;x_coord[75][9] = 256490;
+	x_coord[76][0] = 1858;x_coord[76][1] = 1909;x_coord[76][2] = 2005;x_coord[76][3] = 256490;x_coord[76][4] = 256490;x_coord[76][5] = 256490;x_coord[76][6] = 256490;x_coord[76][7] = 256490;x_coord[76][8] = 256490;x_coord[76][9] = 256490;
+	x_coord[77][0] = 1338;x_coord[77][1] = 1604;x_coord[77][2] = 1666;x_coord[77][3] = 1672;x_coord[77][4] = 1729;x_coord[77][5] = 1785;x_coord[77][6] = 1833;x_coord[77][7] = 2083;x_coord[77][8] = 2156;x_coord[77][9] = 256490;
+	x_coord[78][0] = 1450;x_coord[78][1] = 1547;x_coord[78][2] = 256490;x_coord[78][3] = 256490;x_coord[78][4] = 256490;x_coord[78][5] = 256490;x_coord[78][6] = 256490;x_coord[78][7] = 256490;x_coord[78][8] = 256490;x_coord[78][9] = 256490;
+	x_coord[79][0] = 495;x_coord[79][1] = 750;x_coord[79][2] = 853;x_coord[79][3] = 256490;x_coord[79][4] = 256490;x_coord[79][5] = 256490;x_coord[79][6] = 256490;x_coord[79][7] = 256490;x_coord[79][8] = 256490;x_coord[79][9] = 256490;
+	x_coord[80][0] = 1134;x_coord[80][1] = 1324;x_coord[80][2] = 256490;x_coord[80][3] = 256490;x_coord[80][4] = 256490;x_coord[80][5] = 256490;x_coord[80][6] = 256490;x_coord[80][7] = 256490;x_coord[80][8] = 256490;x_coord[80][9] = 256490;
+
+	var y_coord = new Array(81);
+	for (i=0; i<81; i++)
+	y_coord[i]=new Array(10);
+
+	y_coord[0][0] = 1495;y_coord[0][1] = 1286;y_coord[0][2] = 459;y_coord[0][3] = 437;y_coord[0][4] = 505;y_coord[0][5] = 788;y_coord[0][6] = 790;y_coord[0][7] = 702;y_coord[0][8] = 507;y_coord[0][9] = 251;
+	y_coord[1][0] = 412;y_coord[1][1] = 138;y_coord[1][2] = 78;y_coord[1][3] = 54;y_coord[1][4] = 35;y_coord[1][5] = 8868351;y_coord[1][6] = 8868351;y_coord[1][7] = 8868351;y_coord[1][8] = 8868351;y_coord[1][9] = 8868351;
+	y_coord[2][0] = 876;y_coord[2][1] = 759;y_coord[2][2] = 8868351;y_coord[2][3] = 8868351;y_coord[2][4] = 8868351;y_coord[2][5] = 8868351;y_coord[2][6] = 8868351;y_coord[2][7] = 8868351;y_coord[2][8] = 8868351;y_coord[2][9] = 8868351;
+	y_coord[3][0] = 677;y_coord[3][1] = 867;y_coord[3][2] = 956;y_coord[3][3] = 1040;y_coord[3][4] = 1135;y_coord[3][5] = 1522;y_coord[3][6] = 1742;y_coord[3][7] = 1966;y_coord[3][8] = 2186;y_coord[3][9] = 8868351;
+	y_coord[4][0] = 1859;y_coord[4][1] = 2067;y_coord[4][2] = 8868351;y_coord[4][3] = 8868351;y_coord[4][4] = 8868351;y_coord[4][5] = 8868351;y_coord[4][6] = 8868351;y_coord[4][7] = 8868351;y_coord[4][8] = 8868351;y_coord[4][9] = 8868351;
+	y_coord[5][0] = 889;y_coord[5][1] = 982;y_coord[5][2] = 1337;y_coord[5][3] = 1476;y_coord[5][4] = 1597;y_coord[5][5] = 1715;y_coord[5][6] = 8868351;y_coord[5][7] = 8868351;y_coord[5][8] = 8868351;y_coord[5][9] = 8868351;
+	y_coord[6][0] = 1833;y_coord[6][1] = 2019;y_coord[6][2] = 8868351;y_coord[6][3] = 8868351;y_coord[6][4] = 8868351;y_coord[6][5] = 8868351;y_coord[6][6] = 8868351;y_coord[6][7] = 8868351;y_coord[6][8] = 8868351;y_coord[6][9] = 8868351;
+	y_coord[7][0] = 2261;y_coord[7][1] = 1938;y_coord[7][2] = 8868351;y_coord[7][3] = 8868351;y_coord[7][4] = 8868351;y_coord[7][5] = 8868351;y_coord[7][6] = 8868351;y_coord[7][7] = 8868351;y_coord[7][8] = 8868351;y_coord[7][9] = 8868351;
+	y_coord[8][0] = 495;y_coord[8][1] = 379;y_coord[8][2] = 8868351;y_coord[8][3] = 8868351;y_coord[8][4] = 8868351;y_coord[8][5] = 8868351;y_coord[8][6] = 8868351;y_coord[8][7] = 8868351;y_coord[8][8] = 8868351;y_coord[8][9] = 8868351;
+	y_coord[9][0] = 775;y_coord[9][1] = 529;y_coord[9][2] = 8868351;y_coord[9][3] = 8868351;y_coord[9][4] = 8868351;y_coord[9][5] = 8868351;y_coord[9][6] = 8868351;y_coord[9][7] = 8868351;y_coord[9][8] = 8868351;y_coord[9][9] = 8868351;
+	y_coord[10][0] = 2124;y_coord[10][1] = 2864;y_coord[10][2] = 2668;y_coord[10][3] = 2640;y_coord[10][4] = 2574;y_coord[10][5] = 1727;y_coord[10][6] = 1757;y_coord[10][7] = 1717;y_coord[10][8] = 1505;y_coord[10][9] = 8868351;
+	y_coord[11][0] = 2251;y_coord[11][1] = 2504;y_coord[11][2] = 2505;y_coord[11][3] = 2418;y_coord[11][4] = 2337;y_coord[11][5] = 8868351;y_coord[11][6] = 8868351;y_coord[11][7] = 8868351;y_coord[11][8] = 8868351;y_coord[11][9] = 8868351;
+	y_coord[12][0] = 723;y_coord[12][1] = 807;y_coord[12][2] = 8868351;y_coord[12][3] = 8868351;y_coord[12][4] = 8868351;y_coord[12][5] = 8868351;y_coord[12][6] = 8868351;y_coord[12][7] = 8868351;y_coord[12][8] = 8868351;y_coord[12][9] = 8868351;
+	y_coord[13][0] = 726;y_coord[13][1] = 545;y_coord[13][2] = 526;y_coord[13][3] = 523;y_coord[13][4] = 536;y_coord[13][5] = 602;y_coord[13][6] = 8868351;y_coord[13][7] = 8868351;y_coord[13][8] = 8868351;y_coord[13][9] = 8868351;
+	y_coord[14][0] = 2519;y_coord[14][1] = 2192;y_coord[14][2] = 1967;y_coord[14][3] = 1713;y_coord[14][4] = 8868351;y_coord[14][5] = 8868351;y_coord[14][6] = 8868351;y_coord[14][7] = 8868351;y_coord[14][8] = 8868351;y_coord[14][9] = 8868351;
+	y_coord[15][0] = 2143;y_coord[15][1] = 2413;y_coord[15][2] = 8868351;y_coord[15][3] = 8868351;y_coord[15][4] = 8868351;y_coord[15][5] = 8868351;y_coord[15][6] = 8868351;y_coord[15][7] = 8868351;y_coord[15][8] = 8868351;y_coord[15][9] = 8868351;
+	y_coord[16][0] = 1211;y_coord[16][1] = 1596;y_coord[16][2] = 8868351;y_coord[16][3] = 8868351;y_coord[16][4] = 8868351;y_coord[16][5] = 8868351;y_coord[16][6] = 8868351;y_coord[16][7] = 8868351;y_coord[16][8] = 8868351;y_coord[16][9] = 8868351;
+	y_coord[17][0] = 966;y_coord[17][1] = 777;y_coord[17][2] = 400;y_coord[17][3] = 8868351;y_coord[17][4] = 8868351;y_coord[17][5] = 8868351;y_coord[17][6] = 8868351;y_coord[17][7] = 8868351;y_coord[17][8] = 8868351;y_coord[17][9] = 8868351;
+	y_coord[18][0] = 1529;y_coord[18][1] = 1534;y_coord[18][2] = 1594;y_coord[18][3] = 1575;y_coord[18][4] = 1786;y_coord[18][5] = 1775;y_coord[18][6] = 1965;y_coord[18][7] = 8868351;y_coord[18][8] = 8868351;y_coord[18][9] = 8868351;
+	y_coord[19][0] = 1855;y_coord[19][1] = 2061;y_coord[19][2] = 8868351;y_coord[19][3] = 8868351;y_coord[19][4] = 8868351;y_coord[19][5] = 8868351;y_coord[19][6] = 8868351;y_coord[19][7] = 8868351;y_coord[19][8] = 8868351;y_coord[19][9] = 8868351;
+	y_coord[20][0] = 1221;y_coord[20][1] = 1491;y_coord[20][2] = 8868351;y_coord[20][3] = 8868351;y_coord[20][4] = 8868351;y_coord[20][5] = 8868351;y_coord[20][6] = 8868351;y_coord[20][7] = 8868351;y_coord[20][8] = 8868351;y_coord[20][9] = 8868351;
+	y_coord[21][0] = 1515;y_coord[21][1] = 1567;y_coord[21][2] = 1931;y_coord[21][3] = 8868351;y_coord[21][4] = 8868351;y_coord[21][5] = 8868351;y_coord[21][6] = 8868351;y_coord[21][7] = 8868351;y_coord[21][8] = 8868351;y_coord[21][9] = 8868351;
+	y_coord[22][0] = 979;y_coord[22][1] = 874;y_coord[22][2] = 8868351;y_coord[22][3] = 8868351;y_coord[22][4] = 8868351;y_coord[22][5] = 8868351;y_coord[22][6] = 8868351;y_coord[22][7] = 8868351;y_coord[22][8] = 8868351;y_coord[22][9] = 8868351;
+	y_coord[23][0] = 748;y_coord[23][1] = 941;y_coord[23][2] = 8868351;y_coord[23][3] = 8868351;y_coord[23][4] = 8868351;y_coord[23][5] = 8868351;y_coord[23][6] = 8868351;y_coord[23][7] = 8868351;y_coord[23][8] = 8868351;y_coord[23][9] = 8868351;
+	y_coord[24][0] = 1809;y_coord[24][1] = 2038;y_coord[24][2] = 2050;y_coord[24][3] = 2277;y_coord[24][4] = 8868351;y_coord[24][5] = 8868351;y_coord[24][6] = 8868351;y_coord[24][7] = 8868351;y_coord[24][8] = 8868351;y_coord[24][9] = 8868351;
+	y_coord[25][0] = 1908;y_coord[25][1] = 2122;y_coord[25][2] = 2124;y_coord[25][3] = 2344;y_coord[25][4] = 8868351;y_coord[25][5] = 8868351;y_coord[25][6] = 8868351;y_coord[25][7] = 8868351;y_coord[25][8] = 8868351;y_coord[25][9] = 8868351;
+	y_coord[26][0] = 1447;y_coord[26][1] = 1695;y_coord[26][2] = 8868351;y_coord[26][3] = 8868351;y_coord[26][4] = 8868351;y_coord[26][5] = 8868351;y_coord[26][6] = 8868351;y_coord[26][7] = 8868351;y_coord[26][8] = 8868351;y_coord[26][9] = 8868351;
+	y_coord[27][0] = 1591;y_coord[27][1] = 1531;y_coord[27][2] = 1417;y_coord[27][3] = 1383;y_coord[27][4] = 8868351;y_coord[27][5] = 8868351;y_coord[27][6] = 8868351;y_coord[27][7] = 8868351;y_coord[27][8] = 8868351;y_coord[27][9] = 8868351;
+	y_coord[28][0] = 2114;y_coord[28][1] = 1916;y_coord[28][2] = 1714;y_coord[28][3] = 1450;y_coord[28][4] = 1443;y_coord[28][5] = 1301;y_coord[28][6] = 1152;y_coord[28][7] = 1054;y_coord[28][8] = 944;y_coord[28][9] = 8868351;
+	y_coord[29][0] = 620;y_coord[29][1] = 707;y_coord[29][2] = 8868351;y_coord[29][3] = 8868351;y_coord[29][4] = 8868351;y_coord[29][5] = 8868351;y_coord[29][6] = 8868351;y_coord[29][7] = 8868351;y_coord[29][8] = 8868351;y_coord[29][9] = 8868351;
+	y_coord[30][0] = 2634;y_coord[30][1] = 2426;y_coord[30][2] = 2350;y_coord[30][3] = 2103;y_coord[30][4] = 1918;y_coord[30][5] = 8868351;y_coord[30][6] = 8868351;y_coord[30][7] = 8868351;y_coord[30][8] = 8868351;y_coord[30][9] = 8868351;
+	y_coord[31][0] = 555;y_coord[31][1] = 752;y_coord[31][2] = 871;y_coord[31][3] = 1095;y_coord[31][4] = 1216;y_coord[31][5] = 1567;y_coord[31][6] = 1699;y_coord[31][7] = 8868351;y_coord[31][8] = 8868351;y_coord[31][9] = 8868351;
+	y_coord[32][0] = 1570;y_coord[32][1] = 1817;y_coord[32][2] = 8868351;y_coord[32][3] = 8868351;y_coord[32][4] = 8868351;y_coord[32][5] = 8868351;y_coord[32][6] = 8868351;y_coord[32][7] = 8868351;y_coord[32][8] = 8868351;y_coord[32][9] = 8868351;
+	y_coord[33][0] = 1419;y_coord[33][1] = 1818;y_coord[33][2] = 8868351;y_coord[33][3] = 8868351;y_coord[33][4] = 8868351;y_coord[33][5] = 8868351;y_coord[33][6] = 8868351;y_coord[33][7] = 8868351;y_coord[33][8] = 8868351;y_coord[33][9] = 8868351;
+	y_coord[34][0] = 1474;y_coord[34][1] = 1861;y_coord[34][2] = 8868351;y_coord[34][3] = 8868351;y_coord[34][4] = 8868351;y_coord[34][5] = 8868351;y_coord[34][6] = 8868351;y_coord[34][7] = 8868351;y_coord[34][8] = 8868351;y_coord[34][9] = 8868351;
+	y_coord[35][0] = 821;y_coord[35][1] = 1015;y_coord[35][2] = 8868351;y_coord[35][3] = 8868351;y_coord[35][4] = 8868351;y_coord[35][5] = 8868351;y_coord[35][6] = 8868351;y_coord[35][7] = 8868351;y_coord[35][8] = 8868351;y_coord[35][9] = 8868351;
+	y_coord[36][0] = 433;y_coord[36][1] = 622;y_coord[36][2] = 8868351;y_coord[36][3] = 8868351;y_coord[36][4] = 8868351;y_coord[36][5] = 8868351;y_coord[36][6] = 8868351;y_coord[36][7] = 8868351;y_coord[36][8] = 8868351;y_coord[36][9] = 8868351;
+	y_coord[37][0] = 288;y_coord[37][1] = 302;y_coord[37][2] = 398;y_coord[37][3] = 412;y_coord[37][4] = 8868351;y_coord[37][5] = 8868351;y_coord[37][6] = 8868351;y_coord[37][7] = 8868351;y_coord[37][8] = 8868351;y_coord[37][9] = 8868351;
+	y_coord[38][0] = 1538;y_coord[38][1] = 1686;y_coord[38][2] = 1896;y_coord[38][3] = 2120;y_coord[38][4] = 8868351;y_coord[38][5] = 8868351;y_coord[38][6] = 8868351;y_coord[38][7] = 8868351;y_coord[38][8] = 8868351;y_coord[38][9] = 8868351;
+	y_coord[39][0] = 1569;y_coord[39][1] = 1801;y_coord[39][2] = 1986;y_coord[39][3] = 8868351;y_coord[39][4] = 8868351;y_coord[39][5] = 8868351;y_coord[39][6] = 8868351;y_coord[39][7] = 8868351;y_coord[39][8] = 8868351;y_coord[39][9] = 8868351;
+	y_coord[40][0] = 493;y_coord[40][1] = 740;y_coord[40][2] = 8868351;y_coord[40][3] = 8868351;y_coord[40][4] = 8868351;y_coord[40][5] = 8868351;y_coord[40][6] = 8868351;y_coord[40][7] = 8868351;y_coord[40][8] = 8868351;y_coord[40][9] = 8868351;
+	y_coord[41][0] = 1208;y_coord[41][1] = 1125;y_coord[41][2] = 8868351;y_coord[41][3] = 8868351;y_coord[41][4] = 8868351;y_coord[41][5] = 8868351;y_coord[41][6] = 8868351;y_coord[41][7] = 8868351;y_coord[41][8] = 8868351;y_coord[41][9] = 8868351;
+	y_coord[42][0] = 1590;y_coord[42][1] = 1472;y_coord[42][2] = 8868351;y_coord[42][3] = 8868351;y_coord[42][4] = 8868351;y_coord[42][5] = 8868351;y_coord[42][6] = 8868351;y_coord[42][7] = 8868351;y_coord[42][8] = 8868351;y_coord[42][9] = 8868351;
+	y_coord[43][0] = 982;y_coord[43][1] = 1171;y_coord[43][2] = 8868351;y_coord[43][3] = 8868351;y_coord[43][4] = 8868351;y_coord[43][5] = 8868351;y_coord[43][6] = 8868351;y_coord[43][7] = 8868351;y_coord[43][8] = 8868351;y_coord[43][9] = 8868351;
+	y_coord[44][0] = 590;y_coord[44][1] = 509;y_coord[44][2] = 8868351;y_coord[44][3] = 8868351;y_coord[44][4] = 8868351;y_coord[44][5] = 8868351;y_coord[44][6] = 8868351;y_coord[44][7] = 8868351;y_coord[44][8] = 8868351;y_coord[44][9] = 8868351;
+	y_coord[45][0] = 382;y_coord[45][1] = 552;y_coord[45][2] = 8868351;y_coord[45][3] = 8868351;y_coord[45][4] = 8868351;y_coord[45][5] = 8868351;y_coord[45][6] = 8868351;y_coord[45][7] = 8868351;y_coord[45][8] = 8868351;y_coord[45][9] = 8868351;
+	y_coord[46][0] = 327;y_coord[46][1] = 488;y_coord[46][2] = 8868351;y_coord[46][3] = 8868351;y_coord[46][4] = 8868351;y_coord[46][5] = 8868351;y_coord[46][6] = 8868351;y_coord[46][7] = 8868351;y_coord[46][8] = 8868351;y_coord[46][9] = 8868351;
+	y_coord[47][0] = 2271;y_coord[47][1] = 1903;y_coord[47][2] = 1529;y_coord[47][3] = 8868351;y_coord[47][4] = 8868351;y_coord[47][5] = 8868351;y_coord[47][6] = 8868351;y_coord[47][7] = 8868351;y_coord[47][8] = 8868351;y_coord[47][9] = 8868351;
+	y_coord[48][0] = 1672;y_coord[48][1] = 1587;y_coord[48][2] = 8868351;y_coord[48][3] = 8868351;y_coord[48][4] = 8868351;y_coord[48][5] = 8868351;y_coord[48][6] = 8868351;y_coord[48][7] = 8868351;y_coord[48][8] = 8868351;y_coord[48][9] = 8868351;
+	y_coord[49][0] = 370;y_coord[49][1] = 416;y_coord[49][2] = 493;y_coord[49][3] = 8868351;y_coord[49][4] = 8868351;y_coord[49][5] = 8868351;y_coord[49][6] = 8868351;y_coord[49][7] = 8868351;y_coord[49][8] = 8868351;y_coord[49][9] = 8868351;
+	y_coord[50][0] = 425;y_coord[50][1] = 275;y_coord[50][2] = 8868351;y_coord[50][3] = 8868351;y_coord[50][4] = 8868351;y_coord[50][5] = 8868351;y_coord[50][6] = 8868351;y_coord[50][7] = 8868351;y_coord[50][8] = 8868351;y_coord[50][9] = 8868351;
+	y_coord[51][0] = 488;y_coord[51][1] = 695;y_coord[51][2] = 8868351;y_coord[51][3] = 8868351;y_coord[51][4] = 8868351;y_coord[51][5] = 8868351;y_coord[51][6] = 8868351;y_coord[51][7] = 8868351;y_coord[51][8] = 8868351;y_coord[51][9] = 8868351;
+	y_coord[52][0] = 665;y_coord[52][1] = 750;y_coord[52][2] = 8868351;y_coord[52][3] = 8868351;y_coord[52][4] = 8868351;y_coord[52][5] = 8868351;y_coord[52][6] = 8868351;y_coord[52][7] = 8868351;y_coord[52][8] = 8868351;y_coord[52][9] = 8868351;
+	y_coord[53][0] = 1105;y_coord[53][1] = 974;y_coord[53][2] = 874;y_coord[53][3] = 774;y_coord[53][4] = 564;y_coord[53][5] = 8868351;y_coord[53][6] = 8868351;y_coord[53][7] = 8868351;y_coord[53][8] = 8868351;y_coord[53][9] = 8868351;
+	y_coord[54][0] = 1058;y_coord[54][1] = 1250;y_coord[54][2] = 8868351;y_coord[54][3] = 8868351;y_coord[54][4] = 8868351;y_coord[54][5] = 8868351;y_coord[54][6] = 8868351;y_coord[54][7] = 8868351;y_coord[54][8] = 8868351;y_coord[54][9] = 8868351;
+	y_coord[55][0] = 1802;y_coord[55][1] = 1967;y_coord[55][2] = 8868351;y_coord[55][3] = 8868351;y_coord[55][4] = 8868351;y_coord[55][5] = 8868351;y_coord[55][6] = 8868351;y_coord[55][7] = 8868351;y_coord[55][8] = 8868351;y_coord[55][9] = 8868351;
+	y_coord[56][0] = 1077;y_coord[56][1] = 975;y_coord[56][2] = 8868351;y_coord[56][3] = 8868351;y_coord[56][4] = 8868351;y_coord[56][5] = 8868351;y_coord[56][6] = 8868351;y_coord[56][7] = 8868351;y_coord[56][8] = 8868351;y_coord[56][9] = 8868351;
+	y_coord[57][0] = 1284;y_coord[57][1] = 1448;y_coord[57][2] = 1521;y_coord[57][3] = 1675;y_coord[57][4] = 8868351;y_coord[57][5] = 8868351;y_coord[57][6] = 8868351;y_coord[57][7] = 8868351;y_coord[57][8] = 8868351;y_coord[57][9] = 8868351;
+	y_coord[58][0] = 1154;y_coord[58][1] = 1350;y_coord[58][2] = 2026;y_coord[58][3] = 2086;y_coord[58][4] = 2275;y_coord[58][5] = 2616;y_coord[58][6] = 8868351;y_coord[58][7] = 8868351;y_coord[58][8] = 8868351;y_coord[58][9] = 8868351;
+	y_coord[59][0] = 1638;y_coord[59][1] = 1844;y_coord[59][2] = 8868351;y_coord[59][3] = 8868351;y_coord[59][4] = 8868351;y_coord[59][5] = 8868351;y_coord[59][6] = 8868351;y_coord[59][7] = 8868351;y_coord[59][8] = 8868351;y_coord[59][9] = 8868351;
+	y_coord[60][0] = 1878;y_coord[60][1] = 2055;y_coord[60][2] = 8868351;y_coord[60][3] = 8868351;y_coord[60][4] = 8868351;y_coord[60][5] = 8868351;y_coord[60][6] = 8868351;y_coord[60][7] = 8868351;y_coord[60][8] = 8868351;y_coord[60][9] = 8868351;
+	y_coord[61][0] = 508;y_coord[61][1] = 40;y_coord[61][2] = 8868351;y_coord[61][3] = 8868351;y_coord[61][4] = 8868351;y_coord[61][5] = 8868351;y_coord[61][6] = 8868351;y_coord[61][7] = 8868351;y_coord[61][8] = 8868351;y_coord[61][9] = 8868351;
+	y_coord[62][0] = 515;y_coord[62][1] = 484;y_coord[62][2] = 322;y_coord[62][3] = 292;y_coord[62][4] = 8868351;y_coord[62][5] = 8868351;y_coord[62][6] = 8868351;y_coord[62][7] = 8868351;y_coord[62][8] = 8868351;y_coord[62][9] = 8868351;
+	y_coord[63][0] = 2141;y_coord[63][1] = 1818;y_coord[63][2] = 8868351;y_coord[63][3] = 8868351;y_coord[63][4] = 8868351;y_coord[63][5] = 8868351;y_coord[63][6] = 8868351;y_coord[63][7] = 8868351;y_coord[63][8] = 8868351;y_coord[63][9] = 8868351;
+	y_coord[64][0] = 1534;y_coord[64][1] = 1557;y_coord[64][2] = 1630;y_coord[64][3] = 1841;y_coord[64][4] = 8868351;y_coord[64][5] = 8868351;y_coord[64][6] = 8868351;y_coord[64][7] = 8868351;y_coord[64][8] = 8868351;y_coord[64][9] = 8868351;
+	y_coord[65][0] = 901;y_coord[65][1] = 1091;y_coord[65][2] = 1358;y_coord[65][3] = 8868351;y_coord[65][4] = 8868351;y_coord[65][5] = 8868351;y_coord[65][6] = 8868351;y_coord[65][7] = 8868351;y_coord[65][8] = 8868351;y_coord[65][9] = 8868351;
+	y_coord[66][0] = 421;y_coord[66][1] = 191;y_coord[66][2] = 8868351;y_coord[66][3] = 8868351;y_coord[66][4] = 8868351;y_coord[66][5] = 8868351;y_coord[66][6] = 8868351;y_coord[66][7] = 8868351;y_coord[66][8] = 8868351;y_coord[66][9] = 8868351;
+	y_coord[67][0] = 1363;y_coord[67][1] = 1754;y_coord[67][2] = 1963;y_coord[67][3] = 2192;y_coord[67][4] = 2419;y_coord[67][5] = 8868351;y_coord[67][6] = 8868351;y_coord[67][7] = 8868351;y_coord[67][8] = 8868351;y_coord[67][9] = 8868351;
+	y_coord[68][0] = 770;y_coord[68][1] = 404;y_coord[68][2] = 8868351;y_coord[68][3] = 8868351;y_coord[68][4] = 8868351;y_coord[68][5] = 8868351;y_coord[68][6] = 8868351;y_coord[68][7] = 8868351;y_coord[68][8] = 8868351;y_coord[68][9] = 8868351;
+	y_coord[69][0] = 701;y_coord[69][1] = 582;y_coord[69][2] = 499;y_coord[69][3] = 365;y_coord[69][4] = 273;y_coord[69][5] = 192;y_coord[69][6] = 142;y_coord[69][7] = 8868351;y_coord[69][8] = 8868351;y_coord[69][9] = 8868351;
+	y_coord[70][0] = 1179;y_coord[70][1] = 946;y_coord[70][2] = 642;y_coord[70][3] = 8868351;y_coord[70][4] = 8868351;y_coord[70][5] = 8868351;y_coord[70][6] = 8868351;y_coord[70][7] = 8868351;y_coord[70][8] = 8868351;y_coord[70][9] = 8868351;
+	y_coord[71][0] = 1955;y_coord[71][1] = 2059;y_coord[71][2] = 2166;y_coord[71][3] = 8868351;y_coord[71][4] = 8868351;y_coord[71][5] = 8868351;y_coord[71][6] = 8868351;y_coord[71][7] = 8868351;y_coord[71][8] = 8868351;y_coord[71][9] = 8868351;
+	y_coord[72][0] = 1955;y_coord[72][1] = 1818;y_coord[72][2] = 1621;y_coord[72][3] = 1558;y_coord[72][4] = 1494;y_coord[72][5] = 1277;y_coord[72][6] = 1160;y_coord[72][7] = 1099;y_coord[72][8] = 883;y_coord[72][9] = 8868351;
+	y_coord[73][0] = 1267;y_coord[73][1] = 1042;y_coord[73][2] = 728;y_coord[73][3] = 8868351;y_coord[73][4] = 8868351;y_coord[73][5] = 8868351;y_coord[73][6] = 8868351;y_coord[73][7] = 8868351;y_coord[73][8] = 8868351;y_coord[73][9] = 8868351;
+	y_coord[74][0] = 2444;y_coord[74][1] = 2460;y_coord[74][2] = 8868351;y_coord[74][3] = 8868351;y_coord[74][4] = 8868351;y_coord[74][5] = 8868351;y_coord[74][6] = 8868351;y_coord[74][7] = 8868351;y_coord[74][8] = 8868351;y_coord[74][9] = 8868351;
+	y_coord[75][0] = 309;y_coord[75][1] = 628;y_coord[75][2] = 8868351;y_coord[75][3] = 8868351;y_coord[75][4] = 8868351;y_coord[75][5] = 8868351;y_coord[75][6] = 8868351;y_coord[75][7] = 8868351;y_coord[75][8] = 8868351;y_coord[75][9] = 8868351;
+	y_coord[76][0] = 341;y_coord[76][1] = 306;y_coord[76][2] = 199;y_coord[76][3] = 8868351;y_coord[76][4] = 8868351;y_coord[76][5] = 8868351;y_coord[76][6] = 8868351;y_coord[76][7] = 8868351;y_coord[76][8] = 8868351;y_coord[76][9] = 8868351;
+	y_coord[77][0] = 2371;y_coord[77][1] = 2080;y_coord[77][2] = 2018;y_coord[77][3] = 1989;y_coord[77][4] = 1933;y_coord[77][5] = 1862;y_coord[77][6] = 1816;y_coord[77][7] = 1528;y_coord[77][8] = 1448;y_coord[77][9] = 8868351;
+	y_coord[78][0] = 568;y_coord[78][1] = 655;y_coord[78][2] = 8868351;y_coord[78][3] = 8868351;y_coord[78][4] = 8868351;y_coord[78][5] = 8868351;y_coord[78][6] = 8868351;y_coord[78][7] = 8868351;y_coord[78][8] = 8868351;y_coord[78][9] = 8868351;
+	y_coord[79][0] = 1487;y_coord[79][1] = 1358;y_coord[79][2] = 1237;y_coord[79][3] = 8868351;y_coord[79][4] = 8868351;y_coord[79][5] = 8868351;y_coord[79][6] = 8868351;y_coord[79][7] = 8868351;y_coord[79][8] = 8868351;y_coord[79][9] = 8868351;
+	y_coord[80][0] = 1718;y_coord[80][1] = 1890;y_coord[80][2] = 8868351;y_coord[80][3] = 8868351;y_coord[80][4] = 8868351;y_coord[80][5] = 8868351;y_coord[80][6] = 8868351;y_coord[80][7] = 8868351;y_coord[80][8] = 8868351;y_coord[80][9] = 8868351;
+
+	var map = new Image();
+	var ctx = canvas.getContext('2d');
+	var scale = canvas.width / mapWidth;
+	var x = 0;
+	var y = 0;
+
+	var x_offset = 0;
+	var y_offset = 0;
+	
+	map.onload = function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
+		for (n = 1; n < num_pts[calle]; n++)
+		{
+			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
+			ctx.stroke();
+		}
+	}
+	map.src = mapFileName;
+
+	function redrawMap() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);	
+		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
+
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
+		for (n = 1; n < num_pts[street_number]; n++)
+		{
+			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
+			ctx.stroke();
+		}
+	}
+
+	//----------------------------
+	// Mouse listeners and events
+	//----------------------------
+	var zoom = function(evt){
+		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
+		if (delta) {
+			scale = scale*Math.pow(1.01,delta);
+			if (scale < 0.25) scale = 0.25;
+			redrawMap();
+		}
+		return evt.preventDefault() && false;
+	};
+	canvas.addEventListener('DOMMouseScroll',zoom,false);
+	canvas.addEventListener('mousewheel',zoom,false);
+	//--------------------------------------------
+	canvas.addEventListener('mousedown', mouseDownListener, false);
+	
+	function mouseDownListener(evt) {
+		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+				
+		dragging = true;
+		startX = mouseX - x_offset;
+		startY = mouseY - y_offset;
+
+		if (dragging) {
+			window.addEventListener('mousemove', mouseMoveListener, false);
+		}
+		canvas.removeEventListener('mousedown', mouseDownListener, false);
+		window.addEventListener('mouseup', mouseUpListener, false);
+		
+		//code below prevents the mouse down from having an effect on the main browser window:
+		if (evt.preventDefault) {
+			evt.preventDefault();
+		} //standard
+		else if (evt.returnValue) {
+			evt.returnValue = false;
+		} //older IE
+		return false;
+	}
+
+	function mouseMoveListener(evt) {
+	if (!dragging) return;
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+		
+		endX = mouseX;
+		endY = mouseY;
+		
+		x_offset = endX - startX;
+		y_offset = endY - startY;
+
+		redrawMap();
+	}
+	
+	function mouseUpListener(evt) {
+		canvas.addEventListener("mousedown", mouseDownListener, false);
+		window.removeEventListener("mouseup", mouseUpListener, false);
+		if (dragging) {
+			dragging = false;
+			window.removeEventListener("mousemove", mouseMoveListener, false);
+		}
+	}
+}
+</script>
+
+<!-- Libs -->
+<script src="js/jquery.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script src="js/theme.js"></script>
+
+</body>
+</html>
