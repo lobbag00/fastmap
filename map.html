@@ -21,17 +21,21 @@
 <div class="body">
 
 <div role="main" class="main"><div class="container">
-	<div class="row">
-		<div class="col-md-3">
-			<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="location.href='index.html';">Select New Street</button>
+	<nav class="navbar-fixed-top">
+		<div class="row">
+			<div class="col-md-12" style="text-align:center">
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="zoom(10)">Zoom In</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="zoom(-10)">Zoom Out</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="location.href='index.html';">New Street</button>
+			</div>
 		</div>
-		<div class="col-md-9 street" id="street_name"></div>
-	</div>
-		
-	<div class="row"><div class="col-md-12">
-		<canvas id="mapCanvas" style="max-width:100%;height:auto;"></canvas>
-	</div></div>
-	
+		<div class="row"><div class="col-md-12 street" id="street_name"></div></div>
+	</nav>
+
+	<div class="row"><div class="col-md-12"><div id="filter_div">
+		<canvas id="mapCanvas" style="max-width:100%;height:auto;margin-top:110px;border:1px solid black"></canvas>
+	</div></div></div>
+
 </div></div>
 
 </div>
@@ -44,8 +48,24 @@ var mapFileName;
 var street_name;
 
 var canvas = document.getElementsByTagName('canvas')[0];
-canvas.width = 1140; canvas.height = 2000;
+canvas.width = 1140; canvas.height = 1000;
 
+var num_pts = [];
+var x_coord;
+var y_coord;
+
+var x = 0;
+var y = 0;
+
+var x_offset = 0;
+var y_offset = 0;
+
+var scale;
+var default_scale;
+
+var map = new Image();
+var ctx = canvas.getContext('2d');
+	
 function readCookie(name)
 {
     var cookie = localStorage.getItem(name);
@@ -64,8 +84,141 @@ function init()
 	map_number = map_number * 1; //make it a number rather than string
 	street_number = street_number * 1; //make it a number rather than string
 
-	setMapData(map_number, street_number);
+	setMapData(map_number);
+	drawMap(street_number);
+
+	document.getElementById('filter_div').addEventListener("touchstart", touchHandler, true);
+    document.getElementById('filter_div').addEventListener("touchmove", touchHandler, true);
+    document.getElementById('filter_div').addEventListener("touchend", touchHandler, true);
+    document.getElementById('filter_div').addEventListener("touchcancel", touchHandler, true);
+/*
+	document.addEventListener("touchstart", touchHandler, true);
+    document.addEventListener("touchmove", touchHandler, true);
+    document.addEventListener("touchend", touchHandler, true);
+    document.addEventListener("touchcancel", touchHandler, true);
+*/
+    
+// ---------------------- Start of Mouse listener events ------------------------------
+	var zoom = function(evt){
+		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
+		if (delta) {
+			scale = scale*Math.pow(1.01,delta);
+			if (scale < 0.25) scale = 0.25;
+			redrawMap();
+		}
+		return evt.preventDefault() && false;
+	};
+	canvas.addEventListener('DOMMouseScroll',zoom,false);
+	canvas.addEventListener('mousewheel',zoom,false);
+	//--------------------------------------------
+	canvas.addEventListener('mousedown', mouseDownListener, false);
+	
+	function mouseDownListener(evt) {
+		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+				
+		dragging = true;
+		startX = mouseX - x_offset;
+		startY = mouseY - y_offset;
+
+		if (dragging) {
+			window.addEventListener('mousemove', mouseMoveListener, false);
+		}
+		canvas.removeEventListener('mousedown', mouseDownListener, false);
+		window.addEventListener('mouseup', mouseUpListener, false);
+		
+		//code below prevents the mouse down from having an effect on the main browser window:
+		if (evt.preventDefault) {
+			evt.preventDefault();
+		} //standard
+		else if (evt.returnValue) {
+			evt.returnValue = false;
+		} //older IE
+		return false;
+	}
+
+	function mouseMoveListener(evt) {
+	if (!dragging) return;
+		var mouseX;
+		var mouseY;
+		var bRect = canvas.getBoundingClientRect();
+		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
+		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
+		
+		endX = mouseX;
+		endY = mouseY;
+		
+		x_offset = endX - startX;
+		y_offset = endY - startY;
+
+		redrawMap();
+	}
+	
+	function mouseUpListener(evt) {
+		canvas.addEventListener("mousedown", mouseDownListener, false);
+		window.removeEventListener("mouseup", mouseUpListener, false);
+		if (dragging) {
+			dragging = false;
+			window.removeEventListener("mousemove", mouseMoveListener, false);
+		}
+	}
+// ---------------------- End of Mouse listener events ------------------------------
 }
+
+function touchHandler(event)
+{
+    var touches = event.changedTouches,
+        first = touches[0],
+        type = "";
+    switch(event.type)
+    {
+        case "touchstart": type = "mousedown"; break;
+        case "touchmove":  type = "mousemove"; break;        
+        case "touchend":   type = "mouseup";   break;
+        default:           return;
+    }
+
+    // initMouseEvent(type, canBubble, cancelable, view, clickCount, 
+    //                screenX, screenY, clientX, clientY, ctrlKey, 
+    //                altKey, shiftKey, metaKey, button, relatedTarget);
+
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+                                  first.screenX, first.screenY, 
+                                  first.clientX, first.clientY, false, 
+                                  false, false, false, 0/*left*/, null);
+
+    first.target.dispatchEvent(simulatedEvent);
+    // event.preventDefault();
+}
+// ---------------------- Start of button nav functions ------------------------------
+function zoom(delta)
+{
+	if (delta) {
+		scale = scale*Math.pow(1.01,delta);
+		if (scale < 0.25) scale = 0.25;
+		redrawMap();
+	}
+}
+
+function pan(xx,yy)	{
+	y_offset = y_offset + yy;
+	x_offset = x_offset + xx;
+	redrawMap();
+}
+
+function resetPanZoom(){
+	scale = default_scale;
+	x_offset = 1;
+	y_offset = 1;
+	redrawMap();
+}
+	
+// ---------------------- End of button nav functions ------------------------------
 
 function displayLoading()
 {
@@ -75,20 +228,55 @@ function displayLoading()
 	ctx.fillText("Map Loading ...",canvas.width/2-50,200);
 }
 
-function setMapData(map_number, street_number)
+function setMapData(map_number)
 {
 	switch (map_number) {
-		case 1: mapWidth = 1963; mapHeight = 2310; mapFileName = 'img/sector-a.jpg'; drawMapA(street_number); break;
-		case 2: mapWidth = 2151; mapHeight = 3000; mapFileName = 'img/sector-b.jpg'; drawMapB(street_number);break;
-		case 3: mapWidth = 2395; mapHeight = 3260; mapFileName = 'img/sector-c.jpg'; drawMapC(street_number);break;
-		case 4: mapWidth = 3356; mapHeight = 2882; mapFileName = 'img/sector-d.jpg'; drawMapD(street_number);break;
+		case 1: mapWidth = 1963; mapHeight = 2310; scale = canvas.width / mapWidth; default_scale = scale; mapFileName = 'img/sector-a.jpg'; set_a_data(); break;
+		case 2: mapWidth = 2151; mapHeight = 3000; scale = canvas.width / mapWidth; default_scale = scale; mapFileName = 'img/sector-b.jpg'; set_b_data(); break;
+		case 3: mapWidth = 2395; mapHeight = 3260; scale = canvas.width / mapWidth; default_scale = scale; mapFileName = 'img/sector-c.jpg'; set_c_data(); break;
+		case 4: mapWidth = 3356; mapHeight = 2882; scale = canvas.width / mapWidth; default_scale = scale; mapFileName = 'img/sector-d.jpg'; set_d_data(); break;
 		break;
 	}
 }
 
-function drawMapA(calle)
+function drawMap(calle)
 {
-	var num_pts = [];
+	map.onload = function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
+		ctx.lineWidth = 10 * scale;
+		ctx.strokeStyle = '#ff0000';
+		ctx.beginPath();
+		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
+		for (n = 1; n < num_pts[calle]; n++)
+		{
+			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
+			ctx.stroke();
+		}
+	}
+	map.src = mapFileName;
+}
+
+function redrawMap()
+{
+	ctx.clearRect(0, 0, canvas.width, canvas.height);	
+	ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
+
+	ctx.lineWidth = 10 * scale;
+	ctx.strokeStyle = '#ff0000';
+	ctx.beginPath();
+	ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
+	for (n = 1; n < num_pts[street_number]; n++)
+	{
+		ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
+		ctx.stroke();
+	}
+}
+
+//-----------------------------------------------------------------------------
+
+function set_a_data()
+{
 	num_pts[0] = 2;
 	num_pts[1] = 2;
 	num_pts[2] = 2;
@@ -142,11 +330,11 @@ function drawMapA(calle)
 	num_pts[50] = 2;
 	num_pts[51] = 2;
 	num_pts[52] = 2;
-
 	
-	var x_coord = new Array(53);
+	x_coord = new Array(53);
 	for (i=0; i<53; i++)
 	x_coord[i]=new Array(10);
+	
 	x_coord[0][0] = 1060;x_coord[0][1] = 1155;x_coord[0][2] = 0;x_coord[0][3] = 0;x_coord[0][4] = 0;x_coord[0][5] = 0;x_coord[0][6] = 0;x_coord[0][7] = 0;x_coord[0][8] = 0;x_coord[0][9] = 0;
 	x_coord[1][0] = 111;x_coord[1][1] = 618;x_coord[1][2] = 0;x_coord[1][3] = 0;x_coord[1][4] = 0;x_coord[1][5] = 0;x_coord[1][6] = 0;x_coord[1][7] = 0;x_coord[1][8] = 0;x_coord[1][9] = 0;
 	x_coord[2][0] = 80;x_coord[2][1] = 282;x_coord[2][2] = 0;x_coord[2][3] = 0;x_coord[2][4] = 0;x_coord[2][5] = 0;x_coord[2][6] = 0;x_coord[2][7] = 0;x_coord[2][8] = 0;x_coord[2][9] = 0;
@@ -202,7 +390,7 @@ function drawMapA(calle)
 	x_coord[52][0] = 1556;x_coord[52][1] = 1468;x_coord[52][2] = 0;x_coord[52][3] = 0;x_coord[52][4] = 0;x_coord[52][5] = 0;x_coord[52][6] = 0;x_coord[52][7] = 0;x_coord[52][8] = 0;x_coord[52][9] = 0;
 
 
-	var y_coord = new Array(53);
+	y_coord = new Array(53);
 	for (i=0; i<53; i++)
 	y_coord[i]=new Array(10);
 
@@ -259,133 +447,22 @@ function drawMapA(calle)
 	y_coord[50][0] = 1559;y_coord[50][1] = 1470;y_coord[50][2] = 0;y_coord[50][3] = 0;y_coord[50][4] = 0;y_coord[50][5] = 0;y_coord[50][6] = 0;y_coord[50][7] = 0;y_coord[50][8] = 0;y_coord[50][9] = 0;
 	y_coord[51][0] = 1141;y_coord[51][1] = 1355;y_coord[51][2] = 0;y_coord[51][3] = 0;y_coord[51][4] = 0;y_coord[51][5] = 0;y_coord[51][6] = 0;y_coord[51][7] = 0;y_coord[51][8] = 0;y_coord[51][9] = 0;
 	y_coord[52][0] = 497;y_coord[52][1] = 96;y_coord[52][2] = 0;y_coord[52][3] = 0;y_coord[52][4] = 0;y_coord[52][5] = 0;y_coord[52][6] = 0;y_coord[52][7] = 0;y_coord[52][8] = 0;y_coord[52][9] = 0;
-
-	var map = new Image();
-	var ctx = canvas.getContext('2d');
-	var scale = canvas.width / mapWidth;
-	var x = 0;
-	var y = 0;
-
-	var x_offset = 0;
-	var y_offset = 0;
-	
-	map.onload = function() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
-		for (n = 1; n < num_pts[calle]; n++)
-		{
-			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
-			ctx.stroke();
-		}
-	}
-	map.src = mapFileName;
-
-	function redrawMap() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);	
-		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
-
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
-		for (n = 1; n < num_pts[street_number]; n++)
-		{
-			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
-			ctx.stroke();
-		}
-	}
-
-	//----------------------------
-	// Mouse listeners and events
-	//----------------------------
-	var zoom = function(evt){
-		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
-		if (delta) {
-			scale = scale*Math.pow(1.01,delta);
-			if (scale < 0.25) scale = 0.25;
-			redrawMap();
-		}
-		return evt.preventDefault() && false;
-	};
-	canvas.addEventListener('DOMMouseScroll',zoom,false);
-	canvas.addEventListener('mousewheel',zoom,false);
-	//--------------------------------------------
-	canvas.addEventListener('mousedown', mouseDownListener, false);
-	
-	function mouseDownListener(evt) {
-		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-				
-		dragging = true;
-		startX = mouseX - x_offset;
-		startY = mouseY - y_offset;
-
-		if (dragging) {
-			window.addEventListener('mousemove', mouseMoveListener, false);
-		}
-		canvas.removeEventListener('mousedown', mouseDownListener, false);
-		window.addEventListener('mouseup', mouseUpListener, false);
-		
-		//code below prevents the mouse down from having an effect on the main browser window:
-		if (evt.preventDefault) {
-			evt.preventDefault();
-		} //standard
-		else if (evt.returnValue) {
-			evt.returnValue = false;
-		} //older IE
-		return false;
-	}
-
-	function mouseMoveListener(evt) {
-	if (!dragging) return;
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-		
-		endX = mouseX;
-		endY = mouseY;
-		
-		x_offset = endX - startX;
-		y_offset = endY - startY;
-
-		redrawMap();
-	}
-	
-	function mouseUpListener(evt) {
-		canvas.addEventListener("mousedown", mouseDownListener, false);
-		window.removeEventListener("mouseup", mouseUpListener, false);
-		if (dragging) {
-			dragging = false;
-			window.removeEventListener("mousemove", mouseMoveListener, false);
-		}
-	}
 }
-//-----------------------------------------------------------------------------
-function drawMapB(calle)
+
+function set_b_data()
 {
-	var num_pts = [];
-	num_pts[0] = 2;
+	num_pts[0] = 7;
 	num_pts[1] = 2;
-	num_pts[2] = 4;
-	num_pts[3] = 7;
-	num_pts[4] = 2;
-	num_pts[5] = 4;
-	num_pts[6] = 2;
+	num_pts[2] = 2;
+	num_pts[3] = 4;
+	num_pts[4] = 7;
+	num_pts[5] = 2;
+	num_pts[6] = 4;
 	num_pts[7] = 2;
 	num_pts[8] = 2;
 	num_pts[9] = 2;
 	num_pts[10] = 2;
-	num_pts[11] = 7;
+	num_pts[11] = 2;
 	num_pts[12] = 2;
 	num_pts[13] = 2;
 	num_pts[14] = 4;
@@ -406,22 +483,22 @@ function drawMapB(calle)
 	num_pts[29] = 2;
 	num_pts[30] = 2;
 	
-	var x_coord = new Array(31);
+	x_coord = new Array(31);
 	for (i=0; i<31; i++)
 	x_coord[i]=new Array(10);
 	
-	x_coord[0][0] = 811;x_coord[0][1] = 1448;x_coord[0][2] = 251667;x_coord[0][3] = 251667;x_coord[0][4] = 251667;x_coord[0][5] = 251667;x_coord[0][6] = 251667;x_coord[0][7] = 251667;x_coord[0][8] = 251667;x_coord[0][9] = 251667;
-	x_coord[1][0] = 82;x_coord[1][1] = 445;x_coord[1][2] = 251667;x_coord[1][3] = 251667;x_coord[1][4] = 251667;x_coord[1][5] = 251667;x_coord[1][6] = 251667;x_coord[1][7] = 251667;x_coord[1][8] = 251667;x_coord[1][9] = 251667;
-	x_coord[2][0] = 295;x_coord[2][1] = 704;x_coord[2][2] = 717;x_coord[2][3] = 1030;x_coord[2][4] = 251667;x_coord[2][5] = 251667;x_coord[2][6] = 251667;x_coord[2][7] = 251667;x_coord[2][8] = 251667;x_coord[2][9] = 251667;
-	x_coord[3][0] = 540;x_coord[3][1] = 609;x_coord[3][2] = 733;x_coord[3][3] = 801;x_coord[3][4] = 888;x_coord[3][5] = 1019;x_coord[3][6] = 1086;x_coord[3][7] = 251667;x_coord[3][8] = 251667;x_coord[3][9] = 251667;
-	x_coord[4][0] = 302;x_coord[4][1] = 926;x_coord[4][2] = 251667;x_coord[4][3] = 251667;x_coord[4][4] = 251667;x_coord[4][5] = 251667;x_coord[4][6] = 251667;x_coord[4][7] = 251667;x_coord[4][8] = 251667;x_coord[4][9] = 251667;
-	x_coord[5][0] = 292;x_coord[5][1] = 737;x_coord[5][2] = 759;x_coord[5][3] = 1070;x_coord[5][4] = 251667;x_coord[5][5] = 251667;x_coord[5][6] = 251667;x_coord[5][7] = 251667;x_coord[5][8] = 251667;x_coord[5][9] = 251667;
-	x_coord[6][0] = 890;x_coord[6][1] = 1185;x_coord[6][2] = 251667;x_coord[6][3] = 251667;x_coord[6][4] = 251667;x_coord[6][5] = 251667;x_coord[6][6] = 251667;x_coord[6][7] = 251667;x_coord[6][8] = 251667;x_coord[6][9] = 251667;
-	x_coord[7][0] = 304;x_coord[7][1] = 792;x_coord[7][2] = 251667;x_coord[7][3] = 251667;x_coord[7][4] = 251667;x_coord[7][5] = 251667;x_coord[7][6] = 251667;x_coord[7][7] = 251667;x_coord[7][8] = 251667;x_coord[7][9] = 251667;
-	x_coord[8][0] = 1047;x_coord[8][1] = 1172;x_coord[8][2] = 251667;x_coord[8][3] = 251667;x_coord[8][4] = 251667;x_coord[8][5] = 251667;x_coord[8][6] = 251667;x_coord[8][7] = 251667;x_coord[8][8] = 251667;x_coord[8][9] = 251667;
-	x_coord[9][0] = 798;x_coord[9][1] = 1107;x_coord[9][2] = 251667;x_coord[9][3] = 251667;x_coord[9][4] = 251667;x_coord[9][5] = 251667;x_coord[9][6] = 251667;x_coord[9][7] = 251667;x_coord[9][8] = 251667;x_coord[9][9] = 251667;
-	x_coord[10][0] = 636;x_coord[10][1] = 1015;x_coord[10][2] = 251667;x_coord[10][3] = 251667;x_coord[10][4] = 251667;x_coord[10][5] = 251667;x_coord[10][6] = 251667;x_coord[10][7] = 251667;x_coord[10][8] = 251667;x_coord[10][9] = 251667;
-	x_coord[11][0] = 1947;x_coord[11][1] = 1741;x_coord[11][2] = 1363;x_coord[11][3] = 1237;x_coord[11][4] = 932;x_coord[11][5] = 599;x_coord[11][6] = 292;x_coord[11][7] = 251667;x_coord[11][8] = 251667;x_coord[11][9] = 251667;
+	x_coord[0][0] = 1947;x_coord[0][1] = 1741;x_coord[0][2] = 1363;x_coord[0][3] = 1237;x_coord[0][4] = 932;x_coord[0][5] = 599;x_coord[0][6] = 292;x_coord[0][7] = 251667;x_coord[0][8] = 251667;x_coord[0][9] = 251667;
+	x_coord[1][0] = 811;x_coord[1][1] = 1448;x_coord[1][2] = 251667;x_coord[1][3] = 251667;x_coord[1][4] = 251667;x_coord[1][5] = 251667;x_coord[1][6] = 251667;x_coord[1][7] = 251667;x_coord[1][8] = 251667;x_coord[1][9] = 251667;
+	x_coord[2][0] = 82;x_coord[2][1] = 445;x_coord[2][2] = 251667;x_coord[2][3] = 251667;x_coord[2][4] = 251667;x_coord[2][5] = 251667;x_coord[2][6] = 251667;x_coord[2][7] = 251667;x_coord[2][8] = 251667;x_coord[2][9] = 251667;
+	x_coord[3][0] = 295;x_coord[3][1] = 704;x_coord[3][2] = 717;x_coord[3][3] = 1030;x_coord[3][4] = 251667;x_coord[3][5] = 251667;x_coord[3][6] = 251667;x_coord[3][7] = 251667;x_coord[3][8] = 251667;x_coord[3][9] = 251667;
+	x_coord[4][0] = 540;x_coord[4][1] = 609;x_coord[4][2] = 733;x_coord[4][3] = 801;x_coord[4][4] = 888;x_coord[4][5] = 1019;x_coord[4][6] = 1086;x_coord[4][7] = 251667;x_coord[4][8] = 251667;x_coord[4][9] = 251667;
+	x_coord[5][0] = 302;x_coord[5][1] = 926;x_coord[5][2] = 251667;x_coord[5][3] = 251667;x_coord[5][4] = 251667;x_coord[5][5] = 251667;x_coord[5][6] = 251667;x_coord[5][7] = 251667;x_coord[5][8] = 251667;x_coord[5][9] = 251667;
+	x_coord[6][0] = 292;x_coord[6][1] = 737;x_coord[6][2] = 759;x_coord[6][3] = 1070;x_coord[6][4] = 251667;x_coord[6][5] = 251667;x_coord[6][6] = 251667;x_coord[6][7] = 251667;x_coord[6][8] = 251667;x_coord[6][9] = 251667;
+	x_coord[7][0] = 890;x_coord[7][1] = 1185;x_coord[7][2] = 251667;x_coord[7][3] = 251667;x_coord[7][4] = 251667;x_coord[7][5] = 251667;x_coord[7][6] = 251667;x_coord[7][7] = 251667;x_coord[7][8] = 251667;x_coord[7][9] = 251667;
+	x_coord[8][0] = 304;x_coord[8][1] = 792;x_coord[8][2] = 251667;x_coord[8][3] = 251667;x_coord[8][4] = 251667;x_coord[8][5] = 251667;x_coord[8][6] = 251667;x_coord[8][7] = 251667;x_coord[8][8] = 251667;x_coord[8][9] = 251667;
+	x_coord[9][0] = 1047;x_coord[9][1] = 1172;x_coord[9][2] = 251667;x_coord[9][3] = 251667;x_coord[9][4] = 251667;x_coord[9][5] = 251667;x_coord[9][6] = 251667;x_coord[9][7] = 251667;x_coord[9][8] = 251667;x_coord[9][9] = 251667;
+	x_coord[10][0] = 798;x_coord[10][1] = 1107;x_coord[10][2] = 251667;x_coord[10][3] = 251667;x_coord[10][4] = 251667;x_coord[10][5] = 251667;x_coord[10][6] = 251667;x_coord[10][7] = 251667;x_coord[10][8] = 251667;x_coord[10][9] = 251667;
+	x_coord[11][0] = 636;x_coord[11][1] = 1015;x_coord[11][2] = 251667;x_coord[11][3] = 251667;x_coord[11][4] = 251667;x_coord[11][5] = 251667;x_coord[11][6] = 251667;x_coord[11][7] = 251667;x_coord[11][8] = 251667;x_coord[11][9] = 251667;
 	x_coord[12][0] = 956;x_coord[12][1] = 1146;x_coord[12][2] = 251667;x_coord[12][3] = 251667;x_coord[12][4] = 251667;x_coord[12][5] = 251667;x_coord[12][6] = 251667;x_coord[12][7] = 251667;x_coord[12][8] = 251667;x_coord[12][9] = 251667;
 	x_coord[13][0] = 1149;x_coord[13][1] = 1264;x_coord[13][2] = 251667;x_coord[13][3] = 251667;x_coord[13][4] = 251667;x_coord[13][5] = 251667;x_coord[13][6] = 251667;x_coord[13][7] = 251667;x_coord[13][8] = 251667;x_coord[13][9] = 251667;
 	x_coord[14][0] = 1744;x_coord[14][1] = 1903;x_coord[14][2] = 2027;x_coord[14][3] = 2063;x_coord[14][4] = 251667;x_coord[14][5] = 251667;x_coord[14][6] = 251667;x_coord[14][7] = 251667;x_coord[14][8] = 251667;x_coord[14][9] = 251667;
@@ -442,22 +519,22 @@ function drawMapB(calle)
 	x_coord[29][0] = 298;x_coord[29][1] = 995;x_coord[29][2] = 251667;x_coord[29][3] = 251667;x_coord[29][4] = 251667;x_coord[29][5] = 251667;x_coord[29][6] = 251667;x_coord[29][7] = 251667;x_coord[29][8] = 251667;x_coord[29][9] = 251667;
 	x_coord[30][0] = 1768;x_coord[30][1] = 2137;x_coord[30][2] = 251667;x_coord[30][3] = 251667;x_coord[30][4] = 251667;x_coord[30][5] = 251667;x_coord[30][6] = 251667;x_coord[30][7] = 251667;x_coord[30][8] = 251667;x_coord[30][9] = 251667;
 
-	var y_coord = new Array(31);
+	y_coord = new Array(31);
 	for (i=0; i<31; i++)
 	y_coord[i]=new Array(10);
 
-	y_coord[0][0] = 809;y_coord[0][1] = 501;y_coord[0][2] = 8871515;y_coord[0][3] = 8871515;y_coord[0][4] = 8871515;y_coord[0][5] = 8871515;y_coord[0][6] = 8871515;y_coord[0][7] = 8871515;y_coord[0][8] = 8871515;y_coord[0][9] = 8871515;
-	y_coord[1][0] = 1248;y_coord[1][1] = 1001;y_coord[1][2] = 8871515;y_coord[1][3] = 8871515;y_coord[1][4] = 8871515;y_coord[1][5] = 8871515;y_coord[1][6] = 8871515;y_coord[1][7] = 8871515;y_coord[1][8] = 8871515;y_coord[1][9] = 8871515;
-	y_coord[2][0] = 2161;y_coord[2][1] = 1976;y_coord[2][2] = 1986;y_coord[2][3] = 1828;y_coord[2][4] = 8871515;y_coord[2][5] = 8871515;y_coord[2][6] = 8871515;y_coord[2][7] = 8871515;y_coord[2][8] = 8871515;y_coord[2][9] = 8871515;
-	y_coord[3][0] = 1626;y_coord[3][1] = 1767;y_coord[3][2] = 2029;y_coord[3][3] = 2151;y_coord[3][4] = 2340;y_coord[3][5] = 2604;y_coord[3][6] = 2735;y_coord[3][7] = 8871515;y_coord[3][8] = 8871515;y_coord[3][9] = 8871515;
-	y_coord[4][0] = 1921;y_coord[4][1] = 1605;y_coord[4][2] = 8871515;y_coord[4][3] = 8871515;y_coord[4][4] = 8871515;y_coord[4][5] = 8871515;y_coord[4][6] = 8871515;y_coord[4][7] = 8871515;y_coord[4][8] = 8871515;y_coord[4][9] = 8871515;
-	y_coord[5][0] = 2236;y_coord[5][1] = 2030;y_coord[5][2] = 2069;y_coord[5][3] = 1910;y_coord[5][4] = 8871515;y_coord[5][5] = 8871515;y_coord[5][6] = 8871515;y_coord[5][7] = 8871515;y_coord[5][8] = 8871515;y_coord[5][9] = 8871515;
-	y_coord[6][0] = 2340;y_coord[6][1] = 2309;y_coord[6][2] = 8871515;y_coord[6][3] = 8871515;y_coord[6][4] = 8871515;y_coord[6][5] = 8871515;y_coord[6][6] = 8871515;y_coord[6][7] = 8871515;y_coord[6][8] = 8871515;y_coord[6][9] = 8871515;
-	y_coord[7][0] = 1581;y_coord[7][1] = 1339;y_coord[7][2] = 8871515;y_coord[7][3] = 8871515;y_coord[7][4] = 8871515;y_coord[7][5] = 8871515;y_coord[7][6] = 8871515;y_coord[7][7] = 8871515;y_coord[7][8] = 8871515;y_coord[7][9] = 8871515;
-	y_coord[8][0] = 2429;y_coord[8][1] = 2671;y_coord[8][2] = 8871515;y_coord[8][3] = 8871515;y_coord[8][4] = 8871515;y_coord[8][5] = 8871515;y_coord[8][6] = 8871515;y_coord[8][7] = 8871515;y_coord[8][8] = 8871515;y_coord[8][9] = 8871515;
-	y_coord[9][0] = 2151;y_coord[9][1] = 1989;y_coord[9][2] = 8871515;y_coord[9][3] = 8871515;y_coord[9][4] = 8871515;y_coord[9][5] = 8871515;y_coord[9][6] = 8871515;y_coord[9][7] = 8871515;y_coord[9][8] = 8871515;y_coord[9][9] = 8871515;
-	y_coord[10][0] = 2799;y_coord[10][1] = 2605;y_coord[10][2] = 8871515;y_coord[10][3] = 8871515;y_coord[10][4] = 8871515;y_coord[10][5] = 8871515;y_coord[10][6] = 8871515;y_coord[10][7] = 8871515;y_coord[10][8] = 8871515;y_coord[10][9] = 8871515;
-	y_coord[11][0] = 1022;y_coord[11][1] = 936;y_coord[11][2] = 854;y_coord[11][3] = 878;y_coord[11][4] = 1061;y_coord[11][5] = 1251;y_coord[11][6] = 1476;y_coord[11][7] = 8871515;y_coord[11][8] = 8871515;y_coord[11][9] = 8871515;
+	y_coord[0][0] = 1022;y_coord[0][1] = 936;y_coord[0][2] = 854;y_coord[0][3] = 878;y_coord[0][4] = 1061;y_coord[0][5] = 1251;y_coord[0][6] = 1476;y_coord[0][7] = 8871515;y_coord[0][8] = 8871515;y_coord[0][9] = 8871515;
+	y_coord[1][0] = 809;y_coord[1][1] = 501;y_coord[1][2] = 8871515;y_coord[1][3] = 8871515;y_coord[1][4] = 8871515;y_coord[1][5] = 8871515;y_coord[1][6] = 8871515;y_coord[1][7] = 8871515;y_coord[1][8] = 8871515;y_coord[1][9] = 8871515;
+	y_coord[2][0] = 1248;y_coord[2][1] = 1001;y_coord[2][2] = 8871515;y_coord[2][3] = 8871515;y_coord[2][4] = 8871515;y_coord[2][5] = 8871515;y_coord[2][6] = 8871515;y_coord[2][7] = 8871515;y_coord[2][8] = 8871515;y_coord[2][9] = 8871515;
+	y_coord[3][0] = 2161;y_coord[3][1] = 1976;y_coord[3][2] = 1986;y_coord[3][3] = 1828;y_coord[3][4] = 8871515;y_coord[3][5] = 8871515;y_coord[3][6] = 8871515;y_coord[3][7] = 8871515;y_coord[3][8] = 8871515;y_coord[3][9] = 8871515;
+	y_coord[4][0] = 1626;y_coord[4][1] = 1767;y_coord[4][2] = 2029;y_coord[4][3] = 2151;y_coord[4][4] = 2340;y_coord[4][5] = 2604;y_coord[4][6] = 2735;y_coord[4][7] = 8871515;y_coord[4][8] = 8871515;y_coord[4][9] = 8871515;
+	y_coord[5][0] = 1921;y_coord[5][1] = 1605;y_coord[5][2] = 8871515;y_coord[5][3] = 8871515;y_coord[5][4] = 8871515;y_coord[5][5] = 8871515;y_coord[5][6] = 8871515;y_coord[5][7] = 8871515;y_coord[5][8] = 8871515;y_coord[5][9] = 8871515;
+	y_coord[6][0] = 2236;y_coord[6][1] = 2030;y_coord[6][2] = 2069;y_coord[6][3] = 1910;y_coord[6][4] = 8871515;y_coord[6][5] = 8871515;y_coord[6][6] = 8871515;y_coord[6][7] = 8871515;y_coord[6][8] = 8871515;y_coord[6][9] = 8871515;
+	y_coord[7][0] = 2340;y_coord[7][1] = 2309;y_coord[7][2] = 8871515;y_coord[7][3] = 8871515;y_coord[7][4] = 8871515;y_coord[7][5] = 8871515;y_coord[7][6] = 8871515;y_coord[7][7] = 8871515;y_coord[7][8] = 8871515;y_coord[7][9] = 8871515;
+	y_coord[8][0] = 1581;y_coord[8][1] = 1339;y_coord[8][2] = 8871515;y_coord[8][3] = 8871515;y_coord[8][4] = 8871515;y_coord[8][5] = 8871515;y_coord[8][6] = 8871515;y_coord[8][7] = 8871515;y_coord[8][8] = 8871515;y_coord[8][9] = 8871515;
+	y_coord[9][0] = 2429;y_coord[9][1] = 2671;y_coord[9][2] = 8871515;y_coord[9][3] = 8871515;y_coord[9][4] = 8871515;y_coord[9][5] = 8871515;y_coord[9][6] = 8871515;y_coord[9][7] = 8871515;y_coord[9][8] = 8871515;y_coord[9][9] = 8871515;
+	y_coord[10][0] = 2151;y_coord[10][1] = 1989;y_coord[10][2] = 8871515;y_coord[10][3] = 8871515;y_coord[10][4] = 8871515;y_coord[10][5] = 8871515;y_coord[10][6] = 8871515;y_coord[10][7] = 8871515;y_coord[10][8] = 8871515;y_coord[10][9] = 8871515;
+	y_coord[11][0] = 2799;y_coord[11][1] = 2605;y_coord[11][2] = 8871515;y_coord[11][3] = 8871515;y_coord[11][4] = 8871515;y_coord[11][5] = 8871515;y_coord[11][6] = 8871515;y_coord[11][7] = 8871515;y_coord[11][8] = 8871515;y_coord[11][9] = 8871515;
 	y_coord[12][0] = 2185;y_coord[12][1] = 2073;y_coord[12][2] = 8871515;y_coord[12][3] = 8871515;y_coord[12][4] = 8871515;y_coord[12][5] = 8871515;y_coord[12][6] = 8871515;y_coord[12][7] = 8871515;y_coord[12][8] = 8871515;y_coord[12][9] = 8871515;
 	y_coord[13][0] = 2379;y_coord[13][1] = 2600;y_coord[13][2] = 8871515;y_coord[13][3] = 8871515;y_coord[13][4] = 8871515;y_coord[13][5] = 8871515;y_coord[13][6] = 8871515;y_coord[13][7] = 8871515;y_coord[13][8] = 8871515;y_coord[13][9] = 8871515;
 	y_coord[14][0] = 1080;y_coord[14][1] = 1146;y_coord[14][2] = 1158;y_coord[14][3] = 1219;y_coord[14][4] = 8871515;y_coord[14][5] = 8871515;y_coord[14][6] = 8871515;y_coord[14][7] = 8871515;y_coord[14][8] = 8871515;y_coord[14][9] = 8871515;
@@ -477,121 +554,10 @@ function drawMapB(calle)
 	y_coord[28][0] = 964;y_coord[28][1] = 1164;y_coord[28][2] = 8871515;y_coord[28][3] = 8871515;y_coord[28][4] = 8871515;y_coord[28][5] = 8871515;y_coord[28][6] = 8871515;y_coord[28][7] = 8871515;y_coord[28][8] = 8871515;y_coord[28][9] = 8871515;
 	y_coord[29][0] = 2091;y_coord[29][1] = 1751;y_coord[29][2] = 8871515;y_coord[29][3] = 8871515;y_coord[29][4] = 8871515;y_coord[29][5] = 8871515;y_coord[29][6] = 8871515;y_coord[29][7] = 8871515;y_coord[29][8] = 8871515;y_coord[29][9] = 8871515;
 	y_coord[30][0] = 1354;y_coord[30][1] = 1183;y_coord[30][2] = 8871515;y_coord[30][3] = 8871515;y_coord[30][4] = 8871515;y_coord[30][5] = 8871515;y_coord[30][6] = 8871515;y_coord[30][7] = 8871515;y_coord[30][8] = 8871515;y_coord[30][9] = 8871515;
-
-	var map = new Image();
-	var ctx = canvas.getContext('2d');
-	var scale = canvas.width / mapWidth;
-	var x = 0;
-	var y = 0;
-
-	var x_offset = 0;
-	var y_offset = 0;
-	
-	map.onload = function() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
-		for (n = 1; n < num_pts[calle]; n++)
-		{
-			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
-			ctx.stroke();
-		}
-	}
-	map.src = mapFileName;
-
-	function redrawMap() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);	
-		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
-
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
-		for (n = 1; n < num_pts[street_number]; n++)
-		{
-			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
-			ctx.stroke();
-		}
-	}
-
-	//----------------------------
-	// Mouse listeners and events
-	//----------------------------
-	var zoom = function(evt){
-		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
-		if (delta) {
-			scale = scale*Math.pow(1.01,delta);
-			if (scale < 0.25) scale = 0.25;
-			redrawMap();
-		}
-		return evt.preventDefault() && false;
-	};
-	canvas.addEventListener('DOMMouseScroll',zoom,false);
-	canvas.addEventListener('mousewheel',zoom,false);
-	//--------------------------------------------
-	canvas.addEventListener('mousedown', mouseDownListener, false);
-	
-	function mouseDownListener(evt) {
-		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-				
-		dragging = true;
-		startX = mouseX - x_offset;
-		startY = mouseY - y_offset;
-
-		if (dragging) {
-			window.addEventListener('mousemove', mouseMoveListener, false);
-		}
-		canvas.removeEventListener('mousedown', mouseDownListener, false);
-		window.addEventListener('mouseup', mouseUpListener, false);
-		
-		//code below prevents the mouse down from having an effect on the main browser window:
-		if (evt.preventDefault) {
-			evt.preventDefault();
-		} //standard
-		else if (evt.returnValue) {
-			evt.returnValue = false;
-		} //older IE
-		return false;
-	}
-
-	function mouseMoveListener(evt) {
-	if (!dragging) return;
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-		
-		endX = mouseX;
-		endY = mouseY;
-		
-		x_offset = endX - startX;
-		y_offset = endY - startY;
-
-		redrawMap();
-	}
-	
-	function mouseUpListener(evt) {
-		canvas.addEventListener("mousedown", mouseDownListener, false);
-		window.removeEventListener("mouseup", mouseUpListener, false);
-		if (dragging) {
-			dragging = false;
-			window.removeEventListener("mousemove", mouseMoveListener, false);
-		}
-	}
 }
-//-----------------------------------------------------------------------------
-function drawMapC(calle)
+
+function set_c_data()
 {
-	var num_pts = [];
 	num_pts[0] = 7;
 	num_pts[1] = 4;
 	num_pts[2] = 2;
@@ -633,7 +599,7 @@ function drawMapC(calle)
 	num_pts[38] = 2;
 	num_pts[39] = 2;
 	
-	var x_coord = new Array(40);
+	x_coord = new Array(40);
 	for (i=0; i<40; i++)
 	x_coord[i]=new Array(10);
 	
@@ -678,7 +644,7 @@ function drawMapC(calle)
 	x_coord[38][0] = 533;x_coord[38][1] = 185;x_coord[38][2] = 254069;x_coord[38][3] = 254069;x_coord[38][4] = 254069;x_coord[38][5] = 254069;x_coord[38][6] = 254069;x_coord[38][7] = 254069;x_coord[38][8] = 254069;x_coord[38][9] = 254069;
 	x_coord[39][0] = 1038;x_coord[39][1] = 1244;x_coord[39][2] = 254069;x_coord[39][3] = 254069;x_coord[39][4] = 254069;x_coord[39][5] = 254069;x_coord[39][6] = 254069;x_coord[39][7] = 254069;x_coord[39][8] = 254069;x_coord[39][9] = 254069;
 
-	var y_coord = new Array(40);
+	y_coord = new Array(40);
 	for (i=0; i<40; i++)
 	y_coord[i]=new Array(10);
 
@@ -722,121 +688,10 @@ function drawMapC(calle)
 	y_coord[37][0] = 2638;y_coord[37][1] = 2760;y_coord[37][2] = 2779;y_coord[37][3] = 2884;y_coord[37][4] = 3127;y_coord[37][5] = 8870355;y_coord[37][6] = 8870355;y_coord[37][7] = 8870355;y_coord[37][8] = 8870355;y_coord[37][9] = 8870355;
 	y_coord[38][0] = 457;y_coord[38][1] = 594;y_coord[38][2] = 8870355;y_coord[38][3] = 8870355;y_coord[38][4] = 8870355;y_coord[38][5] = 8870355;y_coord[38][6] = 8870355;y_coord[38][7] = 8870355;y_coord[38][8] = 8870355;y_coord[38][9] = 8870355;
 	y_coord[39][0] = 3243;y_coord[39][1] = 3017;y_coord[39][2] = 8870355;y_coord[39][3] = 8870355;y_coord[39][4] = 8870355;y_coord[39][5] = 8870355;y_coord[39][6] = 8870355;y_coord[39][7] = 8870355;y_coord[39][8] = 8870355;y_coord[39][9] = 8870355;
-
-	var map = new Image();
-	var ctx = canvas.getContext('2d');
-	var scale = canvas.width / mapWidth;
-	var x = 0;
-	var y = 0;
-
-	var x_offset = 0;
-	var y_offset = 0;
-	
-	map.onload = function() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
-		for (n = 1; n < num_pts[calle]; n++)
-		{
-			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
-			ctx.stroke();
-		}
-	}
-	map.src = mapFileName;
-
-	function redrawMap() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);	
-		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
-
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
-		for (n = 1; n < num_pts[street_number]; n++)
-		{
-			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
-			ctx.stroke();
-		}
-	}
-
-	//----------------------------
-	// Mouse listeners and events
-	//----------------------------
-	var zoom = function(evt){
-		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
-		if (delta) {
-			scale = scale*Math.pow(1.01,delta);
-			if (scale < 0.25) scale = 0.25;
-			redrawMap();
-		}
-		return evt.preventDefault() && false;
-	};
-	canvas.addEventListener('DOMMouseScroll',zoom,false);
-	canvas.addEventListener('mousewheel',zoom,false);
-	//--------------------------------------------
-	canvas.addEventListener('mousedown', mouseDownListener, false);
-	
-	function mouseDownListener(evt) {
-		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-				
-		dragging = true;
-		startX = mouseX - x_offset;
-		startY = mouseY - y_offset;
-
-		if (dragging) {
-			window.addEventListener('mousemove', mouseMoveListener, false);
-		}
-		canvas.removeEventListener('mousedown', mouseDownListener, false);
-		window.addEventListener('mouseup', mouseUpListener, false);
-		
-		//code below prevents the mouse down from having an effect on the main browser window:
-		if (evt.preventDefault) {
-			evt.preventDefault();
-		} //standard
-		else if (evt.returnValue) {
-			evt.returnValue = false;
-		} //older IE
-		return false;
-	}
-
-	function mouseMoveListener(evt) {
-	if (!dragging) return;
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-		
-		endX = mouseX;
-		endY = mouseY;
-		
-		x_offset = endX - startX;
-		y_offset = endY - startY;
-
-		redrawMap();
-	}
-	
-	function mouseUpListener(evt) {
-		canvas.addEventListener("mousedown", mouseDownListener, false);
-		window.removeEventListener("mouseup", mouseUpListener, false);
-		if (dragging) {
-			dragging = false;
-			window.removeEventListener("mousemove", mouseMoveListener, false);
-		}
-	}
 }
-//-----------------------------------------------------------------------------
-function drawMapD(calle)
+
+function set_d_data()
 {
-	var num_pts = [];
 	num_pts[0] = 10;
 	num_pts[1] = 5;
 	num_pts[2] = 2;
@@ -918,9 +773,8 @@ function drawMapD(calle)
 	num_pts[78] = 2;
 	num_pts[79] = 3;
 	num_pts[80] = 2;
-
 	
-	var x_coord = new Array(81);
+	x_coord = new Array(81);
 	for (i=0; i<81; i++)
 	x_coord[i]=new Array(10);
 	
@@ -1006,7 +860,7 @@ function drawMapD(calle)
 	x_coord[79][0] = 495;x_coord[79][1] = 750;x_coord[79][2] = 853;x_coord[79][3] = 256490;x_coord[79][4] = 256490;x_coord[79][5] = 256490;x_coord[79][6] = 256490;x_coord[79][7] = 256490;x_coord[79][8] = 256490;x_coord[79][9] = 256490;
 	x_coord[80][0] = 1134;x_coord[80][1] = 1324;x_coord[80][2] = 256490;x_coord[80][3] = 256490;x_coord[80][4] = 256490;x_coord[80][5] = 256490;x_coord[80][6] = 256490;x_coord[80][7] = 256490;x_coord[80][8] = 256490;x_coord[80][9] = 256490;
 
-	var y_coord = new Array(81);
+	y_coord = new Array(81);
 	for (i=0; i<81; i++)
 	y_coord[i]=new Array(10);
 
@@ -1091,117 +945,8 @@ function drawMapD(calle)
 	y_coord[78][0] = 568;y_coord[78][1] = 655;y_coord[78][2] = 8868351;y_coord[78][3] = 8868351;y_coord[78][4] = 8868351;y_coord[78][5] = 8868351;y_coord[78][6] = 8868351;y_coord[78][7] = 8868351;y_coord[78][8] = 8868351;y_coord[78][9] = 8868351;
 	y_coord[79][0] = 1487;y_coord[79][1] = 1358;y_coord[79][2] = 1237;y_coord[79][3] = 8868351;y_coord[79][4] = 8868351;y_coord[79][5] = 8868351;y_coord[79][6] = 8868351;y_coord[79][7] = 8868351;y_coord[79][8] = 8868351;y_coord[79][9] = 8868351;
 	y_coord[80][0] = 1718;y_coord[80][1] = 1890;y_coord[80][2] = 8868351;y_coord[80][3] = 8868351;y_coord[80][4] = 8868351;y_coord[80][5] = 8868351;y_coord[80][6] = 8868351;y_coord[80][7] = 8868351;y_coord[80][8] = 8868351;y_coord[80][9] = 8868351;
-
-	var map = new Image();
-	var ctx = canvas.getContext('2d');
-	var scale = canvas.width / mapWidth;
-	var x = 0;
-	var y = 0;
-
-	var x_offset = 0;
-	var y_offset = 0;
-	
-	map.onload = function() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.drawImage(map,x,y,mapWidth*scale,mapHeight*scale);
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[calle][0] * scale,y_coord[calle][0] * scale);
-		for (n = 1; n < num_pts[calle]; n++)
-		{
-			ctx.lineTo(x_coord[calle][n] * scale,y_coord[calle][n] * scale);
-			ctx.stroke();
-		}
-	}
-	map.src = mapFileName;
-
-	function redrawMap() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);	
-		ctx.drawImage(map,x_offset,y_offset,mapWidth*scale,mapHeight*scale);
-
-		ctx.lineWidth = 10 * scale;
-		ctx.strokeStyle = '#ff0000';
-		ctx.beginPath();
-		ctx.moveTo(x_coord[street_number][0] * scale + x_offset, y_coord[street_number][0] * scale + y_offset);
-		for (n = 1; n < num_pts[street_number]; n++)
-		{
-			ctx.lineTo(x_coord[street_number][n] * scale + x_offset, y_coord[street_number][n] * scale + y_offset);
-			ctx.stroke();
-		}
-	}
-
-	//----------------------------
-	// Mouse listeners and events
-	//----------------------------
-	var zoom = function(evt){
-		var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 10;
-		if (delta) {
-			scale = scale*Math.pow(1.01,delta);
-			if (scale < 0.25) scale = 0.25;
-			redrawMap();
-		}
-		return evt.preventDefault() && false;
-	};
-	canvas.addEventListener('DOMMouseScroll',zoom,false);
-	canvas.addEventListener('mousewheel',zoom,false);
-	//--------------------------------------------
-	canvas.addEventListener('mousedown', mouseDownListener, false);
-	
-	function mouseDownListener(evt) {
-		//getting mouse position correctly, being mindful of resizing that may have occured in the browser:
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-				
-		dragging = true;
-		startX = mouseX - x_offset;
-		startY = mouseY - y_offset;
-
-		if (dragging) {
-			window.addEventListener('mousemove', mouseMoveListener, false);
-		}
-		canvas.removeEventListener('mousedown', mouseDownListener, false);
-		window.addEventListener('mouseup', mouseUpListener, false);
-		
-		//code below prevents the mouse down from having an effect on the main browser window:
-		if (evt.preventDefault) {
-			evt.preventDefault();
-		} //standard
-		else if (evt.returnValue) {
-			evt.returnValue = false;
-		} //older IE
-		return false;
-	}
-
-	function mouseMoveListener(evt) {
-	if (!dragging) return;
-		var mouseX;
-		var mouseY;
-		var bRect = canvas.getBoundingClientRect();
-		mouseX = (evt.clientX - bRect.left)*(canvas.width/bRect.width);
-		mouseY = (evt.clientY - bRect.top)*(canvas.height/bRect.height);
-		
-		endX = mouseX;
-		endY = mouseY;
-		
-		x_offset = endX - startX;
-		y_offset = endY - startY;
-
-		redrawMap();
-	}
-	
-	function mouseUpListener(evt) {
-		canvas.addEventListener("mousedown", mouseDownListener, false);
-		window.removeEventListener("mouseup", mouseUpListener, false);
-		if (dragging) {
-			dragging = false;
-			window.removeEventListener("mousemove", mouseMoveListener, false);
-		}
-	}
 }
+
 </script>
 
 <!-- Libs -->
