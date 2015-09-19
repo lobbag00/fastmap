@@ -15,240 +15,252 @@
 <link rel="stylesheet" href="css/fonts/font-awesome/css/font-awesome.css">
 <link href="css/custom.css" rel="stylesheet">
 
+<script src="js/jquery.js"></script>
+<script>
+$(document).ready(function() {
+    $('button').on('click tap', function (e) {
+		localStorage.setItem('map_number', $(this).data("value1"));
+		localStorage.setItem('street_number', $(this).data("value2"));
+		localStorage.setItem('street_name', $(this).data("value3"));
+		location.href='map.html';
+    });   
+});
+</script>
+
 </head>
 
 <body>
 <div class="body">
 
 <div role="main" class="main"><div class="container">
-	<div class="row"><div class="col-md-12" style="text-align:center;"><div class="blue_top_cell"><h1>FAST Map (Version 2)</h1></div></div></div>
+	<div class="row"><div class="col-md-12" style="text-align:center;"><div class="blue_top_cell"><h1>FAST Map (Version 2.1)</h1></div></div></div>
 	<div class="row"><div class="col-md-12"><div class="toogle"><div class="white_bot_cell">
 		<section class="toggle">
 			<label>Sector A</label>
 			<div class="toggle-content white_cell">
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,0,'Alava');location.href='map.html';">Alava</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,1,'Albacete');location.href='map.html';">Albacete</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,2,'Alicante');location.href='map.html';">Alicante</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,3,'Almagro');location.href='map.html';">Almagro</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,4,'Almería');location.href='map.html';">Almería</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,5,'Andalucía');location.href='map.html';">Andalucía</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,6,'Ávila');location.href='map.html';">Ávila</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,7,'Badajoz');location.href='map.html';">Badajoz</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,8,'Barcelona');location.href='map.html';">Barcelona</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,9,'Bilbao');location.href='map.html';">Bilbao</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,10,'Burgos');location.href='map.html';">Burgos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,11,'Cáceres');location.href='map.html';">Cáceres</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,12,'Cádiz');location.href='map.html';">Cádiz</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,13,'Castollon la Plana');location.href='map.html';">Castollon la Plana</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,14,'Cataluña');location.href='map.html';">Cataluña</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,15,'Ciudades Españolas');location.href='map.html';">Ciudades Españolas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,16,'Córdoba');location.href='map.html';">Córdoba</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,17,'Cuenca');location.href='map.html';">Cuenca</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,18,'Galicia');location.href='map.html';">Galicia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,19,'Gerona');location.href='map.html';">Gerona</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,20,'Granada');location.href='map.html';">Granada</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,21,'Guadalajara');location.href='map.html';">Guadalajara</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,22,'Huelva');location.href='map.html';">Huelva</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,23,'Huesca');location.href='map.html';">Huesca</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,24,'Jaén');location.href='map.html';">Jaén</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,25,'Jerez de Frontera');location.href='map.html';">Jerez de Frontera</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,26,'la Coruña');location.href='map.html';">la Coruña</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,27,'Lérida');location.href='map.html';">Lérida</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,28,'Logrono');location.href='map.html';">Logrono</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,29,'Lugo');location.href='map.html';">Lugo</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,30,'Madrid');location.href='map.html';">Madrid</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,31,'Málaga');location.href='map.html';">Málaga</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,32,'Merida');location.href='map.html';">Merida</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,33,'Orense');location.href='map.html';">Orense</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,34,'Pamplona');location.href='map.html';">Pamplona</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,35,'Pontevedra');location.href='map.html';">Pontevedra</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,36,'Saladillo');location.href='map.html';">Saladillo</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,37,'Salamanca');location.href='map.html';">Salamanca</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,38,'San Sebastián');location.href='map.html';">San Sebastián</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,39,'Santiago de Compostela');location.href='map.html';">Santiago de Compostela</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,40,'Segovia');location.href='map.html';">Segovia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,41,'Sevilla');location.href='map.html';">Sevilla</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,42,'Soria');location.href='map.html';">Soria</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,43,'Tarancón');location.href='map.html';">Tarancón</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,44,'Tarragona');location.href='map.html';">Tarragona</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,45,'Teruel');location.href='map.html';">Teruel</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,46,'Toledo');location.href='map.html';">Toledo</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,47,'Trujillo');location.href='map.html';">Trujillo</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,48,'Valencia');location.href='map.html';">Valencia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,49,'Valladolid');location.href='map.html';">Valladolid</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,50,'Vitoria');location.href='map.html';">Vitoria</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,51,'Zafra');location.href='map.html';">Zafra</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(1,52,'Zamora');location.href='map.html';">Zamora</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="0" data-value3='Alava')>Alava</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="1" data-value3='Albacete')>Albacete</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="2" data-value3='Alicante')>Alicante</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="3" data-value3='Almagro')>Almagro</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="4" data-value3='Almería')>Almería</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="5" data-value3='Andalucía')>Andalucía</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="6" data-value3='Ávila')>Ávila</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="7" data-value3='Badajoz')>Badajoz</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="8" data-value3='Barcelona')>Barcelona</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="9" data-value3='Bilbao')>Bilbao</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="10" data-value3='Burgos')>Burgos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="11" data-value3='Cáceres')>Cáceres</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="12" data-value3='Cádiz')>Cádiz</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="13" data-value3='Castollon la Plana')>Castollon la Plana</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="14" data-value3='Cataluña')>Cataluña</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="15" data-value3='Ciudades Españolas')>Ciudades Españolas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="16" data-value3='Córdoba')>Córdoba</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="17" data-value3='Cuenca')>Cuenca</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="18" data-value3='Galicia')>Galicia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="19" data-value3='Gerona')>Gerona</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="20" data-value3='Granada')>Granada</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="21" data-value3='Guadalajara')>Guadalajara</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="22" data-value3='Huelva')>Huelva</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="23" data-value3='Huesca')>Huesca</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="24" data-value3='Jaén')>Jaén</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="25" data-value3='Jerez de Frontera')>Jerez de Frontera</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="26" data-value3='la Coruña')>la Coruña</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="27" data-value3='Lérida')>Lérida</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="28" data-value3='Logrono')>Logrono</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="29" data-value3='Lugo')>Lugo</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="30" data-value3='Madrid')>Madrid</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="31" data-value3='Málaga')>Málaga</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="32" data-value3='Merida')>Merida</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="33" data-value3='Orense')>Orense</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="34" data-value3='Pamplona')>Pamplona</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="35" data-value3='Pontevedra')>Pontevedra</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="36" data-value3='Saladillo')>Saladillo</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="37" data-value3='Salamanca')>Salamanca</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="38" data-value3='San Sebastián')>San Sebastián</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="39" data-value3='Santiago de Compostela')>Santiago de Compostela</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="40" data-value3='Segovia')>Segovia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="41" data-value3='Sevilla')>Sevilla</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="42" data-value3='Soria')>Soria</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="43" data-value3='Tarancón')>Tarancón</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="44" data-value3='Tarragona')>Tarragona</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="45" data-value3='Teruel')>Teruel</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="46" data-value3='Toledo')>Toledo</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="47" data-value3='Trujillo')>Trujillo</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="48" data-value3='Valencia')>Valencia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="49" data-value3='Valladolid')>Valladolid</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="50" data-value3='Vitoria')>Vitoria</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="51" data-value3='Zafra')>Zafra</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="1" data-value2="52" data-value3='Zamora')>Zamora</button>
 			</div>
 		</section>
 	
 		<section class="toggle">
 			<label>Sector B</label>
 			<div class="toggle-content white_cell">
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,0,'Avenida de los Covachos');location.href='map.html';">Avenida de los Covachos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,1,'Abrucena');location.href='map.html';">Abrucena</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,2,'Adra');location.href='map.html';">Adra</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,3,'Albanchez');location.href='map.html';">Albanchez</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,4,'Albizia');location.href='map.html';">Albizia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,5,'Albox');location.href='map.html';">Albox</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,6,'Alcolea');location.href='map.html';">Alcolea</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,7,'Alcontar');location.href='map.html';">Alcontar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,8,'Alhabia');location.href='map.html';">Alhabia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,9,'Alicun');location.href='map.html';">Alicun</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,10,'Antas');location.href='map.html';">Antas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,11,'Arboleas');location.href='map.html';">Arboleas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,12,'Bedar');location.href='map.html';">Bedar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,13,'Berja');location.href='map.html';">Berja</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,14,'Cantoria');location.href='map.html';">Cantoria</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,15,'Cuervas de Almonzoia');location.href='map.html';">Cuervas de Almonzoia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,16,'Cueva del Pelciego');location.href='map.html';">Cueva del Pelciego</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,17,'Cyclaman');location.href='map.html';">Cyclaman</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,18,'Ermita de Hornera');location.href='map.html';">Ermita de Hornera</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,19,'Ermita de la Penicas');location.href='map.html';">Ermita de la Penicas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,20,'Finana');location.href='map.html';">Finana</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,21,'Fresno');location.href='map.html';">Fresno</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,22,'Helecho');location.href='map.html';">Helecho</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,23,'Jarra');location.href='map.html';">Jarra</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,24,'Lavanda');location.href='map.html';">Lavanda</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,25,'Punica');location.href='map.html';">Punica</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,26,'Sierra de la Torrecilla');location.href='map.html';">Sierra de la Torrecilla</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,27,'Tamariz');location.href='map.html';">Tamariz</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,28,'Travesia Ermita de Hornera');location.href='map.html';">Travesia Ermita de Hornera</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,29,'Virgen de la Cabeza');location.href='map.html';">Virgen de la Cabeza</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(2,30,'Virgen de la Labez');location.href='map.html';">Virgen de la Labez</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="0" data-value3='Avenida de los Covachos')>Avenida de los Covachos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="1" data-value3='Abrucena')>Abrucena</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="2" data-value3='Adra')>Adra</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="3" data-value3='Albanchez')>Albanchez</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="4" data-value3='Albizia')>Albizia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="5" data-value3='Albox')>Albox</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="6" data-value3='Alcolea')>Alcolea</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="7" data-value3='Alcontar')>Alcontar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="8" data-value3='Alhabia')>Alhabia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="9" data-value3='Alicun')>Alicun</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="10" data-value3='Antas')>Antas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="11" data-value3='Arboleas')>Arboleas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="12" data-value3='Bedar')>Bedar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="13" data-value3='Berja')>Berja</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="14" data-value3='Cantoria')>Cantoria</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="15" data-value3='Cuervas de Almonzoia')>Cuervas de Almonzoia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="16" data-value3='Cueva del Pelciego')>Cueva del Pelciego</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="17" data-value3='Cyclaman')>Cyclaman</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="18" data-value3='Ermita de Hornera')>Ermita de Hornera</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="19" data-value3='Ermita de la Penicas')>Ermita de la Penicas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="20" data-value3='Finana')>Finana</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="21" data-value3='Fresno')>Fresno</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="22" data-value3='Helecho')>Helecho</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="23" data-value3='Jarra')>Jarra</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="24" data-value3='Lavanda')>Lavanda</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="25" data-value3='Punica')>Punica</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="26" data-value3='Sierra de la Torrecilla')>Sierra de la Torrecilla</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="27" data-value3='Tamariz')>Tamariz</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="28" data-value3='Travesia Ermita de Hornera')>Travesia Ermita de Hornera</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="29" data-value3='Virgen de la Cabeza')>Virgen de la Cabeza</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="2" data-value2="30" data-value3='Virgen de la Labez')>Virgen de la Labez</button>
 			</div>
 		</section>
 			
 		<section class="toggle">
 			<label>Sector C</label>
 			<div class="toggle-content white_cell">
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,0,'Avenida de los Covachos');location.href='map.html';">Avenida de los Covachos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,1,'Albaida');location.href='map.html';">Albaida</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,2,'Alcala la Real');location.href='map.html';">Alcala la Real</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,3,'Alcaudete');location.href='map.html';">Alcaudete</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,4,'Aljibe');location.href='map.html';">Aljibe</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,5,'Alobe');location.href='map.html';">Alobe</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,6,'Andujar');location.href='map.html';">Andujar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,7,'Aralia');location.href='map.html';">Aralia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,8,'Araucarias');location.href='map.html';">Araucarias</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,9,'Arjona');location.href='map.html';">Arjona</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,10,'Aspilla');location.href='map.html';">Aspilla</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,11,'Azaleas');location.href='map.html';">Azaleas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,12,'Baeza');location.href='map.html';">Baeza</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,13,'Bailen');location.href='map.html';">Bailen</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,14,'Beas del Segura');location.href='map.html';">Beas del Segura</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,15,'Begijar');location.href='map.html';">Begijar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,16,'Bugambilla');location.href='map.html';">Bugambilla</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,17,'Castillo de San Juan');location.href='map.html';">Castillo de San Juan</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,18,'Castillo Mayorazgo Ascoy');location.href='map.html';">Castillo Mayorazgo Ascoy</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,19,'Cazoria');location.href='map.html';">Cazoria</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,20,'Chiclana');location.href='map.html';">Chiclana</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,21,'Embalse del Judio');location.href='map.html';">Embalse del Judio</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,22,'Frailes');location.href='map.html';">Frailes</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,23,'Huesa');location.href='map.html';">Huesa</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,24,'Ibiscum');location.href='map.html';">Ibiscum</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,25,'Jimena');location.href='map.html';">Jimena</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,26,'Jodar');location.href='map.html';">Jodar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,27,'La Carolina');location.href='map.html';">La Carolina</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,28,'Lava');location.href='map.html';">Lava</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,29,'Lopera');location.href='map.html';">Lopera</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,30,'lris');location.href='map.html';">lris</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,31,'Martos');location.href='map.html';">Martos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,32,'Pozo Alcon');location.href='map.html';">Pozo Alcon</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,33,'Puerto Lumbreas');location.href='map.html';">Puerto Lumbreas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,34,'Quesada');location.href='map.html';">Quesada</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,35,'Retama');location.href='map.html';">Retama</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,36,'Santuario De La Fuensanta');location.href='map.html';">Santuario De La Fuensanta</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,37,'Siles');location.href='map.html';">Siles</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,38,'Ubeda');location.href='map.html';">Ubeda</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(3,39,'Yuca');location.href='map.html';">Yuca</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="0" data-value3='Avenida de los Covachos')>Avenida de los Covachos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="1" data-value3='Albaida')>Albaida</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="2" data-value3='Alcala la Real')>Alcala la Real</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="3" data-value3='Alcaudete')>Alcaudete</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="4" data-value3='Aljibe')>Aljibe</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="5" data-value3='Alobe')>Alobe</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="6" data-value3='Andujar')>Andujar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="7" data-value3='Aralia')>Aralia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="8" data-value3='Araucarias')>Araucarias</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="9" data-value3='Arjona')>Arjona</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="10" data-value3='Aspilla')>Aspilla</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="11" data-value3='Azaleas')>Azaleas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="12" data-value3='Baeza')>Baeza</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="13" data-value3='Bailen')>Bailen</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="14" data-value3='Beas del Segura')>Beas del Segura</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="15" data-value3='Begijar')>Begijar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="16" data-value3='Bugambilla')>Bugambilla</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="17" data-value3='Castillo de San Juan')>Castillo de San Juan</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="18" data-value3='Castillo Mayorazgo Ascoy')>Castillo Mayorazgo Ascoy</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="19" data-value3='Cazoria')>Cazoria</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="20" data-value3='Chiclana')>Chiclana</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="21" data-value3='Embalse del Judio')>Embalse del Judio</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="22" data-value3='Frailes')>Frailes</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="23" data-value3='Huesa')>Huesa</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="24" data-value3='Ibiscum')>Ibiscum</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="25" data-value3='Jimena')>Jimena</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="26" data-value3='Jodar')>Jodar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="27" data-value3='La Carolina')>La Carolina</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="28" data-value3='Lava')>Lava</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="29" data-value3='Lopera')>Lopera</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="30" data-value3='lris')>lris</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="31" data-value3='Martos')>Martos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="32" data-value3='Pozo Alcon')>Pozo Alcon</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="33" data-value3='Puerto Lumbreas')>Puerto Lumbreas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="34" data-value3='Quesada')>Quesada</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="35" data-value3='Retama')>Retama</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="36" data-value3='Santuario De La Fuensanta')>Santuario De La Fuensanta</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="37" data-value3='Siles')>Siles</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="38" data-value3='Ubeda')>Ubeda</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="3" data-value2="39" data-value3='Yuca')>Yuca</button>
 			</div>
 		</section>
 
 		<section class="toggle">
 			<label>Sector D</label>
 			<div class="toggle-content">
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,0,'Avenida de los Covachos');location.href='map.html';">Avenida de los Covachos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,1,'Abeduies');location.href='map.html';">Abeduies</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,2,'Acebos');location.href='map.html';">Acebos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,3,'Ajedreas');location.href='map.html';">Ajedreas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,4,'Albolot');location.href='map.html';">Albolot</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,5,'Alcivaras');location.href='map.html';">Alcivaras</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,6,'Alhendin');location.href='map.html';">Alhendin</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,7,'Alibunol');location.href='map.html';">Alibunol</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,8,'Armilla');location.href='map.html';">Armilla</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,9,'Atarfe');location.href='map.html';">Atarfe</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,10,'Babinas');location.href='map.html';">Babinas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,11,'Baza');location.href='map.html';">Baza</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,12,'Benalua');location.href='map.html';">Benalua</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,13,'Berchules');location.href='map.html';">Berchules</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,14,'Brencas de Sicilia');location.href='map.html';">Brencas de Sicilia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,15,'Bubion');location.href='map.html';">Bubion</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,16,'Buquistar');location.href='map.html';">Buquistar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,17,'Cadiar');location.href='map.html';">Cadiar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,18,'Calahonda');location.href='map.html';">Calahonda</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,19,'Canar');location.href='map.html';">Canar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,20,'Caniles');location.href='map.html';">Caniles</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,21,'Capileira');location.href='map.html';">Capileira</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,22,'Castril');location.href='map.html';">Castril</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,23,'Cortes');location.href='map.html';">Cortes</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,24,'Cullar');location.href='map.html';">Cullar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,25,'Darro');location.href='map.html';">Darro</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,26,'Diezma');location.href='map.html';">Diezma</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,27,'Durcal');location.href='map.html';">Durcal</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,28,'Esparraquera');location.href='map.html';">Esparraquera</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,29,'Fonelar');location.href='map.html';">Fonelar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,30,'Frangulas');location.href='map.html';">Frangulas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,31,'Fresnos');location.href='map.html';">Fresnos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,32,'Fuente Vaqueros');location.href='map.html';">Fuente Vaqueros</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,33,'Gonafe');location.href='map.html';">Gonafe</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,34,'Gor');location.href='map.html';">Gor</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,35,'Graena');location.href='map.html';">Graena</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,36,'Guadix');location.href='map.html';">Guadix</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,37,'Havas');location.href='map.html';">Havas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,38,'Hernan-Valle');location.href='map.html';">Hernan-Valle</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,39,'Huescar');location.href='map.html';">Huescar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,40,'Juviles');location.href='map.html';">Juviles</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,41,'La Zubia');location.href='map.html';">La Zubia</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,42,'Lanjaron');location.href='map.html';">Lanjaron</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,43,'Lecrin');location.href='map.html';">Lecrin</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,44,'Loja');location.href='map.html';">Loja</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,45,'Lugros');location.href='map.html';">Lugros</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,46,'Maracena');location.href='map.html';">Maracena</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,47,'Mentas');location.href='map.html';">Mentas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,48,'Monachil');location.href='map.html';">Monachil</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,49,'Mosquera');location.href='map.html';">Mosquera</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,50,'Motril');location.href='map.html';">Motril</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,51,'Murtas');location.href='map.html';">Murtas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,52,'Nivar');location.href='map.html';">Nivar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,53,'Nogales');location.href='map.html';">Nogales</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,54,'Orce');location.href='map.html';">Orce</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,55,'Orgiva');location.href='map.html';">Orgiva</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,56,'Padui');location.href='map.html';">Padui</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,57,'Pampaneira');location.href='map.html';">Pampaneira</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,58,'Piteras');location.href='map.html';">Piteras</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,59,'Polopos');location.href='map.html';">Polopos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,60,'Purullena');location.href='map.html';">Purullena</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,61,'Quejigos');location.href='map.html';">Quejigos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,62,'Robles');location.href='map.html';">Robles</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,63,'Romeros');location.href='map.html';">Romeros</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,64,'Salar');location.href='map.html';">Salar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,65,'Salavias');location.href='map.html';">Salavias</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,66,'Salobrena');location.href='map.html';">Salobrena</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,67,'Salvias');location.href='map.html';">Salvias</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,68,'Serbales');location.href='map.html';">Serbales</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,69,'Sobrija');location.href='map.html';">Sobrija</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,70,'Soportujar');location.href='map.html';">Soportujar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,71,'Sorvilan');location.href='map.html';">Sorvilan</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,72,'Tejos');location.href='map.html';">Tejos</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,73,'Torvicor');location.href='map.html';">Torvicor</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,74,'Travesia Baza');location.href='map.html';">Travesia Baza</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,75,'Treveles');location.href='map.html';">Treveles</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,76,'Vebrena');location.href='map.html';">Vebrena</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,77,'Violetas');location.href='map.html';">Violetas</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,78,'Vizniar');location.href='map.html';">Vizniar</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,79,'Zagra');location.href='map.html';">Zagra</button>
-				<button class="btn btn-primary btn-lg" style="margin:0.25em;" onClick="storeData(4,80,'Zujar');location.href='map.html';">Zujar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="0" data-value3='Avenida de los Covachos')>Avenida de los Covachos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="1" data-value3='Abeduies')>Abeduies</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="2" data-value3='Acebos')>Acebos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="3" data-value3='Ajedreas')>Ajedreas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="4" data-value3='Albolot')>Albolot</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="5" data-value3='Alcivaras')>Alcivaras</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="6" data-value3='Alhendin')>Alhendin</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="7" data-value3='Alibunol')>Alibunol</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="8" data-value3='Armilla')>Armilla</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="9" data-value3='Atarfe')>Atarfe</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="10" data-value3='Babinas')>Babinas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="11" data-value3='Baza')>Baza</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="12" data-value3='Benalua')>Benalua</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="13" data-value3='Berchules')>Berchules</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="14" data-value3='Brencas de Sicilia')>Brencas de Sicilia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="15" data-value3='Bubion')>Bubion</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="16" data-value3='Buquistar')>Buquistar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="17" data-value3='Cadiar')>Cadiar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="18" data-value3='Calahonda')>Calahonda</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="19" data-value3='Canar')>Canar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="20" data-value3='Caniles')>Caniles</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="21" data-value3='Capileira')>Capileira</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="22" data-value3='Castril')>Castril</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="23" data-value3='Cortes')>Cortes</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="24" data-value3='Cullar')>Cullar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="25" data-value3='Darro')>Darro</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="26" data-value3='Diezma')>Diezma</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="27" data-value3='Durcal')>Durcal</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="28" data-value3='Esparraquera')>Esparraquera</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="29" data-value3='Fonelar')>Fonelar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="30" data-value3='Frangulas')>Frangulas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="31" data-value3='Fresnos')>Fresnos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="32" data-value3='Fuente Vaqueros')>Fuente Vaqueros</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="33" data-value3='Gonafe')>Gonafe</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="34" data-value3='Gor')>Gor</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="35" data-value3='Graena')>Graena</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="36" data-value3='Guadix')>Guadix</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="37" data-value3='Havas')>Havas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="38" data-value3='Hernan-Valle')>Hernan-Valle</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="39" data-value3='Huescar')>Huescar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="40" data-value3='Juviles')>Juviles</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="41" data-value3='La Zubia')>La Zubia</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="42" data-value3='Lanjaron')>Lanjaron</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="43" data-value3='Lecrin')>Lecrin</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="44" data-value3='Loja')>Loja</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="45" data-value3='Lugros')>Lugros</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="46" data-value3='Maracena')>Maracena</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="47" data-value3='Mentas')>Mentas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="48" data-value3='Monachil')>Monachil</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="49" data-value3='Mosquera')>Mosquera</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="50" data-value3='Motril')>Motril</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="51" data-value3='Murtas')>Murtas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="52" data-value3='Nivar')>Nivar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="53" data-value3='Nogales')>Nogales</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="54" data-value3='Orce')>Orce</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="55" data-value3='Orgiva')>Orgiva</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="56" data-value3='Padui')>Padui</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="57" data-value3='Pampaneira')>Pampaneira</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="58" data-value3='Piteras')>Piteras</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="59" data-value3='Polopos')>Polopos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="60" data-value3='Purullena')>Purullena</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="61" data-value3='Quejigos')>Quejigos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="62" data-value3='Robles')>Robles</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="63" data-value3='Romeros')>Romeros</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="64" data-value3='Salar')>Salar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="65" data-value3='Salavias')>Salavias</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="66" data-value3='Salobrena')>Salobrena</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="67" data-value3='Salvias')>Salvias</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="68" data-value3='Serbales')>Serbales</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="69" data-value3='Sobrija')>Sobrija</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="70" data-value3='Soportujar')>Soportujar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="71" data-value3='Sorvilan')>Sorvilan</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="72" data-value3='Tejos')>Tejos</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="73" data-value3='Torvicor')>Torvicor</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="74" data-value3='Travesia Baza')>Travesia Baza</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="75" data-value3='Treveles')>Treveles</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="76" data-value3='Vebrena')>Vebrena</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="77" data-value3='Violetas')>Violetas</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="78" data-value3='Vizniar')>Vizniar</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="79" data-value3='Zagra')>Zagra</button>
+				<button class="btn btn-primary btn-lg" style="margin:0.25em;" data-value1="4" data-value2="80" data-value3='Zujar')>Zujar</button>
 			</div>
 		</section>
 		
@@ -258,10 +270,7 @@
 
 </div>
 
-<script> function storeData(map,calle,name){localStorage.setItem('map_number', map);localStorage.setItem('street_number', calle);localStorage.setItem('street_name', name);}</script>
-
 <!-- Libs -->
-<script src="js/jquery.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.validate.js"></script>
